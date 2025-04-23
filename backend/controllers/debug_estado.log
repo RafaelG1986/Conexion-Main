@@ -1,0 +1,48 @@
+Llamada recibida: {"id":"38","estado":"Primer contacto"}
+ID: 38, Estado: Primer contacto, Filas: 1
+Llamada recibida: {"id":"38","estado":"No confirmado a desayuno"}
+ID: 38, Estado: No confirmado a desayuno, Filas: 1
+Llamada recibida: {"id":"37","estado":"Por Validar Estado"}
+ID: 37, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"20","estado":"Desayuno Asistido"}
+ID: 20, Estado: Desayuno Asistido, Filas: 1
+Llamada recibida: {"id":"21","estado":"Por Validar Estado"}
+ID: 21, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"22","estado":"No interesado"}
+ID: 22, Estado: No interesado, Filas: 1
+Llamada recibida: {"id":"23","estado":"Por Validar Estado"}
+ID: 23, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"24","estado":"Por Validar Estado"}
+ID: 24, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"26","estado":"Por Validar Estado"}
+ID: 26, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"27","estado":"Por Validar Estado"}
+ID: 27, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"28","estado":"Por Validar Estado"}
+ID: 28, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"29","estado":"Por Validar Estado"}
+ID: 29, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"30","estado":"Por Validar Estado"}
+ID: 30, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"31","estado":"Desayuno Asistido"}
+ID: 31, Estado: Desayuno Asistido, Filas: 1
+Llamada recibida: {"id":"32","estado":"Por Validar Estado"}
+ID: 32, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"29","estado":"No confirmado a desayuno"}
+ID: 29, Estado: No confirmado a desayuno, Filas: 1
+Llamada recibida: {"id":"28","estado":"No confirmado a desayuno"}
+ID: 28, Estado: No confirmado a desayuno, Filas: 1
+Llamada recibida: {"id":"30","estado":"Congregado sin desayuno"}
+ID: 30, Estado: Congregado sin desayuno, Filas: 1
+Llamada recibida: {"id":"38","estado":"Primer contacto"}
+ID: 38, Estado: Primer contacto, Filas: 1
+Llamada recibida: {"id":"38","estado":"Por Validar Estado"}
+ID: 38, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"24","estado":"No confirmado a desayuno"}
+ID: 24, Estado: No confirmado a desayuno, Filas: 1
+Llamada recibida: {"id":"24","estado":"Confirmado a Desayuno"}
+ID: 24, Estado: Confirmado a Desayuno, Filas: 1
+Llamada recibida: {"id":"24","estado":"No confirmado a desayuno"}
+ID: 24, Estado: No confirmado a desayuno, Filas: 1
+Llamada recibida: {"id":"24","estado":"No interesado"}
+ID: 24, Estado: No interesado, Filas: 1

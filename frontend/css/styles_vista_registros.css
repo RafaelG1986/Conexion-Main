@@ -1,0 +1,418 @@
+/* Estilos generales para la vista de registros */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Contenedor principal */
+div.registros-container {
+    padding: 15px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Encabezado */
+h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 24px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+/* Contenedor de la tabla */
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: 25px;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabla principal */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    font-size: 14px;
+}
+
+/* Encabezados de tabla */
+table th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Celdas de tabla */
+table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: middle;
+}
+
+/* Filas alternadas */
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Hover en filas */
+table tr:hover {
+    background-color: #f0f8ff;
+}
+
+/* Imágenes en tabla */
+table td img {
+    max-width: 60px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    display: block;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+table td img:hover {
+    transform: scale(1.05);
+}
+
+/* Selector de estados - aumentado el tamaño */
+table td select {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-width: 250px; /* Aumentado para caber textos más largos */
+    min-width: 220px; /* Garantiza un ancho mínimo */
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    cursor: pointer;
+    font-size: 14px; /* Texto ligeramente más grande */
+    font-weight: 500; /* Texto más visible */
+}
+
+/* Estado actual - resaltar celda */
+table td.estado-activo {
+    transition: all 0.3s;
+    position: relative;
+}
+
+table td.estado-activo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #3498db;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+/* Opciones dentro del select */
+table td select option {
+    padding: 10px !important;
+    font-size: 14px !important;
+}
+
+/* Mejorar la apariencia del select cuando está abierto */
+table td select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5);
+}
+
+/* Estilos para opciones específicas de color */
+select option[selected] {
+    font-weight: bold !important;
+}
+
+/* Añadir estos estilos al final del archivo */
+.estado-selected {
+    font-weight: bold !important;
+    text-shadow: 0 0 1px rgba(0,0,0,0.2);
+}
+
+/* Mejorar contraste en opciones */
+option.estado-Primercontacto,
+option.estado-Conectado,
+option.estado-Noconfirmadoadesayuno,
+option.estado-ConfirmadoaDesayuno,
+option.estado-DesayunoAsistido,
+option.estado-Congregadosindesayuno,
+option.estado-Visitante,
+option.estado-Nointeresado,
+option.estado-PorValidarEstado {
+    padding: 8px 12px !important;
+    margin: 2px 0 !important;
+}
+
+/* Botones de acción */
+button {
+    margin: 3px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+button:first-child {
+    background-color: #3498db;
+    color: white;
+}
+
+button:first-child:hover {
+    background-color: #2980b9;
+}
+
+button:nth-child(2) {
+    background-color: #e74c3c;
+    color: white;
+}
+
+button:nth-child(2):hover {
+    background-color: #c0392b;
+}
+
+button:nth-child(3) {
+    background-color: #2ecc71;
+    color: white;
+}
+
+button:nth-child(3):hover {
+    background-color: #27ae60;
+}
+
+button:nth-child(4), 
+button:nth-child(5) {
+    background-color: #f39c12;
+    color: white;
+}
+
+button:nth-child(4):hover, 
+button:nth-child(5):hover {
+    background-color: #d35400;
+}
+
+/* Estilo para mensaje de estado */
+#mensaje-estado {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+#mensaje-estado.exito {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    display: block;
+}
+
+#mensaje-estado.error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    display: block;
+}
+
+/* Modal de observaciones */
+#modal-observaciones {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    z-index: 2000 !important;
+}
+
+#modal-observaciones h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+#lista-observaciones {
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#lista-observaciones p {
+    padding: 10px;
+    background: #f9f9f9;
+    border-left: 3px solid #3498db;
+    margin: 8px 0;
+}
+
+#modal-observaciones button {
+    background-color: #2c3e50;
+    color: white;
+    padding: 8px 16px;
+    display: block;
+    margin: 0 auto;
+}
+
+#modal-observaciones button:hover {
+    background-color: #1a252f;
+}
+
+/* Overlay para modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1999;
+    display: none;
+}
+
+/* Estilos específicos para estados */
+.estado-Primercontacto {
+    background: #FF2400 !important; 
+    color: #fff !important;
+}
+
+.estado-Conectado {
+    background: #9B4EE9 !important; 
+    color: #fff !important;
+}
+
+.estado-Noconfirmadoadesayuno {
+    background: #6A5ACD !important; 
+    color: #fff !important;
+}
+
+.estado-ConfirmadoaDesayuno {
+    background: #4169E1 !important; 
+    color: #fff !important;
+}
+
+.estado-DesayunoAsistido {
+    background: #87CEEB !important; 
+    color: #000 !important;
+}
+
+.estado-Congregadosindesayuno {
+    background: #2ECC71 !important; 
+    color: #fff !important;
+}
+
+.estado-Visitante {
+    background: #fff !important; 
+    color: #222 !important;
+}
+
+.estado-Nointeresado {
+    background: #E74C3C !important; 
+    color: #fff !important;
+}
+
+.estado-PorValidarEstado {
+    background: #F39C12 !important; 
+    color: #fff !important;
+}
+
+/* Estilos para las celdas de estado */
+td.celda-estado {
+    transition: all 0.3s ease;
+    padding: 0 !important; /* Quitar padding para que el select ocupe toda la celda */
+}
+
+/* Selector dentro de celda coloreada */
+td.celda-estado select {
+    background-color: transparent !important; /* Hacer que el select sea transparente */
+    border: none;
+    width: 100%;
+    padding: 10px 15px; /* Padding más grande para mejor visualización */
+    max-width: none; /* Permitir que se expanda según la celda */
+    color: inherit; /* Heredar el color del texto de la celda */
+    font-weight: bold; /* Texto en negrita para mejor legibilidad */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+}
+
+/* Selector enfocado */
+td.celda-estado select:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+/* Resaltar cuando está activo */
+td.estado-activo {
+    box-shadow: 0 0 0 2px #3498db !important;
+    position: relative;
+    z-index: 10;
+}
+
+/* Mejorar la apariencia de las opciones del select */
+td.celda-estado select option {
+    color: initial; /* Reiniciar color para las opciones */
+    font-weight: normal;
+    background-color: white;
+}
+
+td.celda-estado select option:checked {
+    font-weight: bold;
+    background-color: #f0f0f0;
+}
+
+/* Adaptación para dispositivos móviles */
+@media screen and (max-width: 992px) {
+    table {
+        font-size: 13px;
+    }
+    
+    button {
+        padding: 5px 8px;
+        font-size: 12px;
+        margin: 2px;
+    }
+    
+    table td {
+        padding: 8px 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .table-responsive {
+        overflow-x: scroll;
+    }
+    
+    button {
+        padding: 4px 6px;
+        font-size: 11px;
+        display: block;
+        width: 100%;
+        margin: 4px 0;
+    }
+}
+
+/* Estilos para el botón de eliminar */
+.btn-action.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-action.btn-delete:hover {
+    background-color: #c0392b;
+}
+
+/* Transición para filas */
+table tr {
+    transition: background-color 0.3s ease, opacity 0.5s ease, max-height 0.5s ease;
+    max-height: 200px;
+    overflow: hidden;
+}

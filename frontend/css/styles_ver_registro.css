@@ -1,0 +1,346 @@
+/* Estilos para ver_registro.php - Vista y edición */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 30px;
+}
+
+.registro-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    position: relative;
+}
+
+.registro-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.registro-header h1 {
+    color: #2c3e50;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.modo-badge {
+    background: #3498db;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 6px rgba(52, 152, 219, 0.2);
+}
+
+.modo-badge.modo-edicion {
+    background: #e74c3c;
+}
+
+.foto-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.foto-container {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 15px;
+    border: 5px solid #f0f0f0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.foto-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.foto-container img:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.foto-placeholder {
+    color: #bbb;
+    font-size: 60px;
+}
+
+.foto-upload {
+    margin-top: 10px;
+}
+
+.foto-upload label {
+    background: #3498db;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: inline-block;
+}
+
+.foto-upload label:hover {
+    background: #2980b9;
+}
+
+.foto-upload input[type="file"] {
+    display: none;
+}
+
+.registro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.field-group {
+    margin-bottom: 5px;
+}
+
+.field-group label {
+    display: block;
+    font-weight: 600;
+    color: #7f8c8d;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.field-value {
+    font-size: 16px;
+    padding: 10px 0;
+    color: #2c3e50;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Estilos para modo edición */
+.field-group input,
+.field-group select,
+.field-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.field-group input:focus,
+.field-group select:focus,
+.field-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.field-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Estado */
+.estado-select {
+    position: relative;
+}
+
+.estado-option {
+    padding: 8px 10px;
+}
+
+/* Botones */
+.botones-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    gap: 15px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+    box-shadow: 0 5px 15px rgba(127, 140, 141, 0.3);
+}
+
+/* Estilos para los nuevos botones */
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+    box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-dark {
+    background-color: #343a40;
+    color: white;
+}
+
+.btn-dark:hover {
+    background-color: #23272b;
+    box-shadow: 0 5px 15px rgba(52, 58, 64, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Sección de observaciones */
+.observaciones-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.observaciones-section h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.observacion-card {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border-left: 4px solid #3498db;
+}
+
+.observacion-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.observacion-content {
+    color: #2c3e50;
+}
+
+/* Mensajes de validación */
+.validation-message {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 5px;
+    display: none;
+}
+
+.field-group.error input,
+.field-group.error select,
+.field-group.error textarea {
+    border-color: #e74c3c;
+}
+
+.field-group.error .validation-message {
+    display: block;
+}
+
+/* Efectos adicionales */
+.card-effect {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-effect:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Adaptaciones responsive */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    .registro-container {
+        padding: 20px;
+    }
+    
+    .registro-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .registro-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .botones-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    
+    .botones-container .btn {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 500px) {
+    .botones-container {
+        grid-template-columns: 1fr;
+    }
+}

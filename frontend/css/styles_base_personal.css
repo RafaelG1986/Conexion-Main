@@ -1,0 +1,51 @@
+h2 {
+  text-align: center;
+  margin-top: 20px;
+  color: #2c3e50;
+}
+
+.form-inline {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.form-inline label {
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.form-inline select {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.table-responsive {
+  max-width: 800px;
+  margin: 0 auto;
+  overflow-x: auto;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  background: #fff;
+  border-radius: 4px;
+}
+
+#tabla-registros-conector {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#tabla-registros-conector th,
+#tabla-registros-conector td {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+#tabla-registros-conector th {
+  background: #f0f0f0;
+}
+
+#tabla-registros-conector tbody tr:nth-child(even) {
+  background: #fafafa;
+}

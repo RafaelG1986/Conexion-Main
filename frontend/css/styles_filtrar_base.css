@@ -1,0 +1,480 @@
+/* Contenedor principal */
+.filter-container {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    margin: 20px 0;
+    max-width: 100%;
+}
+
+/* Encabezado de filtros */
+.filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.filter-header h2 {
+    color: #2c3e50;
+    font-size: 24px;
+    margin: 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.filter-header h2 i {
+    margin-right: 12px;
+    color: #3498db;
+}
+
+/* Formulario de filtros */
+.filter-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.filter-group {
+    margin-bottom: 0;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #7f8c8d;
+}
+
+.filter-group input,
+.filter-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s;
+    background-color: #fff;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.filter-group input::placeholder {
+    color: #bdc3c7;
+}
+
+/* Botones de acción */
+.filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.btn-reset,
+.btn-filter,
+.btn-home,
+.btn-back {
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.btn-filter {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-filter:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+}
+
+.btn-reset {
+    background-color: #f5f5f5;
+    color: #7f8c8d;
+    border: 1px solid #ddd;
+}
+
+.btn-reset:hover {
+    background-color: #e9ecef;
+    color: #2c3e50;
+    transform: translateY(-2px);
+}
+
+.btn-home {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-home:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+}
+
+.btn-back {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-back:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(108, 117, 125, 0.3);
+}
+
+.btn-reset i,
+.btn-filter i,
+.btn-home i,
+.btn-back i {
+    margin-right: 8px;
+}
+
+/* Encabezado de resultados */
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.results-header h3 {
+    font-size: 20px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    color: #2c3e50;
+}
+
+.results-header h3 i {
+    margin-right: 10px;
+    color: #3498db;
+}
+
+/* Información de resultados */
+.filter-results-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.results-count {
+    font-size: 14px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.export-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-export {
+    padding: 8px 15px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.btn-export i {
+    margin-right: 6px;
+}
+
+.btn-export.excel {
+    background-color: #1d6f42;
+}
+
+.btn-export.excel:hover {
+    background-color: #195a36;
+}
+
+.btn-export.pdf {
+    background-color: #e74c3c;
+}
+
+.btn-export.pdf:hover {
+    background-color: #c0392b;
+}
+
+.btn-export.print {
+    background-color: #7f8c8d;
+}
+
+.btn-export.print:hover {
+    background-color: #6c7a7a;
+}
+
+/* Filtros aplicados */
+.applied-filters {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.filters-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-right: 10px;
+}
+
+.filters-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1;
+}
+
+.filter-tag {
+    background: #e9ecef;
+    color: #495057;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    display: inline-block;
+}
+
+/* Tabla de resultados */
+.table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.stats-table th,
+.stats-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.stats-table thead th {
+    background-color: #f8f9fa;
+    color: #7f8c8d;
+    font-weight: 600;
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.stats-table tbody tr {
+    transition: background 0.3s;
+}
+
+.stats-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.stats-table tbody td {
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+/* Botones de acción en tabla */
+.btn-action {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin: 0 3px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.btn-view {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-view:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.btn-edit {
+    background-color: #f39c12;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #d68910;
+    transform: translateY(-2px);
+}
+
+/* Mensajes de error y sin resultados */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.no-results {
+    text-align: center;
+    padding: 40px 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.no-results i {
+    font-size: 48px;
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+.no-results p {
+    font-size: 18px;
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+/* Indicador de carga */
+.loading-spinner {
+    text-align: center;
+    padding: 40px 0;
+    font-size: 18px;
+    color: #6c757d;
+}
+
+.loading-spinner i {
+    font-size: 24px;
+    margin-right: 10px;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Adaptaciones responsive */
+@media (max-width: 992px) {
+    .filter-form {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    
+    .filter-actions {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .filter-container {
+        padding: 20px;
+    }
+    
+    .filter-form {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .filter-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-reset, 
+    .btn-filter,
+    .btn-home,
+    .btn-back {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .filter-results-info {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .export-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* Estilos para impresión */
+@media print {
+    .filter-header, 
+    .filter-actions, 
+    .export-actions, 
+    .btn-action,
+    .results-header,
+    .applied-filters {
+        display: none !important;
+    }
+    
+    .filter-container {
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .stats-table th, 
+    .stats-table td {
+        padding: 8px;
+    }
+    
+    body, html {
+        background: white;
+        font-size: 12pt;
+    }
+    
+    .table-responsive {
+        box-shadow: none;
+    }
+}
