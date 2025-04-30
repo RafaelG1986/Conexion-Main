@@ -471,5 +471,33 @@ $_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
         }
     });
     </script>
+
+    <!-- Modal de usuarios conectados -->
+    <div id="modal-usuarios-online" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Usuarios conectados</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="lista-usuarios-online">
+                    <p class="cargando">Cargando usuarios...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-limpiar-sesiones" class="btn-limpiar"><i class="fas fa-broom"></i> Limpiar</button>
+                <button id="btn-refresh-usuarios" class="btn-refresh"><i class="fas fa-sync-alt"></i> Actualizar</button>
+                <button class="btn-cerrar">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón para abrir el modal de usuarios conectados -->
+    <button id="btn-usuarios-online" class="floating-btn">
+        <i class="fas fa-users"></i>
+        <span id="contador-usuarios-online">0</span>
+    </button>
+
+    <script src="/Conexion-Main/frontend/js/usuarios-online.js"></script>
 </body>
 </html>

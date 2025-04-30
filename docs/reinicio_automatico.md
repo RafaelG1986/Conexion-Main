@@ -60,3 +60,6 @@ pm2 start tools/localtunnel-start.js --max-memory-restart 300M
 
 # Limitar intentos de reinicio por errores (3 reintentos)
 pm2 start tools/localtunnel-start.js --max-restarts 3
+
+# Iniciar con nueva configuración de reinicio
+pm2 start tools/localtunnel-start.js --name "conexion-tunnel" --max-memory-restart 100M --restart-delay 10000 --max-restarts 10
