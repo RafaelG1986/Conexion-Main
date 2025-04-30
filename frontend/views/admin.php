@@ -8,6 +8,7 @@ if (!isset($_SESSION['user'])) {
 }
 
 $user = $_SESSION['user'];
+$_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -32,6 +33,8 @@ $user = $_SESSION['user'];
     <link rel="stylesheet" href="../css/styles_modal_observaciones.css">
     <script src="../js/ver_observaciones.js"></script>
     <script src="../js/informes.js"></script>
+    <link rel="stylesheet" href="../css/styles_chat.css">
+    <script src="../js/chat.js"></script>
 </head>
 <body>
     <div id="debug-info" style="position:fixed; bottom:0; right:0; background:rgba(0,0,0,0.7); color:white; padding:10px; z-index:9999;"></div>
@@ -54,7 +57,6 @@ $user = $_SESSION['user'];
                 <a href="#" onclick="cargarVista('agregar_registro.php');return false;"><i class="fas fa-plus-circle"></i> Crear Nuevo Registro</a>
                 <a href="#" onclick="cargarVista('vista_estadisticas_personales.php');return false;"><i class="fas fa-chart-line"></i> Estadísticas Personales</a>
                 <a href="#" onclick="cargarVista('base_datos_personal.php');return false;"><i class="fas fa-table"></i> Base de Datos Personal</a>
-                <!-- Modificado: Cambiado para usar cargarVista como los demás enlaces -->
                 <a href="#" onclick="cargarVista('filtrar_base.php');return false;"><i class="fas fa-filter"></i> Filtrar Base</a>
                 <a href="#" onclick="cargarVista('vista_informes.php');return false;"><i class="fas fa-file-alt"></i> Generar Informes</a>
                 <a href="../../backend/controllers/logout.php" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
@@ -92,6 +94,48 @@ $user = $_SESSION['user'];
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <!-- Chat sidebar -->
+    <div class="chat-sidebar" id="chat-sidebar">
+        <div class="chat-header">
+            <h2>Mensajes</h2>
+            <div class="chat-controls">
+                <button id="minimize-chat-sidebar" class="btn-control"><i class="fas fa-minus"></i></button>
+                <button id="close-chat-sidebar" class="btn-control"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        
+        <div class="chat-search">
+            <input type="text" placeholder="Buscar conversaciones...">
+        </div>
+        
+        <div class="conversations-list">
+            <!-- Conversaciones se cargan dinámicamente -->
+        </div>
+    </div>
+
+    <!-- Ventana de chat -->
+    <div id="chat-window" class="chat-window">
+        <div class="chat-window-header">
+            <div class="chat-avatar-container">
+                <img src="..." class="chat-avatar" alt="">
+            </div>
+            <div class="chat-username"></div>
+            <div class="chat-controls">
+                <button id="minimize-chat" class="btn-control"><i class="fas fa-minus"></i></button>
+                <button id="close-chat" class="btn-control"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        
+        <div class="chat-messages">
+            <!-- Los mensajes se cargarán aquí dinámicamente -->
+        </div>
+        
+        <div class="chat-input">
+            <textarea placeholder="Escribe un mensaje..."></textarea>
+            <button id="send-message"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
     
@@ -325,11 +369,101 @@ $user = $_SESSION['user'];
             });
         });
     });
+
+    // Agregar después del último script en admin.php
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar chat
+        if (typeof inicializarChat === 'function') {
+            inicializarChat();
+        }
+        
+        // Configurar botón toggle para chat
+        const chatToggleBtn = document.getElementById('chat-toggle-button');
+        const chatSidebar = document.getElementById('chat-sidebar');
+        
+        chatToggleBtn.addEventListener('click', function() {
+            chatSidebar.classList.toggle('active');
+        });
+    });
     </script>
 
     <!-- Este tipo de código está causando el error -->
     <select class="selector-estado" data-id="<?php echo $registro['id']; ?>">
         <!-- opciones... -->
     </select>
+
+    <!-- Contenedor para el ID de usuario -->
+    <div id="chat-container" data-usuario-id="<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '0'; ?>"></div>
+
+    <!-- Botón para mostrar/ocultar el chat -->
+    <div id="chat-toggle-button" class="chat-toggle-button">
+        <i class="fas fa-comments"></i>
+        <span class="badge" id="unread-badge" style="display: none;">0</span>
+    </div>
+
+    <!-- Añadir al final de admin.php antes del cierre del body -->
+    <div id="chat-container-renamed" data-usuario-id="<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '0'; ?>"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Verificar elementos críticos
+        if (!document.getElementById('chat-container')) {
+            console.error('No se encontró el elemento chat-container');
+        }
+        
+        if (!document.getElementById('chat-window')) {
+            console.error('No se encontró el elemento chat-window');
+        }
+        
+        if (!document.getElementById('minimize-chat')) {
+            console.error('No se encontró el elemento minimize-chat');
+        }
+        
+        // Inicializar chat si existe la función
+        if (typeof inicializarChat === 'function') {
+            console.log('Inicializando sistema de chat...');
+            try {
+                inicializarChat();
+                console.log('Sistema de chat inicializado correctamente');
+            } catch (e) {
+                console.error('Error inicializando el chat:', e);
+            }
+        } else {
+            console.error('Función inicializarChat no encontrada');
+        }
+    });
+    </script>
+
+    <!-- Añade esto al final antes de </body> -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Verificando elementos del chat:');
+        
+        // Verificar botones críticos
+        const btnCerrar = document.getElementById('close-chat');
+        if (btnCerrar) {
+            console.log('✓ Botón cerrar encontrado');
+            // Asegurar que tenga evento click
+            btnCerrar.addEventListener('click', function() {
+                console.log('Click en botón cerrar');
+                const chatWindow = document.getElementById('chat-window');
+                if (chatWindow) {
+                    chatWindow.style.display = 'none';
+                    console.log('Chat cerrado manualmente');
+                }
+            });
+        } else {
+            console.error('✗ Botón cerrar NO encontrado');
+        }
+        
+        // Verificar ventana de chat
+        const chatWindow = document.getElementById('chat-window');
+        if (chatWindow) {
+            console.log('✓ Ventana chat encontrada, display:', chatWindow.style.display);
+        } else {
+            console.error('✗ Ventana chat NO encontrada');
+        }
+    });
+    </script>
 </body>
 </html>

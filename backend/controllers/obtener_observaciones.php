@@ -5,7 +5,11 @@ require_once __DIR__ . '/../config/cors.php';
 session_start();
 
 // Cabecera JSON
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
+
+// Inhabilita la salida de errores en pantalla
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
 
 // Log de depuración
 error_log("Iniciando obtener_observaciones.php");
@@ -78,4 +82,5 @@ try {
     error_log("PDO Error: " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'Error de base de datos']);
 }
+exit;
 

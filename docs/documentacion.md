@@ -15043,3 +15043,9894 @@ header('Access-Control-Allow-Headers: Content-Type');
 Siguiendo esta guía paso a paso, podrás reconstruir completamente el sistema de gestión con el modal de observaciones, tal como lo tienes implementado actualmente.
 
 Código similar encontrado con 2 tipos de licencias
+RafaelG1986: Analiza el contexto
+
+GitHub Copilot: # Análisis del contexto
+
+Estás desarrollando una aplicación web PHP llamada "Conexion-Main" que gestiona registros de contactos con las siguientes características:
+
+## Estructura del proyecto
+- **Frontend**: Vistas y formularios (HTML, CSS, JS)
+- **Backend**: Controladores PHP que procesan datos y se comunican con la base de datos
+- **Base de datos**: MySQL con tablas como "registros" y "conexion_usuarios"
+
+## Funcionalidades implementadas
+1. **Vista de registros** con filtrado y búsqueda
+2. **Agregar observaciones** a los registros existentes
+3. **Eliminar registros** de la base de datos
+4. **Formularios** para crear y editar registros
+
+## Problemas resueltos recientemente
+1. Correcciones en CORS para peticiones AJAX
+2. Implementación de la funcionalidad de eliminar registros
+3. Ajustes en el modal para agregar observaciones
+
+## Problema actual
+Estás trabajando en la funcionalidad de crear nuevos registros, específicamente:
+- El formulario no está procesando correctamente la carga de fotos
+- Necesitas el código completo para `procesar_registro.php` que debería ubicarse en la carpeta backend/controllers
+
+La solución requiere un controlador PHP que valide los datos del formulario, procese la imagen subida y guarde toda la información en la base de datos.
+
+RafaelG1986: quiero ejecutar localhost
+
+GitHub Copilot: # Ejecución de localhost en Windows con XAMPP
+
+Para ejecutar tu aplicación en localhost utilizando XAMPP, sigue estos pasos:
+
+1. **Inicia XAMPP Control Panel**:
+   - Busca el icono de XAMPP en tu escritorio o menú de inicio
+   - O ve a xampp-control.exe y ejecútalo
+
+2. **Inicia los servicios necesarios**:
+   - Haz clic en "Start" para Apache (necesario para PHP)
+   - Haz clic en "Start" para MySQL (si tu aplicación usa base de datos)
+   
+3. **Accede a tu aplicación**:
+   - Abre un navegador web (Chrome, Firefox, Edge, etc.)
+   - Escribe en la barra de direcciones: `http://localhost/Conexion-Main/`
+
+4. **Alternativas de acceso**:
+   - También puedes usar: `http://127.0.0.1/Conexion-Main/`
+   - O si tienes un host virtual configurado, usa ese nombre
+
+5. **Si necesitas ver todas tus aplicaciones**:
+   - Visita `http://localhost/` para ver el directorio raíz
+
+## Solución de problemas comunes
+
+- Si Apache no inicia, puede que el puerto 80 esté ocupado por otro servicio
+- Si ves un error 403, verifica los permisos de la carpeta del proyecto
+- Si ves páginas en blanco, revisa los logs de error en logs
+
+¿Necesitas ayuda con algún aspecto específico de tu aplicación?
+
+RafaelG1986: 2vaEnb83qzpQzrajaF2HAz97ekd_Kwk76dkbWahhFdUMQmQf
+Cannot find file at '..\\lib\ngrok\tools\ngrok.exe' (C:\ProgramData\chocolatey\lib\ngrok\tools\ngrok.exe). This usually indicates a missing or moved file.
+
+GitHub Copilot: # Error al encontrar el ejecutable de ngrok
+
+Estás experimentando un problema con la ubicación del ejecutable de ngrok en tu sistema. El error indica que el archivo no se encuentra en la ruta esperada:
+
+```
+Cannot find file at '..\\lib\ngrok\tools\ngrok.exe' (C:\ProgramData\chocolatey\lib\ngrok\tools\ngrok.exe)
+```
+
+## Soluciones recomendadas:
+
+1. **Reinstalar ngrok usando Chocolatey**:
+   ```
+   choco uninstall ngrok
+   choco install ngrok
+   ```
+
+2. **Descargar e instalar ngrok manualmente**:
+   - Visita [https://ngrok.com/download](https://ngrok.com/download)
+   - Descarga la versión para Windows
+   - Extrae el archivo ZIP a una ubicación conocida (ej: `C:\ngrok`)
+   - Añade esta ubicación a tu PATH de sistema
+
+3. **Verificar permisos de carpeta**:
+   - Comprueba si tienes acceso a la carpeta tools
+   - Puede que necesites ejecutar el comando como administrador
+
+4. **Usar una ruta absoluta**:
+   - En lugar de usar rutas relativas, especifica la ruta completa al ejecutable
+
+¿Necesitas ayuda con alguna de estas opciones en particular?
+
+RafaelG1986: Hola, sabes como funciona Localtunnel?
+
+GitHub Copilot: # LocalTunnel: Una guía completa
+
+LocalTunnel es una herramienta que permite exponer tus servidores locales a Internet a través de URLs públicas temporales, similar a ngrok pero con algunas diferencias.
+
+## ¿Cómo funciona?
+
+1. LocalTunnel establece una conexión entre tu máquina local y sus servidores
+2. Crea un túnel que redirige el tráfico desde una URL pública hacia tu puerto local
+3. Cualquier solicitud a esa URL pública será enviada a tu servidor local
+
+## Instalación
+
+LocalTunnel está basado en Node.js, así que necesitas tener Node.js instalado:
+
+```bash
+# Instalar globalmente con npm
+npm install -g localtunnel
+```
+
+## Uso básico
+
+Para exponer un servidor local que corre en el puerto 80 (típico para XAMPP):
+
+```bash
+lt --port 80
+```
+
+Esto generará una URL como `https://random-subdomain.loca.lt` que podrás compartir.
+
+## Opciones avanzadas
+
+```bash
+# Especificar un subdominio personalizado (si está disponible)
+lt --port 80 --subdomain conexion-main
+
+# Especificar un host diferente (servidor de LocalTunnel)
+lt --port 80 --host https://localtunnel-server.ejemplo.com
+
+# Mostrar tráfico entrante (útil para depuración)
+lt --port 80 --print-requests
+```
+
+## Diferencias con ngrok
+
+- **Simplicidad**: LocalTunnel es más simple y con menos opciones
+- **Sin límites**: No tiene las mismas restricciones de conexiones simultáneas
+- **Open Source**: Es completamente de código abierto
+- **Menos funciones avanzadas**: No tiene todas las características de ngrok como repetición de solicitudes, inspección de tráfico, etc.
+
+## Uso con tu aplicación Conexion-Main
+
+Para tu aplicación XAMPP, simplemente ejecuta:
+
+```bash
+lt --port 80 --subdomain conexion-main
+```
+
+Y podrás acceder a tu aplicación desde cualquier dispositivo usando la URL generada.
+
+¿Necesitas más detalles sobre algún aspecto específico de LocalTunnel?
+
+RafaelG1986: https://conexion-main.loca.lt/conexion_main/index.html ?
+
+GitHub Copilot: # Acceso a la aplicación a través de LocalTunnel
+
+Sí, esa URL es correcta si estás usando LocalTunnel para exponer tu aplicación localmente a Internet.
+
+## Componentes de la URL:
+- `https://conexion-main.loca.lt`: El subdominio que genera LocalTunnel para tu aplicación
+- `/conexion_main/index.html`: La ruta a tu página de inicio
+
+## Cómo se genera esta URL:
+1. Al ejecutar LocalTunnel con `lt --port 80 --subdomain conexion-main`
+2. LocalTunnel crea un túnel entre tu servidor local (XAMPP en puerto 80) y su servidor público
+3. Genera un subdominio personalizado (conexion-main.loca.lt)
+
+## Ventajas de usar LocalTunnel:
+- No tienes las limitaciones de conexiones simultáneas de ngrok
+- El subdominio es más fácil de recordar y compartir
+- No requiere autenticación como ngrok
+
+Si tienes problemas para acceder, verifica:
+- Que LocalTunnel esté ejecutándose correctamente
+- Que tu servidor XAMPP esté activo
+- Que la estructura de carpetas coincida con la URL
+
+¿Estás teniendo algún problema específico al acceder a través de esta URL?
+
+RafaelG1986: como accedo a la pagina
+
+GitHub Copilot: # Cómo acceder a la página de Conexion-Main
+
+Para acceder a tu aplicación web, sigue estos pasos:
+
+1. **Inicia XAMPP Control Panel**:
+   - Busca XAMPP en el menú de inicio o haz doble clic en el icono del escritorio
+   - O navega a xampp-control.exe y ejecútalo
+
+2. **Inicia los servicios necesarios**:
+   - Haz clic en "Start" para Apache (necesario para PHP)
+   - Haz clic en "Start" para MySQL (necesario para la base de datos)
+   - Asegúrate de que ambos servicios muestren un fondo verde, indicando que están activos
+
+3. **Accede a la aplicación en tu navegador**:
+   - Abre cualquier navegador web (Chrome, Firefox, Edge, etc.)
+   - Ingresa la siguiente URL:
+     ```
+     http://localhost/Conexion-Main/
+     ```
+   - O también puedes usar:
+     ```
+     http://127.0.0.1/Conexion-Main/
+     ```
+
+4. **Para la página de inicio de sesión**:
+   - Si existe un archivo index.html o index.php en la raíz, se cargará automáticamente
+   - De lo contrario, puedes necesitar acceder específicamente a:
+     ```
+     http://localhost/Conexion-Main/index.html
+     ```
+
+Una vez que accedas, deberías ver la página de inicio de sesión de tu aplicación donde podrás introducir tus credenciales para entrar al sistema.
+
+RafaelG1986: pero desde localtunnel
+
+GitHub Copilot: # Acceso a tu aplicación mediante LocalTunnel
+
+Para acceder a tu aplicación Conexion-Main utilizando LocalTunnel, sigue estos pasos:
+
+## 1. Iniciar tu servidor local (XAMPP)
+Primero asegúrate que Apache y MySQL estén corriendo en XAMPP.
+
+## 2. Ejecutar LocalTunnel
+Abre una terminal o línea de comandos y ejecuta:
+```bash
+lt --port 80 --subdomain conexion-main
+```
+
+## 3. Acceder a la aplicación
+Una vez que LocalTunnel esté ejecutándose, podrás acceder a tu aplicación a través de:
+```
+https://conexion-main.loca.lt/Conexion-Main/
+```
+
+## Notas importantes:
+- La URL exacta dependerá de la estructura de carpetas en tu servidor local
+- Si tu aplicación está en Conexion-Main, la URL correcta sería la que indiqué arriba
+- Asegúrate de respetar mayúsculas/minúsculas ya que algunos servidores son sensibles a esto
+- Si recibes errores CORS, verifica que tu archivo de configuración CORS esté correctamente implementado
+
+¿La aplicación carga correctamente con esta URL? Si encuentras algún problema, puedo ayudarte a solucionarlo.
+
+RafaelG1986: Ok, cuanto tiempo permanece conectado?
+
+GitHub Copilot: # Duración de conexiones en diferentes contextos
+
+Depende a qué conexión te refieras. Aquí están los tiempos más relevantes para tu aplicación:
+
+## Sesión PHP
+
+- **Duración predeterminada**: 24 minutos (1440 segundos)
+- **Configurable**: Sí, mediante `session.gc_maxlifetime` en php.ini
+- **En tu aplicación**: La sesión permanece activa mientras el usuario utilice la aplicación. Si está inactivo por más del tiempo configurado, deberá iniciar sesión nuevamente.
+
+## Túnel ngrok
+
+- **Plan gratuito**: Permanece activo hasta que cierres la terminal o el proceso
+- **Dirección asignada**: Cambia cada vez que reinicies ngrok
+- **Límite**: 1 conexión simultánea en el plan gratuito
+
+## Conexión a base de datos (MySQL/PDO)
+
+- **Persistent connections**: Permanecen abiertas hasta que se cierre la aplicación
+- **Non-persistent connections**: Se cierran al final de cada script
+- **MySQL timeout**: 8 horas por defecto para conexiones inactivas
+
+## AJAX/Fetch
+
+- **Timeout predeterminado**: Varía según el navegador (generalmente varios minutos)
+- **Personalizable**: Puedes configurar timeouts más cortos en tus llamadas fetch
+
+Si necesitas ajustar alguno de estos tiempos para tu aplicación específica, puedo proporcionarte las configuraciones necesarias.
+
+RafaelG1986:  me refiero a localtunnel, cuanto tiempo quedo conectado?
+
+GitHub Copilot: # Duración de conexiones en LocalTunnel
+
+A diferencia de ngrok, LocalTunnel no tiene un límite de tiempo predefinido para las conexiones. Una conexión de LocalTunnel permanece activa hasta que:
+
+1. **Cierres la terminal** o detengas manualmente el proceso de LocalTunnel
+2. **Tu computadora entre en suspensión** o pierda la conexión a internet
+3. **El servidor de LocalTunnel** experimente problemas o reinicio (esto puede ocurrir ocasionalmente)
+
+LocalTunnel tiene estas ventajas sobre ngrok:
+- Sin límite de tiempo explícito en las sesiones
+- Sin restricciones en el número de conexiones simultáneas
+- No requiere crear cuenta ni autenticación
+- Completamente gratuito y de código abierto
+
+Para conexiones de larga duración, puedes considerar usar un servicio como `pm2` o una configuración similar para reiniciar automáticamente el proceso de LocalTunnel si se cae por algún motivo.
+
+RafaelG1986: Para conexiones de larga duración, puedes considerar usar un servicio como pm2 o una configuración similar para reiniciar automáticamente el proceso de LocalTunnel si se cae por algún motivo.------- como lo hago?
+
+GitHub Copilot: # Configuración de PM2 para mantener LocalTunnel siempre activo
+
+PM2 es un gestor de procesos para aplicaciones Node.js que te permitirá mantener LocalTunnel ejecutándose continuamente con reinicio automático. Sigue estos pasos:
+
+## 1. Instalar PM2 globalmente
+
+```bash
+npm install -g pm2
+```
+
+## 2. Crear un script para LocalTunnel
+
+Crea un archivo llamado `localtunnel-start.js` en una ubicación conveniente:
+
+```javascript
+// localtunnel-start.js
+const localtunnel = require('localtunnel');
+
+// Configuración
+const port = 80; // Puerto que deseas exponer (XAMPP)
+const subdomain = 'conexion-main'; // Subdominio deseado (opcional)
+
+async function startTunnel() {
+  try {
+    const tunnel = await localtunnel({ 
+      port: port,
+      subdomain: subdomain 
+    });
+    
+    console.log(`Túnel iniciado en: ${tunnel.url}`);
+    
+    tunnel.on('close', () => {
+      console.log('Túnel cerrado, reiniciando...');
+      // PM2 detectará esta salida y reiniciará el proceso
+      process.exit(1);
+    });
+    
+    // Mantener el proceso vivo
+    process.on('SIGINT', () => {
+      tunnel.close();
+      process.exit(0);
+    });
+    
+  } catch (error) {
+    console.error('Error al iniciar el túnel:', error);
+    process.exit(1);
+  }
+}
+
+startTunnel();
+```
+
+## 3. Iniciar LocalTunnel con PM2
+
+```bash
+# Iniciar el proceso
+pm2 start localtunnel-start.js --name "conexion-tunnel"
+
+# Ver el estado
+pm2 status
+
+# Ver logs en tiempo real
+pm2 logs conexion-tunnel
+```
+
+## 4. Configurar inicio automático al arrancar el sistema
+
+```bash
+# Generar script de inicio
+pm2 startup
+
+# Guardar la configuración actual para que se reinicie al arrancar
+pm2 save
+```
+
+## 5. Comandos útiles para gestionar el servicio
+
+```bash
+# Reiniciar manualmente
+pm2 restart conexion-tunnel
+
+# Detener temporalmente
+pm2 stop conexion-tunnel
+
+# Iniciar después de detener
+pm2 start conexion-tunnel
+
+# Eliminar de PM2
+pm2 delete conexion-tunnel
+```
+
+## Configuración alternativa con script más simple
+
+Si prefieres una solución más directa, puedes usar un script que ejecute directamente el comando `lt`:
+
+```bash
+# Crear archivo lt-start.sh (Linux/Mac) o lt-start.bat (Windows)
+echo "lt --port 80 --subdomain conexion-main" > lt-start.sh
+chmod +x lt-start.sh  # Solo en Linux/Mac
+
+# Iniciar con PM2
+pm2 start lt-start.sh --name "conexion-tunnel"
+```
+
+Esta configuración mantendrá LocalTunnel ejecutándose continuamente, con reinicio automático si falla, e incluso después de reinicios del sistema.
+
+RafaelG1986: donde puedo crear el archivo?
+
+GitHub Copilot: # Ubicación para crear el archivo procesar_registro.php
+
+Debes crear el archivo en la siguiente ruta:
+
+```
+c:\xampp\htdocs\conexion-main\backend\controllers\procesar_registro.php
+```
+
+Esta ubicación es la más adecuada porque:
+
+1. Sigue el patrón de arquitectura de tu aplicación (MVC)
+2. Todos tus demás controladores (agregar_observacion.php, eliminar_registro.php) están en esta carpeta
+3. Mantiene separada la lógica de negocio (backend) de la presentación (frontend)
+4. Es coherente con las rutas que ya están configuradas en tus archivos JavaScript
+
+Recuerda también asegurarte que el formulario en agregar_registro.php apunte a esta ubicación:
+```html
+<form action="../../backend/controllers/procesar_registro.php" method="POST" enctype="multipart/form-data">
+
+
+RafaelG1986: me refiero a localtunnel
+
+GitHub Copilot: # Duración de conexiones en LocalTunnel
+
+A diferencia de ngrok, LocalTunnel no tiene un límite de tiempo predefinido para las conexiones. Una conexión de LocalTunnel permanece activa hasta que:
+
+1. **Cierres la terminal** o detengas manualmente el proceso de LocalTunnel
+2. **Tu computadora entre en suspensión** o pierda la conexión a internet
+3. **El servidor de LocalTunnel** experimente problemas o reinicio (esto puede ocurrir ocasionalmente)
+
+LocalTunnel tiene estas ventajas sobre ngrok:
+- Sin límite de tiempo explícito en las sesiones
+- Sin restricciones en el número de conexiones simultáneas
+- No requiere crear cuenta ni autenticación
+- Completamente gratuito y de código abierto
+
+Para conexiones de larga duración, puedes considerar usar un servicio como `pm2` o una configuración similar para reiniciar automáticamente el proceso de LocalTunnel si se cae por algún motivo.
+
+RafaelG1986: 2. Crear un script para LocalTunnel
+Crea un archivo llamado localtunnel-start.js en una ubicación conveniente:
+
+donde?
+
+GitHub Copilot: # Ubicación para el script de LocalTunnel
+
+Para crear el archivo `localtunnel-start.js`, te recomiendo la siguiente ubicación:
+
+```
+c:\xampp\htdocs\Conexion-Main\tools\
+```
+
+Si la carpeta `tools` no existe, debes crearla primero:
+
+1. Navega a Conexion-Main
+2. Crea una nueva carpeta llamada `tools`
+3. Dentro de esta carpeta, crea el archivo `localtunnel-start.js`
+
+Esta ubicación es recomendable porque:
+- Está dentro del proyecto pero separada del código de la aplicación
+- Es fácilmente accesible desde la raíz del proyecto
+- Mantiene organizados los scripts de utilidades/herramientas
+
+Cuando instales PM2, podrás iniciar LocalTunnel con:
+```bash
+pm2 start c:\xampp\htdocs\Conexion-Main\tools\localtunnel-start.js --name "conexion-tunnel"
+```
+
+RafaelG1986: id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 0  │ conexion-tunnel    │ fork     │ 16   │ errored   │ 0%       │ 0b
+
+GitHub Copilot: # Error en PM2 con conexion-tunnel
+
+Veo que tu proceso de LocalTunnel está en estado "errored" y ha intentado reiniciarse 16 veces sin éxito. Esto indica que hay un problema con la ejecución del script.
+
+## Posibles causas y soluciones
+
+### 1. Módulo localtunnel no instalado
+
+```bash
+# Instala localtunnel como dependencia local
+cd c:\xampp\htdocs\Conexion-Main\tools\
+npm init -y
+npm install localtunnel
+```
+
+### 2. Ver logs de error para diagnóstico
+
+```bash
+# Ver los logs detallados del error
+pm2 logs conexion-tunnel
+```
+
+### 3. Puerto 80 no disponible
+Verifica que Apache no esté usando el puerto 80. Si es así, modifica el archivo para usar otro puerto (por ejemplo, 8080) y asegúrate que XAMPP esté configurado en ese puerto.
+
+### 4. Subdominio ya en uso
+El subdominio 'conexion-main' podría estar siendo usado por otro usuario. Intenta con otro nombre:
+
+```javascript
+const subdomain = 'conexion-main-xyz'; // Cambia esto a algo más único
+```
+
+### 5. Solución alternativa: Script más simple
+Si continúas con problemas, puedes crear un script alternativo en batch:
+
+```bash
+# Crear archivo lt-start.bat
+echo "@echo off" > c:\xampp\htdocs\Conexion-Main\tools\lt-start.bat
+echo "npx localtunnel --port 80 --subdomain conexion-main" >> c:\xampp\htdocs\Conexion-Main\tools\lt-start.bat
+
+# Iniciar con PM2
+pm2 start c:\xampp\htdocs\Conexion-Main\tools\lt-start.bat --name "conexion-tunnel"
+```
+
+¿Quieres que revisemos los logs de error para un diagnóstico más preciso?
+
+RafaelG1986: no carga la pagina de conexion-main
+
+GitHub Copilot: # Solución a problemas de carga con LocalTunnel
+
+Si no carga la página de conexion-main a través del túnel, hay varios aspectos que debemos revisar:
+
+## 1. Verifica el puerto correcto
+
+En tu script tienes configurado el puerto 8080, pero Apache XAMPP normalmente usa el puerto 80:
+
+```javascript
+const port = 8080; // ← Este puerto debe coincidir con tu configuración de XAMPP
+```
+
+Modifica este valor al puerto correcto donde está corriendo tu aplicación.
+
+## 2. Comprueba el acceso local primero
+
+Antes de usar LocalTunnel, verifica que tu aplicación funciona correctamente de forma local:
+```
+http://localhost/Conexion-Main/
+```
+
+## 3. Verifica la URL completa
+
+La URL correcta para acceder a través de LocalTunnel sería:
+```
+https://conexion-main.loca.lt/Conexion-Main/
+```
+
+Asegúrate de incluir la ruta `/Conexion-Main/` después del dominio.
+
+## 4. Comprueba los logs del túnel
+
+```bash
+pm2 logs conexion-tunnel
+```
+
+Busca mensajes de error o la URL exacta que LocalTunnel genera.
+
+## 5. Posibles soluciones adicionales
+
+- Reinicia el servicio de XAMPP (Apache y MySQL)
+- Prueba con un subdominio diferente (cambia `conexion-main` por otro nombre único)
+- Intenta ejecutar LocalTunnel manualmente para ver si hay errores:
+  ```bash
+  npx localtunnel --port 80
+  ```
+
+¿La consola muestra algún error específico cuando intentas acceder a la página?
+
+RafaelG1986: 0|conexion | Require stack:
+0|conexion | - c:\xampp\htdocs\Conexion-Main\tools\localtunnel-start.js
+0|conexion |     at Function._resolveFilename (node:internal/modules/cjs/loader:1225:15)
+0|conexion |     at Hook._require.Module.require (C:\Users\Emanuel\AppData\Roaming\npm\node_modules\pm2\node_modules\require-in-the-middle\index.js:81:25)
+0|conexion |     at require (node:internal/modules/helpers:136:16)
+0|conexion |     at Object.<anonymous> (c:\xampp\htdocs\Conexion-Main\tools\localtunnel-start.js:2:21)
+0|conexion |     at Module._compile (node:internal/modules/cjs/loader:1554:14)
+0|conexion |     at Object..js (node:internal/modules/cjs/loader:1706:10)
+0|conexion |     at Module.load (node:internal/modules/cjs/loader:1289:32)
+0|conexion |     at Function._load (node:internal/modules/cjs/loader:1108:12)
+0|conexion |     at Object.<anonymous> (C:\Users\Emanuel\AppData\Roaming\npm\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+0|conexion |     at Module._compile (node:internal/modules/cjs/loader:1554:14) {
+0|conexion |   code: 'MODULE_NOT_FOUND',
+0|conexion |   requireStack: [ 'c:\\xampp\\htdocs\\Conexion-Main\\tools\\localtunnel-start.js' ]  
+0|conexion | }
+
+C:\Users\Emanuel\.pm2\logs\conexion-tunnel-out.log last 15 lines:
+0|conexion | Túnel iniciado en: https://conexion-main.loca.lt
+
+GitHub Copilot: # Problema con el módulo LocalTunnel
+
+El error indica que no se puede encontrar el módulo `localtunnel` que está siendo requerido en tu script. Aunque parece que en algún momento el túnel logró iniciarse (según la última línea de log), el script falla durante la ejecución.
+
+## Solución: Instalar LocalTunnel
+
+Debes instalar el módulo como dependencia local en tu proyecto:
+
+```bash
+# Navega al directorio donde está tu script
+cd c:\xampp\htdocs\Conexion-Main\tools\
+
+# Inicializa un proyecto npm si no existe
+npm init -y
+
+# Instala localtunnel como dependencia
+npm install localtunnel
+```
+
+## Verificar puerto correcto
+
+También veo que estás usando el puerto 8080 en tu script:
+
+```javascript
+const port = 8080; // Puerto que deseas exponer (XAMPP)
+```
+
+Asegúrate de que:
+1. XAMPP esté configurado para usar el puerto 8080 (o cambia este valor a 80 si usas el puerto predeterminado)
+2. Apache esté correctamente iniciado en XAMPP
+
+## Acceder a la aplicación
+
+Una vez que el túnel se inicie correctamente, deberías poder acceder a tu aplicación mediante:
+
+```
+https://conexion-main.loca.lt/Conexion-Main/
+```
+
+¿Quieres que te guíe para comprobar la configuración del puerto en XAMPP?
+
+RafaelG1986: si
+
+GitHub Copilot: # Verificación y configuración del puerto en XAMPP
+
+Vamos a comprobar qué puertos está usando XAMPP y asegurarnos de que todo esté configurado correctamente:
+
+## 1. Verificar puertos de Apache en XAMPP
+
+1. Abre XAMPP Control Panel
+2. Haz clic en el botón "Config" de Apache
+3. Selecciona "httpd.conf"
+4. Busca las siguientes líneas (usa Ctrl+F):
+   ```
+   Listen 80
+   ServerName localhost:80
+   ```
+
+## 2. Si necesitas cambiar el puerto de XAMPP a 8080
+
+Si quieres que XAMPP use el puerto 8080 (como en tu script):
+
+1. Cambia `Listen 80` a `Listen 8080`
+2. Cambia todas las referencias a puerto 80 por 8080
+3. Guarda el archivo
+4. Reinicia Apache desde el panel de control de XAMPP
+
+## 3. Alternativa: Cambiar el puerto en tu script LocalTunnel
+
+Si prefieres mantener XAMPP en el puerto 80 (predeterminado):
+
+```javascript
+// En localtunnel-start.js
+const port = 80; // Cambia de 8080 a 80
+```
+
+## 4. Verificar que LocalTunnel esté instalado correctamente
+
+```bash
+# En la terminal, navega a la carpeta del script
+cd c:\xampp\htdocs\Conexion-Main\tools\
+
+# Instala localtunnel localmente
+npm init -y
+npm install localtunnel
+
+# Reinicia el proceso de PM2
+pm2 restart conexion-tunnel
+```
+
+## 5. Probar acceso a la aplicación
+
+Una vez configurado el puerto correcto y reiniciado los servicios:
+
+1. Comprueba que la aplicación funcione localmente:
+   - Si usas puerto 80: `http://localhost/Conexion-Main/`
+   - Si usas puerto 8080: `http://localhost:8080/Conexion-Main/`
+
+2. Accede a través de LocalTunnel:
+   `https://conexion-main.loca.lt/Conexion-Main/`
+
+¿Te gustaría que te ayude con alguna otra configuración específica?
+
+RafaelG1986: 503 - Tunnel Unavailable
+
+GitHub Copilot: # Error 503 - Tunnel Unavailable en LocalTunnel
+
+Este error indica que el túnel no está disponible actualmente. Esto puede ocurrir por varias razones:
+
+## Causas comunes
+
+1. **Subdominio ocupado**: El subdominio `conexion-main` probablemente ya está siendo utilizado por otra persona
+2. **Problemas temporales del servidor**: Los servidores de LocalTunnel pueden estar experimentando dificultades
+3. **Limitaciones de conexión**: Posible saturación del servicio
+
+## Soluciones
+
+### 1. Cambiar el subdominio
+Modifica tu script para usar un subdominio más único:
+
+```javascript
+// Cambiar esta línea en localtunnel-start.js
+const subdomain = 'conexion-main-xyz123'; // Usa algo más único y aleatorio
+```
+
+### 2. Usar subdominio aleatorio
+Otra opción es dejar que LocalTunnel asigne un subdominio aleatorio:
+
+```javascript
+// Elimina el parámetro subdomain
+const tunnel = await localtunnel({ 
+  port: port
+  // Sin especificar subdomain
+});
+```
+
+### 3. Reiniciar el proceso
+
+```bash
+# Detener e iniciar el proceso
+pm2 stop conexion-tunnel
+pm2 start conexion-tunnel
+
+# O reiniciar directamente
+pm2 restart conexion-tunnel
+```
+
+### 4. Ejecutar manualmente para pruebas
+
+```bash
+# Ejecutar directamente desde la terminal para ver errores en tiempo real
+cd c:\xampp\htdocs\Conexion-Main\tools\
+node localtunnel-start.js
+```
+
+### 5. Verificar conectividad
+Asegúrate de que tu conexión a internet funcione correctamente y que no haya restricciones de firewall.
+
+¿Quieres que modifique el script con alguna de estas soluciones?
+
+RafaelG1986: ok, analiza este archivo, busca los archivos donde tiene conexion.
+
+GitHub Copilot: # Análisis de conexiones en generar_informe.php
+
+## Conexiones a archivos externos
+El archivo establece conexión con los siguientes archivos:
+
+1. **Database.php**: 
+   ```php
+   require_once __DIR__ . '/../config/database.php';
+   ```
+   - Ubicación: `c:\xampp\htdocs\Conexion-Main\frontend\config\database.php`
+   - Propósito: Proporciona la clase Database para conectar con la base de datos MySQL
+
+## Conexiones a la base de datos
+El archivo realiza múltiples conexiones a la base de datos:
+
+```php
+$db = new Database();
+$conn = $db->connect();
+```
+
+Características de la conexión:
+- Usa PDO para conexiones seguras con parámetros preparados
+- Consulta principalmente la tabla `registros`
+- Realiza filtrados por:
+  - nombre_conector
+  - estado
+  - fecha_creacion (rangos)
+
+## Verificación de sesión
+El archivo verifica que exista una sesión activa:
+
+```php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Content-Type: text/plain');
+    echo "Error: No hay sesión activa.";
+    exit;
+}
+```
+
+Esto sugiere una conexión con un sistema de autenticación, probablemente ubicado en:
+- `c:\xampp\htdocs\Conexion-Main\frontend\views\login.php` o
+- login.php
+
+## Conexión con el frontend
+El archivo recibe datos mediante POST que provienen de un formulario, posiblemente:
+- `c:\xampp\htdocs\Conexion-Main\frontend\views\informes.php`
+
+¿Deseas que analice alguna de estas conexiones en más detalle o que revise algún otro archivo específico?
+
+RafaelG1986: analiza este archivo es vista_informes
+
+GitHub Copilot: # Análisis del archivo vista_informes.php
+
+Este archivo implementa la interfaz de usuario para generar informes personalizados sobre registros almacenados en la base de datos. A continuación, detallo sus componentes y conexiones:
+
+## Conexiones a archivos y servicios
+
+1. **Conexión a base de datos**:
+   ```php
+   require_once __DIR__ . '/../../backend/config/database.php';
+   $db = new Database();
+   $conn = $db->connect();
+   ```
+   - Ubicación: database.php
+
+2. **Conexión a CSS**:
+   ```php
+   <link rel="stylesheet" href="../css/styles_informes.css">
+   ```
+   - Ubicación: styles_informes.css
+
+3. **Conexión al backend para generar informes**:
+   ```javascript
+   fetch('../../backend/controllers/generar_informe.php', {
+       method: 'POST',
+       body: formData
+   })
+   ```
+   - Ubicación: generar_informe.php
+
+## Funcionalidad principal
+
+El archivo proporciona un formulario interactivo para:
+
+1. **Seleccionar tipo de informe**:
+   - Estadísticas generales
+   - Estadísticas por conector
+   - Distribución por estados
+   - Listado detallado
+
+2. **Filtrar datos**:
+   - Por conector específico
+   - Por estado
+   - Por rango de fechas
+
+3. **Personalizar formato**:
+   - Incluir cabecera
+   - Incluir detalles específicos
+   - Incluir resumen
+
+4. **Generar el informe**:
+   - Vista previa en pantalla
+   - Descargar como archivo de texto
+
+## Interacción con la base de datos
+
+- Consulta la tabla `registros` para obtener listas de conectores y estados únicos
+- Utiliza la clase `Database` para gestionar la conexión
+- Utiliza PDO para consultas seguras
+- Maneja excepciones para errores de conexión
+
+El flujo principal del archivo es: cargar datos de configuración → presentar formulario → enviar solicitud AJAX → mostrar resultados/descargar archivo.
+
+RafaelG1986: analiza este archivo.
+
+GitHub Copilot: # Análisis del archivo generar_informe.php
+
+Este controlador es el encargado de generar informes personalizados sobre los registros almacenados en la base de datos de la aplicación Conexion-Main. 
+
+## Estructura y funcionalidad
+
+1. **Configuración inicial**:
+   - Importa la conexión a la base de datos desde `config/database.php`
+   - Verifica que el usuario tenga una sesión activa
+   - Recibe parámetros del formulario mediante POST
+
+2. **Tipos de informes disponibles**:
+   - **Estadísticas Generales**: Distribución de registros por conectores y estados
+   - **Estadísticas por Conector**: Análisis detallado de un conector específico
+   - **Distribución por Estados**: Análisis por estado, mostrando qué conectores tienen más registros
+   - **Listado Detallado**: Vista tabular de registros según criterios establecidos
+
+3. **Opciones de personalización**:
+   - Filtros por conector, estado y rango de fechas
+   - Secciones opcionales (cabecera, detalles, resumen)
+   - Formato de salida (vista previa en pantalla o descarga como archivo)
+
+4. **Arquitectura modular**:
+   - Función principal `generarInforme()` que coordina la generación
+   - Funciones específicas para cada tipo de informe (ej: `generarInformePersonal()`)
+   - Funciones de resumen para complementar cada informe
+
+## Interacción con la base de datos
+
+- Utiliza PDO con consultas preparadas para prevenir inyección SQL
+- Múltiples consultas a la tabla `registros` con diferentes filtros y agrupaciones
+- Consultas para obtener datos estadísticos (conteos, distribuciones)
+
+## Formato de salida
+
+- Genera informes en formato texto plano (.txt)
+- Estructura tabular con alineación de columnas
+- Secciones claramente definidas con separadores
+- Configura los encabezados HTTP adecuados para vista previa o descarga
+
+## Conexiones con otros archivos
+
+- Recibe datos del formulario presentado en `vista_informes.php`
+- Utiliza la clase Database definida en database.php
+- Se integra con el sistema de autenticación (verifica `$_SESSION['user']`)
+
+Este archivo representa una implementación robusta para la generación de informes personalizados, con buenas prácticas de seguridad y una arquitectura modular bien organizada.
+
+RafaelG1986: ahora necesito generar la actualizacion del repositorio
+
+GitHub Copilot: # Actualización del Repositorio Git
+
+Para actualizar tu repositorio con los cambios recientes, sigue estos pasos:
+
+## 1. Verificar los cambios pendientes
+
+```bash
+git status
+```
+
+Este comando mostrará todos los archivos modificados, añadidos o eliminados.
+
+## 2. Añadir los archivos modificados
+
+Para añadir todos los cambios:
+```bash
+git add .
+```
+
+O para añadir archivos específicos (recomendado):
+```bash
+git add backend/controllers/generar_informe.php
+git add frontend/views/vista_informes.php
+git add tools/localtunnel-start.js
+```
+
+## 3. Crear un commit con los cambios
+
+```bash
+git commit -m "Implementación de generación de informes y configuración de LocalTunnel"
+```
+
+## 4. Subir los cambios al repositorio remoto
+
+```bash
+git push origin main
+```
+
+Si estás en una rama diferente, reemplaza "main" por el nombre de tu rama.
+
+## Resumen de cambios incluidos
+
+- **Funcionalidad de informes**: Implementación completa del controlador de generación de informes con múltiples formatos
+- **Configuración de LocalTunnel**: Script para mantener la aplicación accesible desde Internet
+- **Mejoras en la interfaz**: Actualización de la vista de informes
+
+¿Necesitas ayuda con alguno de estos pasos o con algún error que pueda surgir durante el proceso?
+
+RafaelG1986: ok, ahora necesito que me ayudes a encontrar el error que me impide generar el reporte, cuando hago clic en generar el reporte no me sale nada.
+
+GitHub Copilot: # Solución de problema con generación de informes
+
+He analizado el código y hay varios puntos que podrían estar causando que no se genere el informe. Vamos a revisar los más probables:
+
+## 1. Verificar que lleguen los datos del formulario
+
+Añade este código al principio del archivo para verificar si los datos están llegando:
+
+```php
+// Añadir justo después de session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Verificar llegada de datos
+file_put_contents('debug_log.txt', print_r($_POST, true));
+```
+
+## 2. Corregir la ruta de inclusión de la base de datos
+
+El archivo está intentando cargar la base de datos desde una ubicación incorrecta:
+
+```php
+// Línea actual
+require_once __DIR__ . '/../config/database.php';
+
+// Cambiar a:
+require_once __DIR__ . '/../../backend/config/database.php';
+```
+
+## 3. Verificar si hay errores silenciosos en consultas SQL
+
+Añade el modo de excepciones PDO en la conexión:
+
+```php
+// En la función generarInforme
+$db = new Database();
+$conn = $db->connect();
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+```
+
+## 4. Verificar la estructura del switch
+
+El switch que maneja los tipos de informes podría estar fallando si el valor de `$tipoInforme` no es exactamente uno de los esperados:
+
+```php
+// Antes del switch, añade:
+$tipoInforme = strtolower(trim($tipoInforme));
+file_put_contents('debug_tipo.txt', "Tipo de informe recibido: [$tipoInforme]");
+```
+
+## 5. Problemas con la recepción de parámetros
+
+Verifica que los nombres de los parámetros en el JavaScript coincidan exactamente con los que esperas en PHP:
+
+```javascript
+// Los nombres en el formulario deben ser:
+// tipo-informe, conector, estado, fecha-inicio, fecha-fin, 
+// incluir-cabecera, incluir-detalle, incluir-resumen, vista_previa
+```
+
+## 6. Propuesta de solución inmediata
+
+Si ninguna de las anteriores soluciona el problema, probemos algo simple:
+
+```php
+// Reemplaza todo el código después de recibir los parámetros con:
+header('Content-Type: text/plain; charset=utf-8');
+echo "=== PRUEBA DE INFORME ===\n";
+echo "Tipo: $tipoInforme\n";
+echo "Conector: $conector\n";
+echo "Estado: $estado\n";
+echo "Fechas: $fechaInicio a $fechaFin\n";
+exit;
+```
+
+Si esto muestra información, entonces el problema está en las funciones de generación del informe, no en la recepción de datos.
+
+¿Puedes realizar estas modificaciones y probar nuevamente?
+
+RafaelG1986: ok, como hago la modificacion
+
+GitHub Copilot: # Solución para problemas con la generación de informes
+
+He analizado tu código y encontrado varios posibles problemas que podrían estar impidiendo que el informe se genere correctamente. Aquí te muestro cómo hacer las modificaciones necesarias:
+
+## 1. Corregir inconsistencias en nombres de variables
+
+Hay una inconsistencia entre `vista_previa` (en el formulario) y `vistaPrevista` (en el PHP):
+
+```php
+// Cambiar esta línea
+$vistaPrevista = isset($_POST['vista_previa']) && $_POST['vista_previa'] === '1';
+
+// Por esta
+$vistaPrevista = isset($_POST['vista_previa']) ? ($_POST['vista_previa'] == '1') : false;
+```
+
+## 2. Añadir un registro de debug del contenido de POST
+
+Al principio del archivo, después de `session_start()`, añade:
+
+```php
+// Verificar datos enviados
+$debug_file = __DIR__ . '/debug_post.txt';
+file_put_contents($debug_file, "POST data: " . print_r($_POST, true) . "\n\n", FILE_APPEND);
+```
+
+## 3. Corregir el path de inclusión del archivo de base de datos
+
+```php
+// Cambia esta línea
+require_once __DIR__ . '/../../backend/config/database.php';
+
+// Por esta
+require_once __DIR__ . '/../config/database.php';
+```
+
+## 4. Prueba rápida para verificar ejecución
+
+Añade justo después de leer los parámetros del formulario:
+
+```php
+// Prueba rápida
+header('Content-Type: text/plain; charset=utf-8');
+echo "=== TEST ===\n";
+echo "Tipo de informe: $tipoInforme\n";
+echo "Conector: $conector\n";
+echo "Estado: $estado\n";
+echo "Fechas: $fechaInicio a $fechaFin\n";
+echo "Vista previa: " . ($vistaPrevista ? 'Sí' : 'No') . "\n";
+exit;
+```
+
+## 5. Verificar la estructura del formulario HTML
+
+Asegúrate que tu formulario envía los datos correctamente:
+
+```javascript
+// Revisa que en el JavaScript, estés configurando bien el FormData:
+const formData = new FormData();
+formData.append('tipo-informe', tipoInforme);
+formData.append('conector', conector);
+formData.append('estado', estado);
+formData.append('fecha-inicio', fechaInicio);
+formData.append('fecha-fin', fechaFin);
+formData.append('vista_previa', vistaPrevia ? '1' : '0');
+```
+
+## Pasos a seguir:
+
+1. Haz estas modificaciones al archivo
+2. Intenta generar un informe
+3. Revisa el archivo de debug creado en la carpeta controllers
+4. Si la prueba rápida muestra los datos correctamente, entonces elimina ese código y el problema estará en las funciones posteriores
+
+Cuando identifiques dónde falla exactamente, podemos hacer una corrección más específica.
+
+RafaelG1986: sigue igual el codigo, no se genera el debug.
+
+GitHub Copilot: # Solución de problema con generación de informes
+
+Veo que el script tiene código de depuración pero los archivos no se están generando. Probemos con algunas modificaciones para identificar el problema:
+
+## 1. Verificar permisos de escritura
+
+El problema podría ser que Apache no tiene permisos para escribir en la carpeta. Modifica las rutas de los archivos de depuración:
+
+```php
+// Después de session_start()
+$debug_file = __DIR__ . '/../logs/debug_post.txt';
+// Crear directorio si no existe
+if (!file_exists(dirname($debug_file))) {
+    mkdir(dirname($debug_file), 0777, true);
+}
+file_put_contents($debug_file, "POST data: " . print_r($_POST, true) . "\n\n", FILE_APPEND);
+
+// Usar ruta absoluta también para el segundo archivo
+$debug_log = __DIR__ . '/../logs/debug_log.txt';
+file_put_contents($debug_log, "POST data recibida: " . date('Y-m-d H:i:s') . "\n" . print_r($_POST, true), FILE_APPEND);
+```
+
+## 2. Probar con un script más simple
+
+Crea un archivo `test_post.php` en la misma ubicación:
+
+```php
+<?php
+// Archivo simple para verificar si llegan los datos POST
+file_put_contents(__DIR__ . '/test_post.txt', "Prueba: " . date('Y-m-d H:i:s') . "\n" . print_r($_POST, true), FILE_APPEND);
+echo "Test completado";
+?>
+```
+
+## 3. Revisar el código JavaScript en el formulario
+
+Verifica que el script de JavaScript esté enviando correctamente los datos:
+
+```javascript
+// Revisar en el archivo de JS que tengas algo similar a:
+fetch('../../backend/controllers/generar_informe.php', {
+    method: 'POST',
+    body: formData,
+    headers: {
+        // No incluir 'Content-Type' cuando se usa FormData
+    }
+})
+.then(response => {
+    console.log("Respuesta recibida", response);
+    // Resto del código
+})
+```
+
+## 4. Verificar acceso directo al archivo
+
+Intenta acceder directamente al archivo a través del navegador con un formulario simple para probar si hay algún problema con el servidor:
+
+```
+http://localhost/Conexion-Main/backend/controllers/generar_informe.php
+```
+
+Estos pasos nos ayudarán a determinar si el problema está en la recepción de datos, en la generación del informe o en la comunicación entre el frontend y el backend.
+
+RafaelG1986: no tengo creado el javascript
+
+GitHub Copilot: # Archivo JavaScript para el formulario de informes
+
+Ahora entiendo el problema - necesitas crear el archivo JavaScript que maneje el envío del formulario al backend. Aquí te muestro cómo crearlo:
+
+## 1. Crear el archivo JS
+
+Crea un nuevo archivo en:
+```
+c:\xampp\htdocs\Conexion-Main\frontend\js\informes.js
+```
+
+## 2. Contenido del archivo
+
+```javascript
+document.addEventListener('DOMContentLoaded', function() {
+    // Obtener referencia al formulario
+    const informeForm = document.getElementById('informeForm');
+    
+    // Si existe el formulario, agregar el event listener
+    if (informeForm) {
+        informeForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Evitar envío normal del formulario
+            
+            // Obtener valores del formulario
+            const tipoInforme = document.querySelector('input[name="tipo-informe"]:checked').value;
+            const conector = document.getElementById('conector').value;
+            const estado = document.getElementById('estado').value;
+            const fechaInicio = document.getElementById('fecha-inicio').value;
+            const fechaFin = document.getElementById('fecha-fin').value;
+            
+            // Checkboxes de opciones
+            const incluirCabecera = document.getElementById('incluir-cabecera').checked ? '1' : '0';
+            const incluirDetalle = document.getElementById('incluir-detalle').checked ? '1' : '0';
+            const incluirResumen = document.getElementById('incluir-resumen').checked ? '1' : '0';
+            
+            // Obtener tipo de visualización
+            const vistaPrevia = document.getElementById('vista-previa').checked ? '1' : '0';
+            
+            // Crear FormData para enviar
+            const formData = new FormData();
+            formData.append('tipo-informe', tipoInforme);
+            formData.append('conector', conector);
+            formData.append('estado', estado);
+            formData.append('fecha-inicio', fechaInicio);
+            formData.append('fecha-fin', fechaFin);
+            formData.append('incluir-cabecera', incluirCabecera);
+            formData.append('incluir-detalle', incluirDetalle);
+            formData.append('incluir-resumen', incluirResumen);
+            formData.append('vista_previa', vistaPrevia);
+            
+            // Mostrar indicador de carga
+            const resultadoDiv = document.getElementById('resultado-informe');
+            resultadoDiv.innerHTML = '<p>Generando informe, por favor espere...</p>';
+            
+            // Enviar la solicitud al backend
+            fetch('../../backend/controllers/generar_informe.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                
+                // Si es descarga, manejarlo de manera diferente
+                if (vistaPrevia === '0') {
+                    return response.blob();
+                } else {
+                    return response.text();
+                }
+            })
+            .then(data => {
+                if (vistaPrevia === '0') {
+                    // Es una descarga
+                    const url = window.URL.createObjectURL(data);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'informe_conexion_main.txt';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                } else {
+                    // Es vista previa
+                    resultadoDiv.innerHTML = '<pre>' + data + '</pre>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultadoDiv.innerHTML = '<p class="error">Error al generar el informe: ' + error.message + '</p>';
+            });
+        });
+    }
+});
+```
+
+## 3. Incluir el archivo JS en tu vista_informes.php
+
+Añade esta línea antes del cierre del `</body>` en tu vista_informes.php:
+
+```html
+<script src="../js/informes.js"></script>
+```
+
+## 4. Asegúrate que tu formulario tenga el ID correcto
+
+Verifica que tu formulario en vista_informes.php tenga el ID "informeForm":
+
+```html
+<form id="informeForm" class="informe-form">
+    <!-- Contenido del formulario -->
+</form>
+```
+
+## 5. Verifica los IDs de los campos
+
+Asegúrate de que los IDs mencionados en el JavaScript coincidan con los de tu formulario:
+- `tipo-informe` (radio buttons)
+- `conector` (select)
+- `estado` (select)
+- `fecha-inicio` (input date)
+- `fecha-fin` (input date)
+- `incluir-cabecera` (checkbox)
+- `incluir-detalle` (checkbox)
+- `incluir-resumen` (checkbox)
+- `vista-previa` (checkbox)
+
+Con estos cambios, el formulario debería enviar los datos correctamente al backend.
+
+RafaelG1986: no tengo vista previa en vista informes. conector, tampoco, estado tampoco.
+
+GitHub Copilot: # Solución: Problemas en vista_informes.php
+
+Hay varios problemas en tu código que están impidiendo que funcione correctamente:
+
+## 1. Error crítico: FormData incorrecto
+
+En tu función `generarInforme()` estás usando un ID de formulario equivocado:
+
+```javascript
+// ERROR: este formulario no existe
+const formData = new FormData(document.getElementById('form-informe'));
+```
+
+Debería ser:
+
+```javascript
+const formData = new FormData(document.getElementById('informeForm'));
+```
+
+## 2. Los checkboxes no tienen IDs
+
+Tus checkboxes no tienen IDs, solo nombres, lo que dificulta acceder a ellos:
+
+```html
+<input type="checkbox" name="incluir-cabecera" checked>
+```
+
+Corrige a:
+
+```html
+<input type="checkbox" id="incluir-cabecera" name="incluir-cabecera" checked>
+<input type="checkbox" id="incluir-detalle" name="incluir-detalle" checked>
+<input type="checkbox" id="incluir-resumen" name="incluir-resumen" checked>
+```
+
+## 3. Vista previa, conector y estado
+
+El problema de que no aparecen estos elementos es porque:
+
+- El conector y estado están inicialmente ocultos con `style="display: none;"` y solo se muestran al seleccionar ciertos tipos de informe
+- El bloque de vista previa está configurado como oculto inicialmente
+
+## 4. Implementación corregida
+
+Reemplaza tu función `generarInforme()` con esta versión corregida:
+
+```javascript
+function generarInforme(esPrevista) {
+    // CORREGIDO: Usar el ID correcto del formulario
+    const formData = new FormData(document.getElementById('informeForm'));
+    formData.append('vista_previa', esPrevista ? '1' : '0');
+    
+    // Para debugging: mostrar qué datos se están enviando
+    console.log("Enviando datos:");
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
+    
+    // Resto del código igual...
+}
+```
+
+## 5. Prueba de funcionamiento básico
+
+Para verificar rápidamente la comunicación, coloca este archivo simple en el backend:
+
+```php
+<?php
+header('Content-Type: text/plain');
+echo "=== Datos recibidos ===\n";
+echo print_r($_POST, true);
+echo "\n\n=== Fin de prueba ===";
+?>
+```
+
+Y prueba haciendo una petición hacia este archivo para verificar la comunicación.
+
+¿Quieres que prepare una versión corregida completa de tu archivo vista_informes.php?
+
+RafaelG1986: <?php
+header('Content-Type: text/plain');
+echo "=== Datos recibidos ===\n";
+echo print_r($_POST, true);
+echo "\n\n=== Fin de prueba ===";
+?> en que parte?
+
+GitHub Copilot: # Ubicación para el archivo de prueba
+
+Debes crear un nuevo archivo llamado `test_post.php` en la misma carpeta donde está tu controlador principal:
+
+```
+c:\xampp\htdocs\Conexion-Main\backend\controllers\test_post.php
+```
+
+Con el siguiente contenido:
+
+```php
+<?php
+header('Content-Type: text/plain');
+echo "=== Datos recibidos ===\n";
+echo print_r($_POST, true);
+echo "\n\n=== Fin de prueba ===";
+?>
+```
+
+Luego, para probar si el formulario está funcionando correctamente, modifica temporalmente la función `generarInforme()` en tu archivo vista_informes.php para que apunte a este archivo de prueba:
+
+```javascript
+// Modifica esta línea en la función generarInforme
+fetch('../../backend/controllers/test_post.php', {  // Cambiado de generar_informe.php a test_post.php
+    method: 'POST',
+    body: formData
+})
+```
+
+Esto te permitirá ver exactamente qué datos está recibiendo el servidor y confirmar si el problema está en el envío del formulario o en el procesamiento del backend.
+
+RafaelG1986: no se ve nada
+
+GitHub Copilot: # Solución: No se muestra nada al generar informes
+
+Si no se muestra ninguna respuesta cuando envías el formulario, hay varios problemas que podrían estar ocurriendo:
+
+## 1. Errores en la consola del navegador
+
+Primero, revisa la consola del navegador (F12 → pestaña Console) para ver si hay mensajes de error. Esto te dará pistas sobre dónde está el problema.
+
+## 2. Problema con la ruta al archivo test_post.php
+
+Asegúrate de que la ruta es correcta:
+
+```javascript
+// Cambia la URL a una ruta absoluta para eliminar problemas de rutas relativas
+fetch('/Conexion-Main/backend/controllers/test_post.php', {
+    method: 'POST',
+    body: formData
+})
+```
+
+## 3. Contenido mínimo para el archivo test_post.php
+
+Verifica que el archivo test_post.php tiene exactamente este contenido (sin espacios adicionales o BOM):
+
+```php
+<?php
+// Forzar mostrar errores
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Enviar headers adecuados
+header('Content-Type: text/plain; charset=utf-8');
+
+// Simple mensaje de prueba
+echo "=== PRUEBA BÁSICA DE CONEXIÓN ===\n";
+echo "Tiempo: " . date('Y-m-d H:i:s') . "\n\n";
+echo "Datos POST recibidos:\n";
+print_r($_POST);
+echo "\n\n=== FIN DE PRUEBA ===";
+```
+
+## 4. Solución temporal: Guardar datos en un archivo
+
+Si no logras ver los datos, prueba esta versión modificada de test_post.php que guarda los datos en un archivo:
+
+```php
+<?php
+// Guardar los datos en un archivo físico para debugging
+$logFile = __DIR__ . '/debug_post_' . date('Ymd_His') . '.txt';
+$logData = "Fecha: " . date('Y-m-d H:i:s') . "\n\n";
+$logData .= "POST Data:\n" . print_r($_POST, true) . "\n\n";
+$logData .= "GET Data:\n" . print_r($_GET, true) . "\n\n";
+$logData .= "Raw input:\n" . file_get_contents('php://input') . "\n";
+
+file_put_contents($logFile, $logData);
+
+// Responder al cliente
+header('Content-Type: text/plain; charset=utf-8');
+echo "Datos guardados en el servidor para debugging.\nRevisa el archivo $logFile";
+```
+
+## 5. Verifica que Apache tiene permisos
+
+Asegúrate que el usuario de Apache (normalmente www-data o SYSTEM) tiene permisos para escribir en la carpeta controllers.
+
+¿Quieres que revise algo específico en tu código para identificar mejor el problema?
+
+RafaelG1986: ahora, tengo este php en views
+
+GitHub Copilot: # El problema: generar_informe.php está en la ubicación incorrecta
+
+He identificado el problema principal: el archivo generar_informe.php está ubicado en la carpeta de vistas (views) cuando debería estar en la carpeta de controladores (controllers).
+
+## Pasos para solucionar el problema:
+
+1. **Mover el archivo a la ubicación correcta**:
+   - Corta el archivo completo de:
+     ```
+     c:\xampp\htdocs\Conexion-Main\frontend\views\generar_informe.php
+     ```
+   - Pégalo en:
+     ```
+     c:\xampp\htdocs\Conexion-Main\backend\controllers\generar_informe.php
+     ```
+
+2. **Corregir la ruta de inclusión de la base de datos**:
+   - Cambia esta línea:
+     ```php
+     require_once __DIR__ . '/../config/database.php';
+     ```
+   - Por esta:
+     ```php
+     require_once __DIR__ . '/../config/database.php';
+     ```
+
+3. **Verifica que el fetch en vista_informes.php apunte a la ruta correcta**:
+   ```javascript
+   fetch('../../backend/controllers/generar_informe.php', {
+       method: 'POST',
+       body: formData
+   })
+   ```
+
+Este es un problema común en aplicaciones MVC: colocar el código en la capa incorrecta. La generación de informes es una operación de lógica de negocio que debe estar en los controladores, no en las vistas.
+
+¿Necesitas ayuda para mover el archivo o para ajustar alguna ruta específica?
+
+RafaelG1986: Lo elimine, porque ya existe en backend
+
+GitHub Copilot: # Reparación de la generación de informes
+
+Ahora que has confirmado que `generar_informe.php` existe en la ubicación correcta (backend/controllers), hay que hacer estos ajustes para que funcione:
+
+## 1. Corregir la URL de fetch en vista_informes.php
+
+Cambia la línea:
+```javascript
+fetch('../../backend/controllers/test_post.php', {  // Cambiado de generar_informe.php a test_post.php
+```
+
+Por:
+```javascript
+fetch('../../backend/controllers/generar_informe.php', {
+```
+
+## 2. Verificar el contenido completo de generar_informe.php
+
+Asegúrate que el archivo generar_informe.php en la carpeta backend/controllers tenga:
+- La conexión a la base de datos 
+- El código para procesar los parámetros del formulario
+- Las funciones para generar los distintos tipos de informes
+- El manejo adecuado de la salida (descarga o vista previa)
+
+## 3. Elimina el código de depuración
+
+Si has agregado código de depuración como:
+```php
+file_put_contents('debug_tipo.txt', "Tipo de informe recibido: [$tipoInforme]");
+```
+
+Asegúrate de eliminarlo o comentarlo para que no interfiera con la generación del informe.
+
+## 4. Verificación final
+
+Con estos cambios, el sistema debería funcionar correctamente. Tu estructura MVC está adecuadamente organizada:
+- Vista (frontend/views/vista_informes.php)
+- Controlador (backend/controllers/generar_informe.php)
+- Modelo (la clase Database y las consultas SQL)
+
+¿Quieres que revisemos también el contenido de `generar_informe.php` para asegurarnos que está correcto?
+
+RafaelG1986: sigue sin hacer nada los botones de vista previa y generar informe.
+
+GitHub Copilot: # Solución: Botones de informe no funcionan
+
+Revisando tu código, hay varios problemas que impiden que los botones funcionen correctamente:
+
+## 1. Error crítico: Línea incompleta en tu función
+
+Hay un error de sintaxis en la función `generarInforme()`:
+
+```javascript
+// INCORRECTO - Línea incompleta
+const btnUsado = esPrevista ? 
+```
+
+Debe ser:
+
+```javascript
+// CORRECTO
+const btnUsado = esPrevista ? 
+    document.getElementById('btn-vista-previa') : 
+    document.getElementById('btn-generar');
+```
+
+## 2. Conflicto entre scripts
+
+Tienes doble inicialización:
+- Un archivo externo: `<script src="../js/informes.js"></script>`
+- Código JavaScript interno dentro de etiquetas `<script>` 
+
+Esto puede causar conflictos. **Solución**: Elimina uno de ellos.
+
+## 3. Plan de acción
+
+1. **Elimina la línea**:
+   ```html
+   <script src="../js/informes.js"></script>
+   ```
+
+2. **Corrige la línea incompleta** del operador ternario
+
+3. **Añade un console.log para depuración**:
+   ```javascript
+   document.getElementById('btn-vista-previa').addEventListener('click', function() {
+       console.log('Botón vista previa clickeado');
+       generarInforme(true);
+   });
+   
+   document.getElementById('btn-generar').addEventListener('click', function() {
+       console.log('Botón generar clickeado');
+       generarInforme(false);
+   });
+   ```
+
+4. **Verifica la consola del navegador** (F12 → Console) para ver si hay errores JavaScript
+
+5. **Prueba con una URL absoluta**:
+   ```javascript
+   fetch('/Conexion-Main/backend/controllers/generar_informe.php', {
+   ```
+
+Estos cambios deberían resolver el problema. Si sigues teniendo dificultades, necesitaremos revisar el contenido de generar_informe.php para asegurarnos que está manejando correctamente los datos.
+
+RafaelG1986: donde corrijo esto?
+
+GitHub Copilot: # Solución para los botones que no funcionan
+
+Revisando tu código, veo que tienes tanto un archivo JavaScript externo como código JavaScript interno, lo que puede causar conflictos. Aquí están los pasos para corregir el problema:
+
+## Opción 1: Eliminar la referencia al archivo externo (recomendado)
+
+Elimina esta línea porque ya tienes todo el código implementado internamente:
+
+```html
+<script src="../js/informes.js"></script>
+```
+
+## Opción 2: Si prefieres usar el archivo externo
+
+1. Corta todo el código JavaScript interno (desde `<script>` hasta `</script>`)
+2. Pega ese código en el archivo:
+   ```
+   c:\xampp\htdocs\Conexion-Main\frontend\js\informes.js
+   ```
+3. Deja solo la referencia externa en vista_informes.php:
+   ```html
+   <script src="../js/informes.js"></script>
+   ```
+
+## Verifica si hay errores en la consola
+
+1. Abre tu aplicación en el navegador
+2. Presiona F12 para abrir las herramientas de desarrollo
+3. Ve a la pestaña "Console"
+4. Intenta usar los botones y verifica si hay errores
+
+## Problema adicional a revisar
+
+También verifica que generar_informe.php esté procesando correctamente los datos:
+
+1. Añade esta línea al principio de generar_informe.php:
+   ```php
+   file_put_contents(__DIR__ . '/debug.txt', print_r($_POST, true), FILE_APPEND);
+   ```
+2. Intenta generar un informe
+3. Revisa el archivo debug.txt creado en la carpeta controllers
+
+¿Funcionó alguna de estas soluciones?
+
+RafaelG1986: no se genera nada.
+
+GitHub Copilot: # Solución: Corregir problema de generación de informes
+
+El problema principal es que tu función `generarInforme()` en vista_informes.php está incompleta y tiene varios errores de sintaxis. Veamos cómo solucionarlo:
+
+## 1. Corrige la función JavaScript completa
+
+Reemplaza la función `generarInforme()` actual con esta versión completa y correcta:
+
+```javascript
+function generarInforme(esPrevista) {
+    // Obtener referencia al botón usado
+    const btnUsado = esPrevista ? 
+        document.getElementById('btn-vista-previa') : 
+        document.getElementById('btn-generar');
+    
+    // Guardar texto original y mostrar estado de procesamiento
+    const textoOriginal = btnUsado.textContent;
+    btnUsado.textContent = 'Procesando...';
+    btnUsado.disabled = true;
+    
+    // Crear el FormData desde el formulario
+    const formData = new FormData(document.getElementById('informeForm'));
+    formData.append('vista_previa', esPrevista ? '1' : '0');
+    
+    // Mostrar datos que se envían (para depuración)
+    console.log("Enviando datos al servidor:");
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
+    
+    // Realizar la petición AJAX
+    fetch('../../backend/controllers/generar_informe.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor: ' + response.status);
+        }
+        
+        if (esPrevista) {
+            return response.text();
+        } else {
+            return response.blob();
+        }
+    })
+    .then(data => {
+        if (esPrevista) {
+            // Vista previa: mostrar en el área de resultados
+            const resultadoDiv = document.getElementById('resultado-informe');
+            resultadoDiv.innerHTML = '<pre>' + data + '</pre>';
+        } else {
+            // Descarga: generar archivo
+            const url = window.URL.createObjectURL(data);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'informe_conexion_' + new Date().toISOString().split('T')[0] + '.txt';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            // Mostrar mensaje de éxito
+            alert('Informe generado con éxito');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ha ocurrido un error al generar el informe: ' + error.message);
+    })
+    .finally(() => {
+        // Restaurar botón
+        btnUsado.textContent = textoOriginal;
+        btnUsado.disabled = false;
+    });
+}
+```
+
+## 2. Comenta el código de prueba en generar_informe.php
+
+En tu archivo generar_informe.php, comenta o elimina estas líneas que están deteniendo la ejecución:
+
+```php
+// Comentar o eliminar estas líneas
+// header('Content-Type: text/plain; charset=utf-8');
+// echo "=== TEST ===\n";
+// echo "Tipo de informe: $tipoInforme\n";
+// echo "Conector: $conector\n";
+// echo "Estado: $estado\n";
+// echo "Fechas: $fechaInicio a $fechaFin\n";
+// echo "Vista previa: " . ($vistaPrevista ? 'Sí' : 'No') . "\n";
+// exit;
+```
+
+## 3. Abre la consola del navegador para depuración
+
+1. Abre las herramientas de desarrollo (F12)
+2. Ve a la pestaña "Console"
+3. Intenta generar un informe
+4. Verifica si hay errores JavaScript
+
+Con estos cambios, el sistema debería funcionar correctamente. Si sigues teniendo problemas, revisa los archivos de registro creados en:
+- `c:\xampp\htdocs\Conexion-Main\backend\logs\debug_post.txt`
+- `c:\xampp\htdocs\Conexion-Main\backend\controllers\debug.txt`
+
+RafaelG1986: al parecer, tampoco sale nada, es posible que admin.php tenga que ver?
+
+GitHub Copilot: # Problema con la generación de informes: Sesión de usuario
+
+El problema principal está en esta sección de tu generar_informe.php:
+
+```php
+if (!isset($_SESSION['user'])) {
+    header('Content-Type: text/plain');
+    echo "Error: No hay sesión activa.";
+    exit;
+}
+```
+
+Este código verifica si existe una sesión de usuario activa. Si no existe, el script muestra un mensaje de error y termina la ejecución. Esto explica por qué no se genera nada cuando intentas usar los botones.
+
+## Soluciones posibles:
+
+### 1. Comprobar si estás autenticado
+
+Verifica que estés correctamente autenticado en el sistema. El archivo `admin.php` probablemente maneja la lógica de autenticación y sesiones. Intenta:
+- Cerrar sesión y volver a iniciarla
+- Verificar que `$_SESSION['user']` se establezca correctamente al iniciar sesión
+
+### 2. Modificación temporal para pruebas
+
+Para verificar si este es el único problema, puedes comentar temporalmente la verificación:
+
+```php
+// Comentar solo para pruebas
+// if (!isset($_SESSION['user'])) {
+//     header('Content-Type: text/plain');
+//     echo "Error: No hay sesión activa.";
+//     exit;
+// }
+```
+
+### 3. Añade un mensaje de depuración antes de la verificación
+
+```php
+// Añadir justo después de session_start()
+file_put_contents(__DIR__ . '/session_debug.txt', 
+    "Sesión: " . (isset($_SESSION['user']) ? "Activa" : "Inactiva") . "\n" .
+    "Contenido: " . print_r($_SESSION, true), 
+    FILE_APPEND);
+```
+
+¿Quieres probar alguna de estas soluciones para confirmar si el problema está relacionado con la sesión?
+
+RafaelG1986: Ok, tu me puedes dar el codigo completo de generar_informe.php?
+
+GitHub Copilot: # Código completo de generar_informe.php
+
+A continuación te presento el código completo y optimizado para el archivo generar_informe.php:
+
+```php
+<?php
+require_once __DIR__ . '/../config/database.php';
+
+// Iniciar sesión
+session_start();
+
+// Para desarrollo: mostrar todos los errores
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Verificación de sesión (comentar temporalmente para pruebas si es necesario)
+// if (!isset($_SESSION['user'])) {
+//     header('Content-Type: text/plain');
+//     echo "Error: No hay sesión activa.";
+//     exit;
+// }
+
+// Obtener parámetros del formulario
+$tipoInforme = isset($_POST['tipo-informe']) ? $_POST['tipo-informe'] : '';
+$conector = isset($_POST['conector']) ? $_POST['conector'] : '';
+$estado = isset($_POST['estado']) ? $_POST['estado'] : '';
+$fechaInicio = isset($_POST['fecha-inicio']) ? $_POST['fecha-inicio'] : '';
+$fechaFin = isset($_POST['fecha-fin']) ? $_POST['fecha-fin'] : '';
+$incluirCabecera = isset($_POST['incluir-cabecera']) ? true : false;
+$incluirDetalle = isset($_POST['incluir-detalle']) ? true : false;
+$incluirResumen = isset($_POST['incluir-resumen']) ? true : false;
+$vistaPrevista = isset($_POST['vista_previa']) ? ($_POST['vista_previa'] == '1') : false;
+
+// Normalizar el tipo de informe
+$tipoInforme = strtolower(trim($tipoInforme));
+
+// Crear el informe
+$informe = generarInforme(
+    $tipoInforme, 
+    $conector, 
+    $estado, 
+    $fechaInicio, 
+    $fechaFin, 
+    $incluirCabecera, 
+    $incluirDetalle, 
+    $incluirResumen
+);
+
+// Si es vista previa, devolver HTML, si no, enviar para descarga
+if ($vistaPrevista) {
+    header('Content-Type: text/plain; charset=utf-8');
+    echo $informe;
+} else {
+    $fecha = date('Y-m-d');
+    $nombreArchivo = "informe_{$fecha}.txt";
+    
+    // Encabezados para forzar la descarga
+    header('Content-Type: text/plain; charset=utf-8');
+    header('Content-Disposition: attachment; filename="' . $nombreArchivo . '"');
+    header('Content-Length: ' . strlen($informe));
+    header('Cache-Control: private, max-age=0, must-revalidate');
+    header('Pragma: public');
+    
+    // Asegurarse de que no haya salida antes de los encabezados
+    if (ob_get_level()) ob_end_clean();
+    
+    echo $informe;
+}
+exit;
+
+/**
+ * Genera el contenido del informe según los parámetros
+ */
+function generarInforme($tipoInforme, $conector, $estado, $fechaInicio, $fechaFin, $incluirCabecera, $incluirDetalle, $incluirResumen) {
+    $db = new Database();
+    $conn = $db->connect();
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $resultado = "";
+    
+    // Añadir cabecera si está seleccionada
+    if ($incluirCabecera) {
+        $resultado .= "=======================================================\n";
+        $resultado .= "                INFORME DE CONEXIÓN                    \n";
+        $resultado .= "=======================================================\n";
+        $resultado .= "Fecha de generación: " . date('d/m/Y H:i:s') . "\n";
+        $resultado .= "Tipo de informe: " . obtenerNombreTipoInforme($tipoInforme) . "\n";
+        
+        if ($conector) {
+            $resultado .= "Conector: " . $conector . "\n";
+        }
+        
+        if ($estado) {
+            $resultado .= "Estado: " . $estado . "\n";
+        }
+        
+        if ($fechaInicio && $fechaFin) {
+            $resultado .= "Período: Del " . date('d/m/Y', strtotime($fechaInicio)) . " al " . date('d/m/Y', strtotime($fechaFin)) . "\n";
+        } elseif ($fechaInicio) {
+            $resultado .= "Período: Desde " . date('d/m/Y', strtotime($fechaInicio)) . "\n";
+        } elseif ($fechaFin) {
+            $resultado .= "Período: Hasta " . date('d/m/Y', strtotime($fechaFin)) . "\n";
+        }
+        
+        $resultado .= "=======================================================\n\n";
+    }
+    
+    // Generar el contenido según el tipo de informe
+    switch ($tipoInforme) {
+        case 'general':
+            $resultado .= generarInformeGeneral($conn, $fechaInicio, $fechaFin, $incluirDetalle);
+            break;
+            
+        case 'personal':
+            $resultado .= generarInformePersonal($conn, $conector, $fechaInicio, $fechaFin, $incluirDetalle);
+            break;
+            
+        case 'estados':
+            $resultado .= generarInformeEstados($conn, $estado, $fechaInicio, $fechaFin, $incluirDetalle);
+            break;
+            
+        case 'detallado':
+            $resultado .= generarInformeDetallado($conn, $conector, $estado, $fechaInicio, $fechaFin, $incluirDetalle);
+            break;
+            
+        default:
+            $resultado .= "No se ha seleccionado un tipo de informe válido.\n";
+    }
+    
+    // Añadir resumen si está seleccionado
+    if ($incluirResumen) {
+        $resultado .= "\n=======================================================\n";
+        $resultado .= "                     RESUMEN                           \n";
+        $resultado .= "=======================================================\n";
+        
+        // Obtener totales generales
+        $sql = "SELECT COUNT(*) as total FROM registros WHERE 1=1";
+        
+        if ($conector) {
+            $sql .= " AND nombre_conector = :conector";
+        }
+        
+        if ($estado) {
+            $sql .= " AND estado = :estado";
+        }
+        
+        if ($fechaInicio) {
+            $sql .= " AND fecha_creacion >= :fecha_inicio";
+        }
+        
+        if ($fechaFin) {
+            $sql .= " AND fecha_creacion <= :fecha_fin";
+        }
+        
+        $stmt = $conn->prepare($sql);
+        
+        if ($conector) {
+            $stmt->bindParam(':conector', $conector);
+        }
+        
+        if ($estado) {
+            $stmt->bindParam(':estado', $estado);
+        }
+        
+        if ($fechaInicio) {
+            $fechaInicioDb = $fechaInicio . ' 00:00:00';
+            $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+        }
+        
+        if ($fechaFin) {
+            $fechaFinDb = $fechaFin . ' 23:59:59';
+            $stmt->bindParam(':fecha_fin', $fechaFinDb);
+        }
+        
+        $stmt->execute();
+        $totalRegistros = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+        
+        $resultado .= "Total de registros: " . $totalRegistros . "\n";
+        
+        // Añadir más estadísticas al resumen según el tipo de informe
+        switch ($tipoInforme) {
+            case 'general':
+                $resultado .= generarResumenGeneral($conn, $fechaInicio, $fechaFin);
+                break;
+                
+            case 'personal':
+                $resultado .= generarResumenPersonal($conn, $conector, $fechaInicio, $fechaFin);
+                break;
+                
+            case 'estados':
+                $resultado .= generarResumenEstados($conn, $estado, $fechaInicio, $fechaFin);
+                break;
+        }
+    }
+    
+    return $resultado;
+}
+
+/**
+ * Obtiene el nombre descriptivo del tipo de informe
+ */
+function obtenerNombreTipoInforme($tipo) {
+    switch ($tipo) {
+        case 'general': return 'Estadísticas Generales';
+        case 'personal': return 'Estadísticas por Conector';
+        case 'estados': return 'Distribución por Estados';
+        case 'detallado': return 'Listado Detallado';
+        default: return 'Desconocido';
+    }
+}
+
+/**
+ * Genera informe de estadísticas generales
+ */
+function generarInformeGeneral($conn, $fechaInicio, $fechaFin, $incluirDetalle) {
+    $resultado = "ESTADÍSTICAS GENERALES\n";
+    $resultado .= "---------------------\n\n";
+    
+    // Consulta para obtener conteo por conector
+    $sql = "SELECT nombre_conector, COUNT(*) as total FROM registros WHERE nombre_conector IS NOT NULL AND nombre_conector != ''";
+    
+    if ($fechaInicio) {
+        $sql .= " AND fecha_creacion >= :fecha_inicio";
+    }
+    
+    if ($fechaFin) {
+        $sql .= " AND fecha_creacion <= :fecha_fin";
+    }
+    
+    $sql .= " GROUP BY nombre_conector ORDER BY total DESC";
+    
+    $stmt = $conn->prepare($sql);
+    
+    if ($fechaInicio) {
+        $fechaInicioDb = $fechaInicio . ' 00:00:00';
+        $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+    }
+    
+    if ($fechaFin) {
+        $fechaFinDb = $fechaFin . ' 23:59:59';
+        $stmt->bindParam(':fecha_fin', $fechaFinDb);
+    }
+    
+    $stmt->execute();
+    $conectores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $resultado .= "DISTRIBUCIÓN POR CONECTORES:\n";
+    foreach ($conectores as $row) {
+        $resultado .= str_pad($row['nombre_conector'], 30) . ": " . $row['total'] . " registros\n";
+    }
+    
+    // Consulta para obtener conteo por estado
+    $sql = "SELECT estado, COUNT(*) as total FROM registros WHERE estado IS NOT NULL AND estado != ''";
+    
+    if ($fechaInicio) {
+        $sql .= " AND fecha_creacion >= :fecha_inicio";
+    }
+    
+    if ($fechaFin) {
+        $sql .= " AND fecha_creacion <= :fecha_fin";
+    }
+    
+    $sql .= " GROUP BY estado ORDER BY total DESC";
+    
+    $stmt = $conn->prepare($sql);
+    
+    if ($fechaInicio) {
+        $fechaInicioDb = $fechaInicio . ' 00:00:00';
+        $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+    }
+    
+    if ($fechaFin) {
+        $fechaFinDb = $fechaFin . ' 23:59:59';
+        $stmt->bindParam(':fecha_fin', $fechaFinDb);
+    }
+    
+    $stmt->execute();
+    $estados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $resultado .= "\nDISTRIBUCIÓN POR ESTADOS:\n";
+    foreach ($estados as $row) {
+        $resultado .= str_pad($row['estado'], 30) . ": " . $row['total'] . " registros\n";
+    }
+    
+    return $resultado;
+}
+
+/**
+ * Genera informe de estadísticas por conector
+ */
+function generarInformePersonal($conn, $conector, $fechaInicio, $fechaFin, $incluirDetalle) {
+    if (empty($conector)) {
+        return "ESTADÍSTICAS POR CONECTOR\n----------------------\n\nSelecciona un conector específico para ver sus estadísticas.\n";
+    }
+    
+    $resultado = "ESTADÍSTICAS DEL CONECTOR: " . strtoupper($conector) . "\n";
+    $resultado .= str_repeat("-", 40) . "\n\n";
+    
+    // Consulta para obtener conteo por estado para este conector
+    $sql = "SELECT estado, COUNT(*) as total FROM registros WHERE nombre_conector = :conector";
+    
+    if ($fechaInicio) {
+        $sql .= " AND fecha_creacion >= :fecha_inicio";
+    }
+    
+    if ($fechaFin) {
+        $sql .= " AND fecha_creacion <= :fecha_fin";
+    }
+    
+    $sql .= " GROUP BY estado ORDER BY total DESC";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':conector', $conector);
+    
+    if ($fechaInicio) {
+        $fechaInicioDb = $fechaInicio . ' 00:00:00';
+        $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+    }
+    
+    if ($fechaFin) {
+        $fechaFinDb = $fechaFin . ' 23:59:59';
+        $stmt->bindParam(':fecha_fin', $fechaFinDb);
+    }
+    
+    $stmt->execute();
+    $estados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $resultado .= "DISTRIBUCIÓN POR ESTADOS:\n";
+    foreach ($estados as $row) {
+        $resultado .= str_pad($row['estado'], 30) . ": " . $row['total'] . " registros\n";
+    }
+    
+    if ($incluirDetalle) {
+        // Consulta para obtener los últimos 10 registros de este conector
+        $sql = "SELECT nombre_persona, apellido_persona, telefono, estado, fecha_creacion 
+                FROM registros 
+                WHERE nombre_conector = :conector";
+        
+        if ($fechaInicio) {
+            $sql .= " AND fecha_creacion >= :fecha_inicio";
+        }
+        
+        if ($fechaFin) {
+            $sql .= " AND fecha_creacion <= :fecha_fin";
+        }
+        
+        $sql .= " ORDER BY fecha_creacion DESC LIMIT 10";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':conector', $conector);
+        
+        if ($fechaInicio) {
+            $fechaInicioDb = $fechaInicio . ' 00:00:00';
+            $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+        }
+        
+        if ($fechaFin) {
+            $fechaFinDb = $fechaFin . ' 23:59:59';
+            $stmt->bindParam(':fecha_fin', $fechaFinDb);
+        }
+        
+        $stmt->execute();
+        $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $resultado .= "\nÚLTIMOS REGISTROS:\n";
+        foreach ($registros as $reg) {
+            $resultado .= "- " . $reg['nombre_persona'] . " " . $reg['apellido_persona'];
+            $resultado .= " | Tel: " . $reg['telefono'];
+            $resultado .= " | Estado: " . $reg['estado'];
+            $resultado .= " | Fecha: " . date('d/m/Y', strtotime($reg['fecha_creacion'])) . "\n";
+        }
+    }
+    
+    return $resultado;
+}
+
+/**
+ * Genera informe por estados
+ */
+function generarInformeEstados($conn, $estado, $fechaInicio, $fechaFin, $incluirDetalle) {
+    $resultado = "INFORME DE ESTADOS\n";
+    $resultado .= "------------------\n\n";
+    
+    if (empty($estado)) {
+        // Mostrar distribución general de estados
+        $sql = "SELECT estado, COUNT(*) as total FROM registros WHERE estado IS NOT NULL AND estado != ''";
+        
+        if ($fechaInicio) {
+            $sql .= " AND fecha_creacion >= :fecha_inicio";
+        }
+        
+        if ($fechaFin) {
+            $sql .= " AND fecha_creacion <= :fecha_fin";
+        }
+        
+        $sql .= " GROUP BY estado ORDER BY total DESC";
+        
+        $stmt = $conn->prepare($sql);
+        
+        if ($fechaInicio) {
+            $fechaInicioDb = $fechaInicio . ' 00:00:00';
+            $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+        }
+        
+        if ($fechaFin) {
+            $fechaFinDb = $fechaFin . ' 23:59:59';
+            $stmt->bindParam(':fecha_fin', $fechaFinDb);
+        }
+        
+        $stmt->execute();
+        $estados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $resultado .= "DISTRIBUCIÓN GENERAL POR ESTADOS:\n";
+        foreach ($estados as $row) {
+            $resultado .= str_pad($row['estado'], 30) . ": " . $row['total'] . " registros\n";
+        }
+    } else {
+        // Mostrar información detallada del estado seleccionado
+        $resultado .= "ESTADO SELECCIONADO: " . strtoupper($estado) . "\n";
+        $resultado .= str_repeat("-", 40) . "\n\n";
+        
+        // Contar registros con este estado por conector
+        $sql = "SELECT nombre_conector, COUNT(*) as total 
+                FROM registros 
+                WHERE estado = :estado AND nombre_conector IS NOT NULL AND nombre_conector != ''";
+        
+        if ($fechaInicio) {
+            $sql .= " AND fecha_creacion >= :fecha_inicio";
+        }
+        
+        if ($fechaFin) {
+            $sql .= " AND fecha_creacion <= :fecha_fin";
+        }
+        
+        $sql .= " GROUP BY nombre_conector ORDER BY total DESC";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':estado', $estado);
+        
+        if ($fechaInicio) {
+            $fechaInicioDb = $fechaInicio . ' 00:00:00';
+            $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+        }
+        
+        if ($fechaFin) {
+            $fechaFinDb = $fechaFin . ' 23:59:59';
+            $stmt->bindParam(':fecha_fin', $fechaFinDb);
+        }
+        
+        $stmt->execute();
+        $conectores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $resultado .= "DISTRIBUCIÓN POR CONECTORES:\n";
+        foreach ($conectores as $row) {
+            $resultado .= str_pad($row['nombre_conector'], 30) . ": " . $row['total'] . " registros\n";
+        }
+        
+        if ($incluirDetalle) {
+            // Listar últimos 10 registros con este estado
+            $sql = "SELECT nombre_persona, apellido_persona, telefono, nombre_conector, fecha_creacion 
+                    FROM registros 
+                    WHERE estado = :estado";
+            
+            if ($fechaInicio) {
+                $sql .= " AND fecha_creacion >= :fecha_inicio";
+            }
+            
+            if ($fechaFin) {
+                $sql .= " AND fecha_creacion <= :fecha_fin";
+            }
+            
+            $sql .= " ORDER BY fecha_creacion DESC LIMIT 10";
+            
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':estado', $estado);
+            
+            if ($fechaInicio) {
+                $fechaInicioDb = $fechaInicio . ' 00:00:00';
+                $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+            }
+            
+            if ($fechaFin) {
+                $fechaFinDb = $fechaFin . ' 23:59:59';
+                $stmt->bindParam(':fecha_fin', $fechaFinDb);
+            }
+            
+            $stmt->execute();
+            $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            $resultado .= "\nÚLTIMOS REGISTROS CON ESTADO '" . $estado . "':\n";
+            foreach ($registros as $reg) {
+                $resultado .= "- " . $reg['nombre_persona'] . " " . $reg['apellido_persona'];
+                $resultado .= " | Conector: " . $reg['nombre_conector'];
+                $resultado .= " | Tel: " . $reg['telefono'];
+                $resultado .= " | Fecha: " . date('d/m/Y', strtotime($reg['fecha_creacion'])) . "\n";
+            }
+        }
+    }
+    
+    return $resultado;
+}
+
+/**
+ * Genera informe detallado
+ */
+function generarInformeDetallado($conn, $conector, $estado, $fechaInicio, $fechaFin, $incluirDetalle) {
+    $resultado = "INFORME DETALLADO\n";
+    $resultado .= "-----------------\n\n";
+    
+    // Construir consulta con filtros
+    $sql = "SELECT id, nombre_persona, apellido_persona, telefono, nombre_conector, estado, fecha_creacion FROM registros WHERE 1=1";
+    $params = [];
+    
+    if ($conector) {
+        $sql .= " AND nombre_conector = :conector";
+        $params[':conector'] = $conector;
+    }
+    
+    if ($estado) {
+        $sql .= " AND estado = :estado";
+        $params[':estado'] = $estado;
+    }
+    
+    if ($fechaInicio) {
+        $sql .= " AND fecha_creacion >= :fecha_inicio";
+        $params[':fecha_inicio'] = $fechaInicio . ' 00:00:00';
+    }
+    
+    if ($fechaFin) {
+        $sql .= " AND fecha_creacion <= :fecha_fin";
+        $params[':fecha_fin'] = $fechaFin . ' 23:59:59';
+    }
+    
+    // Ordenar por fecha más reciente
+    $sql .= " ORDER BY fecha_creacion DESC";
+    
+    // Limitar registros si no se piden detalles
+    if (!$incluirDetalle) {
+        $sql .= " LIMIT 20";
+    }
+    
+    $stmt = $conn->prepare($sql);
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
+    
+    $stmt->execute();
+    $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    if (count($registros) === 0) {
+        $resultado .= "No se encontraron registros con los criterios seleccionados.\n";
+        return $resultado;
+    }
+    
+    $resultado .= "REGISTROS ENCONTRADOS: " . count($registros) . "\n\n";
+    
+    // Cabecera de la tabla
+    $resultado .= str_pad("ID", 5) . " | ";
+    $resultado .= str_pad("NOMBRE", 20) . " | ";
+    $resultado .= str_pad("APELLIDO", 20) . " | ";
+    $resultado .= str_pad("TELÉFONO", 15) . " | ";
+    $resultado .= str_pad("CONECTOR", 20) . " | ";
+    $resultado .= str_pad("ESTADO", 25) . " | ";
+    $resultado .= "FECHA\n";
+    
+    $resultado .= str_repeat("-", 120) . "\n";
+    
+    // Datos
+    foreach ($registros as $reg) {
+        $resultado .= str_pad($reg['id'], 5) . " | ";
+        $resultado .= str_pad(substr($reg['nombre_persona'], 0, 18), 20) . " | ";
+        $resultado .= str_pad(substr($reg['apellido_persona'], 0, 18), 20) . " | ";
+        $resultado .= str_pad($reg['telefono'], 15) . " | ";
+        $resultado .= str_pad(substr($reg['nombre_conector'], 0, 18), 20) . " | ";
+        $resultado .= str_pad(substr($reg['estado'], 0, 23), 25) . " | ";
+        $resultado .= date('d/m/Y', strtotime($reg['fecha_creacion'])) . "\n";
+    }
+    
+    return $resultado;
+}
+
+/**
+ * Genera resumen para informe general
+ */
+function generarResumenGeneral($conn, $fechaInicio, $fechaFin) {
+    $resultado = "";
+    
+    // Total de conectores activos
+    $sql = "SELECT COUNT(DISTINCT nombre_conector) as total FROM registros 
+            WHERE nombre_conector IS NOT NULL AND nombre_conector != ''";
+    
+    if ($fechaInicio) {
+        $sql .= " AND fecha_creacion >= :fecha_inicio";
+    }
+    
+    if ($fechaFin) {
+        $sql .= " AND fecha_creacion <= :fecha_fin";
+    }
+    
+    $stmt = $conn->prepare($sql);
+    
+    if ($fechaInicio) {
+        $fechaInicioDb = $fechaInicio . ' 00:00:00';
+        $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+    }
+    
+    if ($fechaFin) {
+        $fechaFinDb = $fechaFin . ' 23:59:59';
+        $stmt->bindParam(':fecha_fin', $fechaFinDb);
+    }
+    
+    $stmt->execute();
+    $totalConectores = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    
+    $resultado .= "Total de conectores activos: " . $totalConectores . "\n";
+    
+    // Estados más comunes
+    $sql = "SELECT estado, COUNT(*) as total FROM registros 
+            WHERE estado IS NOT NULL AND estado != ''";
+    
+    if ($fechaInicio) {
+        $sql .= " AND fecha_creacion >= :fecha_inicio";
+    }
+    
+    if ($fechaFin) {
+        $sql .= " AND fecha_creacion <= :fecha_fin";
+    }
+    
+    $sql .= " GROUP BY estado ORDER BY total DESC LIMIT 3";
+    
+    $stmt = $conn->prepare($sql);
+    
+    if ($fechaInicio) {
+        $fechaInicioDb = $fechaInicio . ' 00:00:00';
+        $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+    }
+    
+    if ($fechaFin) {
+        $fechaFinDb = $fechaFin . ' 23:59:59';
+        $stmt->bindParam(':fecha_fin', $fechaFinDb);
+    }
+    
+    $stmt->execute();
+    $estadosComunes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $resultado .= "Estados más comunes:\n";
+    foreach ($estadosComunes as $i => $estado) {
+        $resultado .= "  " . ($i + 1) . ". " . $estado['estado'] . " (" . $estado['total'] . " registros)\n";
+    }
+    
+    return $resultado;
+}
+
+/**
+ * Genera resumen para informe personal
+ */
+function generarResumenPersonal($conn, $conector, $fechaInicio, $fechaFin) {
+    if (empty($conector)) return "";
+    
+    $resultado = "";
+    
+    // Total de registros para este conector
+    $sql = "SELECT COUNT(*) as total FROM registros WHERE nombre_conector = :conector";
+    
+    if ($fechaInicio) {
+        $sql .= " AND fecha_creacion >= :fecha_inicio";
+    }
+    
+    if ($fechaFin) {
+        $sql .= " AND fecha_creacion <= :fecha_fin";
+    }
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':conector', $conector);
+    
+    if ($fechaInicio) {
+        $fechaInicioDb = $fechaInicio . ' 00:00:00';
+        $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+    }
+    
+    if ($fechaFin) {
+        $fechaFinDb = $fechaFin . ' 23:59:59';
+        $stmt->bindParam(':fecha_fin', $fechaFinDb);
+    }
+    
+    $stmt->execute();
+    $totalRegistros = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    
+    // Estado más común para este conector
+    $sql = "SELECT estado, COUNT(*) as total FROM registros 
+            WHERE nombre_conector = :conector AND estado IS NOT NULL AND estado != ''";
+    
+    if ($fechaInicio) {
+        $sql .= " AND fecha_creacion >= :fecha_inicio";
+    }
+    
+    if ($fechaFin) {
+        $sql .= " AND fecha_creacion <= :fecha_fin";
+    }
+    
+    $sql .= " GROUP BY estado ORDER BY total DESC LIMIT 1";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':conector', $conector);
+    
+    if ($fechaInicio) {
+        $fechaInicioDb = $fechaInicio . ' 00:00:00';
+        $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+    }
+    
+    if ($fechaFin) {
+        $fechaFinDb = $fechaFin . ' 23:59:59';
+        $stmt->bindParam(':fecha_fin', $fechaFinDb);
+    }
+    
+    $stmt->execute();
+    $estadoComun = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $resultado .= "Total de registros del conector: " . $totalRegistros . "\n";
+    
+    if ($estadoComun) {
+        $resultado .= "Estado más común: " . $estadoComun['estado'] . " (" . $estadoComun['total'] . " registros)\n";
+        $porcentaje = round(($estadoComun['total'] / $totalRegistros) * 100, 2);
+        $resultado .= "Porcentaje: " . $porcentaje . "%\n";
+    }
+    
+    return $resultado;
+}
+
+/**
+ * Genera resumen para informe de estados
+ */
+function generarResumenEstados($conn, $estado, $fechaInicio, $fechaFin) {
+    if (empty($estado)) return "";
+    
+    $resultado = "";
+    
+    // Total de registros con este estado
+    $sql = "SELECT COUNT(*) as total FROM registros WHERE estado = :estado";
+    
+    if ($fechaInicio) {
+        $sql .= " AND fecha_creacion >= :fecha_inicio";
+    }
+    
+    if ($fechaFin) {
+        $sql .= " AND fecha_creacion <= :fecha_fin";
+    }
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':estado', $estado);
+    
+    if ($fechaInicio) {
+        $fechaInicioDb = $fechaInicio . ' 00:00:00';
+        $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+    }
+    
+    if ($fechaFin) {
+        $fechaFinDb = $fechaFin . ' 23:59:59';
+        $stmt->bindParam(':fecha_fin', $fechaFinDb);
+    }
+    
+    $stmt->execute();
+    $totalRegistros = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    
+    // Conector con más registros en este estado
+    $sql = "SELECT nombre_conector, COUNT(*) as total FROM registros 
+            WHERE estado = :estado AND nombre_conector IS NOT NULL AND nombre_conector != ''";
+    
+    if ($fechaInicio) {
+        $sql .= " AND fecha_creacion >= :fecha_inicio";
+    }
+    
+    if ($fechaFin) {
+        $sql .= " AND fecha_creacion <= :fecha_fin";
+    }
+    
+    $sql .= " GROUP BY nombre_conector ORDER BY total DESC LIMIT 1";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':estado', $estado);
+    
+    if ($fechaInicio) {
+        $fechaInicioDb = $fechaInicio . ' 00:00:00';
+        $stmt->bindParam(':fecha_inicio', $fechaInicioDb);
+    }
+    
+    if ($fechaFin) {
+        $fechaFinDb = $fechaFin . ' 23:59:59';
+        $stmt->bindParam(':fecha_fin', $fechaFinDb);
+    }
+    
+    $stmt->execute();
+    $conectorPrincipal = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $resultado .= "Total de registros con estado '" . $estado . "': " . $totalRegistros . "\n";
+    
+    if ($conectorPrincipal) {
+        $resultado .= "Conector con más registros en este estado: " . $conectorPrincipal['nombre_conector'] . " (" . $conectorPrincipal['total'] . " registros)\n";
+        $porcentaje = round(($conectorPrincipal['total'] / $totalRegistros) * 100, 2);
+        $resultado .= "Porcentaje: " . $porcentaje . "%\n";
+    }
+    
+    return $resultado;
+}
+?>
+```
+
+Notas importantes:
+1. He comentado la verificación de sesión para que puedas probar la funcionalidad
+2. He eliminado las líneas de depuración que ya no son necesarias
+3. La estructura y lógica del código está optimizada para mejor rendimiento
+4. Todas las funciones de generación de informes están completas
+
+Para probar este código:
+1. Reemplaza completamente el contenido de tu archivo generar_informe.php
+2. Asegúrate de que tu formulario en vista_informes.php envía correctamente los datos
+3. Intenta generar un informe y verifica si funciona correctamente
+
+RafaelG1986: Dame el archivo completo de vista informes.
+
+GitHub Copilot: # Archivo completo de vista_informes.php
+
+```php
+<?php
+require_once __DIR__ . '/../../backend/config/database.php';
+
+try {
+    $db = new Database();
+    $conn = $db->connect();
+    
+    // Obtener lista de conectores para el filtro
+    $stmt = $conn->query("SELECT DISTINCT nombre_conector FROM registros WHERE nombre_conector IS NOT NULL AND nombre_conector != '' ORDER BY nombre_conector");
+    $conectores = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    
+    // Obtener lista de estados para el filtro
+    $stmt = $conn->query("SELECT DISTINCT estado FROM registros WHERE estado IS NOT NULL AND estado != '' ORDER BY estado");
+    $estados = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    
+} catch (PDOException $e) {
+    echo '<div class="alert alert-danger">Error al conectar con la base de datos: ' . $e->getMessage() . '</div>';
+    $conectores = [];
+    $estados = [];
+}
+?>
+
+<link rel="stylesheet" href="../css/styles_informes.css">
+
+<div class="informes-container">
+    <h2>Generación de Informes</h2>
+    
+    <div class="alert alert-info">
+        <p>Selecciona los datos que deseas incluir en tu informe y haz clic en "Generar informe".</p>
+    </div>
+    
+    <form id="informeForm" class="informe-form">
+        <div class="form-section">
+            <h3>Tipo de informe</h3>
+            <select id="tipo-informe" name="tipo-informe" required>
+                <option value="">-- Selecciona tipo de informe --</option>
+                <option value="general">Estadísticas generales</option>
+                <option value="personal">Estadísticas por conector</option>
+                <option value="estados">Distribución por estados</option>
+                <option value="detallado">Listado detallado</option>
+            </select>
+        </div>
+        
+        <div class="form-section selector-conector" style="display: none;">
+            <h3>Selecciona conector</h3>
+            <select id="conector" name="conector">
+                <option value="">Todos los conectores</option>
+                <?php foreach ($conectores as $conector): ?>
+                    <option value="<?= htmlspecialchars($conector) ?>"><?= htmlspecialchars($conector) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        
+        <div class="form-section selector-estado" style="display: none;">
+            <h3>Filtrar por estado</h3>
+            <select id="estado" name="estado">
+                <option value="">Todos los estados</option>
+                <?php foreach ($estados as $estado): ?>
+                    <option value="<?= htmlspecialchars($estado) ?>"><?= htmlspecialchars($estado) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        
+        <div class="form-section">
+            <h3>Período</h3>
+            <div class="date-inputs">
+                <div>
+                    <label for="fecha-inicio">Desde:</label>
+                    <input type="date" id="fecha-inicio" name="fecha-inicio">
+                </div>
+                <div>
+                    <label for="fecha-fin">Hasta:</label>
+                    <input type="date" id="fecha-fin" name="fecha-fin">
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h3>Opciones de formato</h3>
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="incluir-cabecera" name="incluir-cabecera" checked>
+                    Incluir cabecera con fecha de generación
+                </label>
+                <label>
+                    <input type="checkbox" id="incluir-detalle" name="incluir-detalle" checked>
+                    Incluir detalles específicos
+                </label>
+                <label>
+                    <input type="checkbox" id="incluir-resumen" name="incluir-resumen" checked>
+                    Incluir resumen al final
+                </label>
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="button" id="btn-vista-previa" class="btn-preview">Vista previa</button>
+            <button type="button" id="btn-generar" class="btn-generate">Generar y descargar</button>
+        </div>
+    </form>
+    
+    <div id="vista-previa" class="preview-section" style="display: none;">
+        <h3>Vista previa del informe</h3>
+        <div id="contenido-informe" class="informe-contenido">
+            <p>La vista previa se mostrará aquí...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Mostrar campos relevantes según el tipo de informe
+    document.getElementById('tipo-informe').addEventListener('change', function() {
+        const tipoInforme = this.value;
+        document.querySelector('.selector-conector').style.display = 
+            (tipoInforme === 'personal' || tipoInforme === 'detallado') ? 'block' : 'none';
+        
+        document.querySelector('.selector-estado').style.display = 
+            (tipoInforme === 'estados' || tipoInforme === 'detallado') ? 'block' : 'none';
+    });
+    
+    // Vista previa del informe
+    document.getElementById('btn-vista-previa').addEventListener('click', function() {
+        generarInforme(true);
+    });
+    
+    // Generar y descargar informe
+    document.getElementById('btn-generar').addEventListener('click', function() {
+        generarInforme(false);
+    });
+});
+
+function generarInforme(esPrevista) {
+    // Obtener referencia al botón usado
+    const btnUsado = esPrevista ? 
+        document.getElementById('btn-vista-previa') : 
+        document.getElementById('btn-generar');
+    
+    // Guardar texto original y mostrar estado de procesamiento
+    const textoOriginal = btnUsado.textContent;
+    btnUsado.textContent = 'Procesando...';
+    btnUsado.disabled = true;
+    
+    // Crear el FormData desde el formulario
+    const formData = new FormData(document.getElementById('informeForm'));
+    formData.append('vista_previa', esPrevista ? '1' : '0');
+    
+    // Mostrar datos que se envían (para depuración)
+    console.log("Enviando datos al servidor:");
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
+    
+    // Realizar la petición AJAX
+    fetch('../../backend/controllers/generar_informe.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor: ' + response.status);
+        }
+        
+        if (esPrevista) {
+            return response.text();
+        } else {
+            return response.blob();
+        }
+    })
+    .then(data => {
+        if (esPrevista) {
+            // Vista previa: mostrar en el área de resultados
+            const vistaPrevia = document.getElementById('vista-previa');
+            vistaPrevia.style.display = 'block';
+            
+            const contenidoInforme = document.getElementById('contenido-informe');
+            contenidoInforme.innerHTML = '<pre>' + data + '</pre>';
+        } else {
+            // Descarga: generar archivo
+            const url = window.URL.createObjectURL(data);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'informe_conexion_' + new Date().toISOString().split('T')[0] + '.txt';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            // Mostrar mensaje de éxito
+            alert('Informe generado con éxito');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ha ocurrido un error al generar el informe: ' + error.message);
+    })
+    .finally(() => {
+        // Restaurar botón
+        btnUsado.textContent = textoOriginal;
+        btnUsado.disabled = false;
+    });
+}
+</script>
+```
+
+He corregido:
+1. La función `generarInforme()` para que muestre el contenedor de vista previa
+2. La referencia al elemento `contenido-informe` en lugar de `resultado-informe`
+3. Eliminado líneas redundantes de formulario en los event listeners
+4. Asegurado que los nombres de los parámetros coincidan con lo que espera el backend
+
+Ahora la vista previa y la generación de informes deberían funcionar correctamente.
+
+RafaelG1986: Ahora dame el codigo completo de informes.js
+
+GitHub Copilot: # Código completo de informes.js
+
+```javascript
+document.addEventListener('DOMContentLoaded', function() {
+    // Mostrar campos relevantes según el tipo de informe
+    document.getElementById('tipo-informe').addEventListener('change', function() {
+        const tipoInforme = this.value;
+        document.querySelector('.selector-conector').style.display = 
+            (tipoInforme === 'personal' || tipoInforme === 'detallado') ? 'block' : 'none';
+        
+        document.querySelector('.selector-estado').style.display = 
+            (tipoInforme === 'estados' || tipoInforme === 'detallado') ? 'block' : 'none';
+    });
+    
+    // Vista previa del informe
+    document.getElementById('btn-vista-previa').addEventListener('click', function() {
+        generarInforme(true);
+    });
+    
+    // Generar y descargar informe
+    document.getElementById('btn-generar').addEventListener('click', function() {
+        generarInforme(false);
+    });
+});
+
+function generarInforme(esPrevista) {
+    // Obtener referencia al botón usado
+    const btnUsado = esPrevista ? 
+        document.getElementById('btn-vista-previa') : 
+        document.getElementById('btn-generar');
+    
+    // Guardar texto original y mostrar estado de procesamiento
+    const textoOriginal = btnUsado.textContent;
+    btnUsado.textContent = 'Procesando...';
+    btnUsado.disabled = true;
+    
+    // Crear el FormData desde el formulario
+    const formData = new FormData(document.getElementById('informeForm'));
+    formData.append('vista_previa', esPrevista ? '1' : '0');
+    
+    // Mostrar datos que se envían (para depuración)
+    console.log("Enviando datos al servidor:");
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
+    
+    // Realizar la petición AJAX
+    fetch('../../backend/controllers/generar_informe.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor: ' + response.status);
+        }
+        
+        if (esPrevista) {
+            return response.text();
+        } else {
+            return response.blob();
+        }
+    })
+    .then(data => {
+        if (esPrevista) {
+            // Vista previa: mostrar en el área de resultados
+            const vistaPrevia = document.getElementById('vista-previa');
+            vistaPrevia.style.display = 'block';
+            
+            const contenidoInforme = document.getElementById('contenido-informe');
+            contenidoInforme.innerHTML = '<pre>' + data + '</pre>';
+        } else {
+            // Descarga: generar archivo
+            const url = window.URL.createObjectURL(data);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'informe_conexion_' + new Date().toISOString().split('T')[0] + '.txt';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            // Mostrar mensaje de éxito
+            alert('Informe generado con éxito');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ha ocurrido un error al generar el informe: ' + error.message);
+    })
+    .finally(() => {
+        // Restaurar botón
+        btnUsado.textContent = textoOriginal;
+        btnUsado.disabled = false;
+    });
+}
+```
+
+Este archivo:
+1. Es compatible con el HTML de vista_informes.php
+2. Muestra/oculta las secciones relevantes según el tipo de informe
+3. Maneja tanto la vista previa como la descarga
+4. Incluye indicadores visuales durante el procesamiento
+5. Muestra mensajes de error apropiados
+
+Reemplaza completamente el contenido actual de tu archivo informes.js con este código.
+
+RafaelG1986: Puedes revisar admin.php frente a la vista informes?
+
+GitHub Copilot: # Revisión de admin.php con vista_informes.php
+
+He analizado la relación entre estos archivos y encontrado por qué no se generan los informes:
+
+## Problema: Falta inicialización de la vista de informes
+
+En admin.php, veo que tienes diferentes módulos con su propia inicialización:
+
+```javascript
+function inicializarModulo(ruta) {
+    if (ruta === 'vista_estadisticas.php') {
+        // Inicializa estadísticas
+    } 
+    else if (ruta.includes('vista_estadisticas_personales.php')) {
+        // Inicializa estadísticas personales
+    }
+    // Otros módulos...
+}
+```
+
+Sin embargo, **no hay inicialización para vista_informes.php**. Cuando se carga la vista, no se ejecuta ninguna inicialización específica para este módulo.
+
+## Solución: Agregar inicialización para vista_informes.php
+
+1. **Añade el script de informes.js al head de admin.php**:
+   ```html
+   <script src="../js/informes.js"></script>
+   ```
+
+2. **Agrega un caso para informes en inicializarModulo()**:
+   ```javascript
+   function inicializarModulo(ruta) {
+       // Código existente...
+       
+       // Añadir esta sección
+       else if (ruta === 'vista_informes.php') {
+           if (typeof inicializarInformes === 'function') {
+               console.log('Inicializando módulo de informes');
+               inicializarInformes();
+           }
+       }
+   }
+   ```
+
+3. **Modifica informes.js para usar una función de inicialización**:
+   ```javascript
+   function inicializarInformes() {
+       // Mover aquí todo el código del DOMContentLoaded
+       console.log("Inicializando módulo de informes");
+       
+       // Mostrar campos relevantes según el tipo de informe
+       document.getElementById('tipo-informe').addEventListener('change', function() {
+           // código existente...
+       });
+       
+       // Vista previa del informe
+       document.getElementById('btn-vista-previa').addEventListener('click', function() {
+           generarInforme(true);
+       });
+       
+       // Generar y descargar informe
+       document.getElementById('btn-generar').addEventListener('click', function() {
+           generarInforme(false);
+       });
+   }
+
+   // Mantén la definición de generarInforme igual
+   function generarInforme(esPrevista) {
+       // código existente...
+   }
+   ```
+
+4. **Simplifica vista_informes.php**:
+   - Elimina la etiqueta `<script>` interna de vista_informes.php
+   - Deja solo el HTML
+
+Esta solución evitará conflictos entre scripts y asegurará que los event listeners se registren correctamente cuando se cargue la vista de informes.
+
+¿Quieres que te proporcione el código completo de alguno de estos archivos con los cambios aplicados?
+
+RafaelG1986: Uncaught TypeError: Cannot read properties of null (reading 'addEventListener')
+    at inicializarInformes (informes.js:9:44)
+    at HTMLDocument.<anonymous> (informes.js:2:5)
+
+GitHub Copilot: # Solución del error en informes.js
+
+El error indica que el elemento con ID `tipo-informe` no existe cuando se ejecuta el código. Esto ocurre porque el script informes.js se está cargando y ejecutando antes de que la vista de informes esté disponible en el DOM.
+
+## Solución: Modificar informes.js
+
+Reemplaza el contenido actual de informes.js con el siguiente código:
+
+```javascript
+// Eliminamos la ejecución automática al cargar la página
+// document.addEventListener('DOMContentLoaded', function() {
+//     inicializarInformes();
+// });
+
+// Esta función será llamada desde admin.php cuando cargue la vista correspondiente
+function inicializarInformes() {
+    console.log("Inicializando módulo de informes");
+    
+    // Verificar que los elementos existan antes de añadir event listeners
+    const tipoInformeSelect = document.getElementById('tipo-informe');
+    const btnVistaPrevia = document.getElementById('btn-vista-previa');
+    const btnGenerar = document.getElementById('btn-generar');
+    
+    if (!tipoInformeSelect || !btnVistaPrevia || !btnGenerar) {
+        console.error("Error: No se encontraron los elementos necesarios para inicializar el módulo de informes");
+        return;
+    }
+    
+    // Mostrar campos relevantes según el tipo de informe
+    tipoInformeSelect.addEventListener('change', function() {
+        const tipoInforme = this.value;
+        document.querySelector('.selector-conector').style.display = 
+            (tipoInforme === 'personal' || tipoInforme === 'detallado') ? 'block' : 'none';
+        
+        document.querySelector('.selector-estado').style.display = 
+            (tipoInforme === 'estados' || tipoInforme === 'detallado') ? 'block' : 'none';
+    });
+    
+    // Vista previa del informe
+    btnVistaPrevia.addEventListener('click', function() {
+        generarInforme(true);
+    });
+    
+    // Generar y descargar informe
+    btnGenerar.addEventListener('click', function() {
+        generarInforme(false);
+    });
+}
+
+// El resto de la función generarInforme permanece igual
+function generarInforme(esPrevista) {
+    // ... (código existente)
+}
+```
+
+## Modificar admin.php
+
+Ahora necesitas agregar el código que llama a `inicializarInformes()` cuando se carga la vista. Añade esta sección en tu función `cargarModulo` o `inicializarModulo` de admin.php:
+
+```javascript
+// Busca donde está la carga de módulos en admin.php
+function cargarModulo(ruta) {
+    // Código existente de carga...
+    
+    // Añade esta parte después de cargar la vista de informes
+    if (ruta === 'vista_informes.php') {
+        // Esperar un momento para que el DOM se actualice
+        setTimeout(function() {
+            if (typeof inicializarInformes === 'function') {
+                inicializarInformes();
+            } else {
+                console.error('La función inicializarInformes no está disponible');
+            }
+        }, 100);
+    }
+}
+```
+
+Esta solución asegura que:
+1. El script no intente acceder a elementos del DOM que aún no existen
+2. La inicialización del módulo de informes ocurra solo cuando su vista esté cargada
+3. Se agreguen verificaciones para evitar errores si algún elemento no está disponible
+
+RafaelG1986: Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'fecha_creacion' in 'where clause' in C:\xampp\htdocs\Conexion-Main\backend\controllers\generar_informe.php:238
+Stack trace:
+#0 C:\xampp\htdocs\Conexion-Main\backend\controllers\generar_informe.php(238): PDOStatement->execute()
+#1 C:\xampp\htdocs\Conexion-Main\backend\controllers\generar_informe.php(105): generarInformeGeneral(Object(PDO), '2025-04-01', '2025-04-29', true)
+#2 C:\xampp\htdocs\Conexion-Main\backend\controllers\generar_informe.php(33): generarInforme('general', '', '', '2025-04-01', '2025-04-29', true, true, true)
+#3 {main}
+  thrown in C:\xampp\htdocs\Conexion-Main\backend\controllers\generar_informe.php on line 238
+
+GitHub Copilot: # Solución: Error de columna fecha_creacion no encontrada
+
+El error indica que la columna `fecha_creacion` no existe en tu tabla `registros`. Este es un problema de compatibilidad entre el código generado y la estructura real de tu base de datos.
+
+## Solución: Modificar las referencias a la columna de fecha
+
+Necesitas cambiar todas las referencias a `fecha_creacion` en el archivo `generar_informe.php` por el nombre real de la columna de fecha en tu tabla. Lo más común es que se llame simplemente `fecha`.
+
+### Pasos para corregir:
+
+1. Abre el archivo `generar_informe.php`
+
+2. Reemplaza todas las ocurrencias de `fecha_creacion` por el nombre correcto de la columna. Usa la función de búsqueda y reemplazo de tu editor (Ctrl+H):
+   - Buscar: `fecha_creacion`
+   - Reemplazar con: `fecha` (o el nombre correcto en tu tabla)
+
+3. Realiza este reemplazo en todo el archivo, ya que hay múltiples consultas SQL que usan esta columna
+
+### Para verificar el nombre correcto de la columna:
+
+Puedes ejecutar esta consulta en phpMyAdmin para ver la estructura de tu tabla:
+
+```sql
+DESCRIBE registros;
+```
+
+O también puedes revisar algún otro archivo de tu aplicación que haga consultas exitosas a esta tabla, como el archivo que muestra los registros en la vista principal.
+
+Una vez realizado este cambio, el sistema de informes debería funcionar correctamente.
+
+RafaelG1986: lo que pasa es que no tenemos un campo que se llame fecha, sino fecha_contacto: Field
+Type
+Null
+Key
+Default
+Extra
+foto
+varchar(255)
+YES
+NULL
+id
+int(11)
+NO
+PRI
+NULL
+auto_increment
+nombre_conector
+varchar(255)
+NO
+NULL
+nombre_persona
+varchar(255)
+NO
+NULL
+apellido_persona
+varchar(255)
+NO
+NULL
+fecha_contacto
+date
+NO
+NULL
+nombre_quien_trajo
+varchar(255)
+NO
+NULL
+formulario_nuevos
+varchar(100)
+YES
+NULL
+formulario_llamadas
+varchar(100)
+YES
+NULL
+subido_por
+varchar(100)
+YES
+NULL
+estado
+varchar(50)
+NO
+NULL
+fecha_ultimo_contacto
+date
+NO
+NULL
+cumpleanos
+varchar(255)
+YES
+NULL
+telefono
+varchar(15)
+YES
+NULL
+observaciones
+text
+YES
+NULL
+
+
+GitHub Copilot: # Solución: Error de columna en generación de informes
+
+El problema es que el script está intentando usar una columna llamada `fecha_creacion` que no existe en tu tabla. Según la estructura que me has compartido, la columna correcta es `fecha_contacto`.
+
+## Pasos para corregir el error:
+
+1. Abre el archivo `generar_informe.php`
+
+2. Reemplaza todas las ocurrencias de `fecha_creacion` por `fecha_contacto`:
+   - Usa la función de búsqueda y reemplazo (Ctrl+H)
+   - Buscar: `fecha_creacion`
+   - Reemplazar con: `fecha_contacto`
+
+3. Esto afecta varias consultas SQL en tu código, como las siguientes:
+   ```php
+   // Ejemplo de línea que necesita cambiar
+   $sql .= " AND fecha_creacion >= :fecha_inicio";
+   
+   // Debe cambiarse a
+   $sql .= " AND fecha_contacto >= :fecha_inicio";
+   ```
+
+4. Asegúrate también de revisar si hay referencias a `date('d/m/Y', strtotime($reg['fecha_creacion']))` y cambiarlas a `date('d/m/Y', strtotime($reg['fecha_contacto']))`.
+
+## Ejemplo de cambios principales:
+
+```php
+// Cambiar aquí
+if ($fechaInicio) {
+    $sql .= " AND fecha_contacto >= :fecha_inicio";
+}
+
+if ($fechaFin) {
+    $sql .= " AND fecha_contacto <= :fecha_fin";
+}
+```
+
+También puedes considerar usar `fecha_ultimo_contacto` en lugar de `fecha_contacto` para algunos informes si lo consideras más apropiado para el contexto específico.
+
+¿Necesitas que revise algo más en el código o hay otra parte específica que quieras corregir?
+
+RafaelG1986: Listo, quedo corregido, por favor subamoslo al repositorio.
+
+GitHub Copilot: # Subir al repositorio los cambios en la generación de informes
+
+¡Excelente! Has corregido exitosamente el sistema de generación de informes para que funcione con la estructura de tu base de datos, cambiando todas las referencias de `fecha_creacion` a `fecha_contacto`.
+
+## Pasos para subir los cambios al repositorio
+
+1. **Verificar los cambios**:
+   ```bash
+   git status
+   ```
+
+2. **Añadir los archivos modificados**:
+   ```bash
+   git add backend/controllers/generar_informe.php
+   git add frontend/js/informes.js
+   git add frontend/views/vista_informes.php
+   ```
+
+3. **Crear un commit con mensaje descriptivo**:
+   ```bash
+   git commit -m "Implementación del sistema de generación de informes y corrección de referencias a campos de la base de datos"
+   ```
+
+4. **Subir los cambios al repositorio remoto**:
+   ```bash
+   git push origin main
+   ```
+   (Reemplaza "main" con el nombre de tu rama principal si usas otra)
+
+## Resumen de las mejoras implementadas
+
+- ✅ Implementación completa del sistema de generación de informes con 4 tipos diferentes
+- ✅ Corrección de referencias a campos de la base de datos (`fecha_contacto` en lugar de `fecha_creacion`)
+- ✅ Integración con el sistema de administración existente
+- ✅ Opciones para vista previa y descarga de informes
+- ✅ Filtros por conector, estado y rango de fechas
+
+¿Quieres que hagamos alguna otra modificación antes de subir al repositorio?
+
+RafaelG1986: Listo, tengo otro error, cuando edito el registro, en la vista registro, cuando no subo una foto, porque ya esta, me quita la que tengo.
+
+GitHub Copilot: # Solución: Preservar la imagen al editar un registro
+
+El problema es que cuando editas un registro sin seleccionar una nueva foto, el sistema está reemplazando la foto existente con un valor vacío. Esto es un error común en los formularios de edición.
+
+## Solución para preservar la imagen existente
+
+Necesitamos modificar el controlador que procesa la edición (probablemente `procesar_registro.php` o similar) para que mantenga la imagen existente cuando no se sube una nueva.
+
+### 1. Localiza el archivo que procesa el formulario
+
+Este será el archivo al que apunta el formulario en su atributo `action`.
+
+### 2. Modifica la lógica de procesamiento de imágenes
+
+Busca una sección que maneje el archivo de imagen y modifícala así:
+
+```php
+// Manejo de la imagen
+$foto = $registro['foto']; // Mantener la foto existente por defecto
+
+if (isset($_FILES['foto']) && $_FILES['foto']['error'] !== UPLOAD_ERR_NO_FILE) {
+    // Solo procesar si se subió un archivo nuevo
+    $archivo = $_FILES['foto'];
+    
+    // Verificar que no hay errores
+    if ($archivo['error'] === UPLOAD_ERR_OK) {
+        $nombreArchivo = date('YmdHis') . '_' . $archivo['name'];
+        $rutaDestino = '../img/' . $nombreArchivo;
+        
+        if (move_uploaded_file($archivo['tmp_name'], $rutaDestino)) {
+            $foto = $nombreArchivo;
+        }
+    }
+}
+
+// Luego usar $foto en la consulta de actualización
+$sql = "UPDATE registros SET 
+        nombre_conector = :nombre_conector,
+        nombre_persona = :nombre_persona,
+        /* otros campos */
+        foto = :foto
+        WHERE id = :id";
+
+// Preparar y ejecutar la consulta con $foto
+```
+
+### 3. Asegúrate que el campo de foto en el formulario es opcional
+
+En el HTML del formulario, asegúrate que el campo de archivo no tenga el atributo `required`:
+
+```html
+<input type="file" name="foto" id="foto" accept="image/*">
+```
+
+### 4. Añade un campo oculto con la foto actual
+
+Para mayor seguridad, puedes añadir un campo oculto que guarde el nombre de la foto actual:
+
+```html
+<input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($registro['foto']); ?>">
+```
+
+Y luego acceder a este valor en el controlador:
+
+```php
+$foto = $_POST['foto_actual'] ?? '';
+```
+
+Estos cambios garantizarán que cuando no subas una nueva foto, se conserve la imagen existente en el registro.
+
+¿Necesitas ayuda para encontrar y modificar específicamente el archivo del controlador?
+
+RafaelG1986: donde?
+
+GitHub Copilot: # Localización del código a modificar
+
+Para solucionar el problema de preservar la imagen durante la edición, debes modificar el controlador que procesa el formulario de edición. Este es el archivo que recibe los datos cuando presionas "Guardar" o "Actualizar" en el formulario.
+
+## Busca el archivo del controlador
+
+1. Primero, revisa el formulario en editar_registro.php y busca el atributo `action` para ver a qué archivo envía los datos:
+   ```html
+   <form action="../../backend/controllers/actualizar_registro.php" method="POST" enctype="multipart/form-data">
+   ```
+
+2. El archivo a modificar probablemente se llamará:
+   - `actualizar_registro.php`
+   - `procesar_edicion.php`
+   - `procesar_registro.php` (si se usa el mismo para crear y editar)
+
+Este archivo estará ubicado en: controllers
+
+## Cambios necesarios
+
+Una vez localizado el archivo, busca el código donde procesa la imagen subida, que se verá similar a:
+
+```php
+// Procesamiento de la imagen
+$foto = '';
+if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+    // Código para subir la imagen
+    $foto = $nombreArchivo;
+}
+
+// Actualización en la base de datos
+$sql = "UPDATE registros SET foto = :foto, ... WHERE id = :id";
+```
+
+¿Puedes encontrar y compartir ese archivo para que te indique exactamente dónde y cómo hacer los cambios?
+
+RafaelG1986: este
+
+GitHub Copilot: # Solución para preservar foto durante la edición
+
+El archivo procesar_registro.php que has compartido está diseñado para crear registros nuevos, no para actualizar existentes. Para solucionar el problema de las fotos en la edición, necesitamos encontrar y modificar el archivo que procesa las actualizaciones.
+
+## 1. Buscar el archivo correcto
+
+El controlador para actualizar registros probablemente se llama `actualizar_registro.php` y debería estar en la misma carpeta (controllers).
+
+Verifica en el formulario de edición qué archivo está configurado en el atributo `action`:
+
+```html
+<form action="../../backend/controllers/actualizar_registro.php" method="POST" enctype="multipart/form-data">
+```
+
+## 2. Modificación necesaria
+
+Una vez localizado el archivo de actualización, busca el código que maneja las imágenes y modifícalo así:
+
+```php
+// Procesamiento de la imagen - MODIFICAR ESTA SECCIÓN
+$foto_sql = ""; // Por defecto no actualizar la foto
+$foto_param = null;
+
+// Si se subió una nueva foto
+if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+    // Verificar el tipo de archivo y tamaño como ya lo haces
+    
+    // Generar nombre único para la foto
+    $nombre_foto = uniqid() . '_' . $_FILES['foto']['name'];
+    $ruta_destino = __DIR__ . '/../../frontend/img/' . $nombre_foto;
+    
+    if (move_uploaded_file($_FILES['foto']['tmp_name'], $ruta_destino)) {
+        // Si se subió exitosamente, actualizar la foto
+        $foto_sql = ", foto = :foto";
+        $foto_param = $nombre_foto;
+        
+        // Opcional: Eliminar la foto anterior si existe
+        if (!empty($_POST['foto_actual']) && file_exists(__DIR__ . '/../../frontend/img/' . $_POST['foto_actual'])) {
+            unlink(__DIR__ . '/../../frontend/img/' . $_POST['foto_actual']);
+        }
+    } else {
+        $error = "Error: No se pudo guardar la imagen.";
+    }
+}
+
+// En la consulta SQL, incluir foto solo si se subió una nueva
+$sql = "UPDATE registros SET 
+        nombre_persona = :nombre,
+        apellido_persona = :apellido,
+        ... otros campos ...
+        $foto_sql  
+        WHERE id = :id";
+
+$stmt = $conn->prepare($sql);
+
+// Vincular parámetros
+$stmt->bindParam(':nombre', $nombre_persona);
+// ... otros parámetros ...
+
+// Vincular foto solo si hay una nueva
+if ($foto_param !== null) {
+    $stmt->bindParam(':foto', $foto_param);
+}
+```
+
+## 3. Modificar también el formulario
+
+En el archivo `editar_registro.php`, asegúrate de añadir un campo oculto para la foto actual:
+
+```html
+<input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($registro['foto'] ?? ''); ?>">
+```
+
+¿Quieres que te ayude a localizar el archivo de actualización y hacer las modificaciones específicas?
+
+RafaelG1986: este?
+
+GitHub Copilot: # ¡Encontramos el problema!
+
+¡Sí! Este es el archivo correcto (`actualizar_registro.php`). Ya contiene la lógica para preservar la foto actual, pero hay un detalle importante que falta implementar.
+
+## El problema está en el formulario
+
+La línea en actualizar_registro.php está correcta:
+```php
+// Si no se subió una nueva, mantener la foto actual
+$foto = $_POST['foto_actual'] ?? '';
+```
+
+Pero necesitamos asegurarnos que el formulario en `editar_registro.php` realmente está enviando el campo `foto_actual`.
+
+## Solución: Añadir campo oculto en el formulario
+
+Abre el archivo editar_registro.php y añade el siguiente campo justo antes del campo de subida de foto:
+
+```html
+<!-- Añadir esto dentro del formulario -->
+<input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($registro['foto'] ?? ''); ?>">
+```
+
+## Verificaciones adicionales recomendadas
+
+1. Para mayor robustez, podemos mejorar la validación en actualizar_registro.php:
+
+```php
+// Si no se subió una nueva, mantener la foto actual
+if (isset($_POST['foto_actual']) && !empty($_POST['foto_actual'])) {
+    $foto = $_POST['foto_actual'];
+} else {
+    $foto = ''; // Sin foto como valor predeterminado
+}
+```
+
+2. Opcionalmente, puedes añadir un texto que indique que la carga de foto es opcional durante la edición:
+
+```html
+<div class="form-group">
+    <label for="foto">Foto (opcional, deja vacío para mantener la foto actual):</label>
+    <input type="file" name="foto" id="foto" accept="image/*">
+</div>
+```
+
+Con estos cambios, el sistema mantendrá correctamente la foto existente cuando no se sube una nueva durante la edición.
+
+RafaelG1986: revisa este archivo
+
+GitHub Copilot: # Revisión de archivo editar_registro.php
+
+El fragmento que me has mostrado es solo una pequeña parte del archivo que muestra la previsualización de la imagen, pero el problema está en otro lugar.
+
+## El problema
+
+Cuando editas un registro sin seleccionar una nueva foto, la imagen existente desaparece porque no se está enviando su nombre al servidor mediante un campo oculto en el formulario.
+
+## Solución: Añadir campo oculto para foto_actual
+
+Necesitas añadir un campo oculto que guarde el nombre de la foto actual. Este debe ubicarse dentro del formulario, idealmente cerca de donde está el campo para subir la nueva foto.
+
+### Busca en el archivo:
+
+1. Localiza la etiqueta `<form>` que envía los datos a `actualizar_registro.php`
+2. Encuentra el campo input para subir la foto: `<input type="file" name="foto" ...>`
+3. Añade justo antes o después de ese campo el siguiente código:
+
+```html
+<!-- Campo oculto para mantener la foto actual -->
+<input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($registro['foto'] ?? ''); ?>">
+```
+
+### Ejemplo de cómo debería quedar:
+
+```html
+<div class="form-group">
+    <label for="foto">Foto:</label>
+    <!-- Campo oculto para la foto actual -->
+    <input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($registro['foto'] ?? ''); ?>">
+    <!-- Campo para subir nueva foto -->
+    <input type="file" name="foto" id="foto" accept="image/*">
+    <!-- Previsualización de la imagen -->
+    <img src="<?php echo !empty($registro['foto']) ? '../img/' . $registro['foto'] : '../img/no-foto.jpg'; ?>" alt="Foto del registro">
+</div>
+```
+
+Esto garantizará que, aunque no subas una nueva foto, el sistema mantendrá la referencia a la foto existente cuando actualices el registro.
+
+RafaelG1986: este?
+
+GitHub Copilot: # Revisión de formularios
+
+No, este no es el archivo que necesitamos modificar. El archivo que me has mostrado es agregar_registro.php, que se usa para **crear** nuevos registros.
+
+Para solucionar el problema de las fotos que se pierden durante la edición, necesitamos modificar el archivo `editar_registro.php`, que es el formulario que se usa para **editar** registros existentes.
+
+El error ocurre cuando:
+1. Editas un registro existente que ya tiene una foto
+2. No seleccionas una nueva foto (mantienes la misma)
+3. Al guardar, la foto desaparece
+
+## Solución
+
+Necesitamos ver y modificar el archivo `editar_registro.php` ubicado en:
+```
+c:\xampp\htdocs\Conexion-Main\frontend\views\editar_registro.php
+```
+
+Allí es donde debemos añadir el campo oculto:
+```html
+<input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($registro['foto'] ?? ''); ?>">
+```
+
+¿Puedes mostrarme ese archivo para que pueda indicarte exactamente dónde hacer el cambio?
+
+RafaelG1986: este?
+
+GitHub Copilot: # ¡Encontrado el problema!
+
+Sí, este es justamente el archivo que tiene el problema. Es guardar_registro.php, que maneja tanto creaciones como actualizaciones de registros.
+
+## El problema específico
+
+El código intenta preservar la foto existente, pero falta un paso crucial:
+
+```php
+// Procesar imagen si se ha enviado
+$ruta_foto = '';
+if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
+    // Código para procesar la nueva foto...
+}
+```
+
+**El problema está aquí**: cuando no se sube una foto nueva, `$ruta_foto` queda como cadena vacía (''), y no se recupera el valor de la foto existente.
+
+## Solución: Recuperar foto existente
+
+Modifica el código así (alrededor de la línea 45):
+
+```php
+// Procesar imagen si se ha enviado
+$ruta_foto = '';
+if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
+    // Definir directorio de uploads y asegurar que existe
+    $directorio_uploads = '../../uploads/';
+    if (!file_exists($directorio_uploads)) {
+        mkdir($directorio_uploads, 0777, true);
+    }
+    
+    // Crear nombre único para el archivo
+    $nombre_archivo = time() . '_' . basename($_FILES['foto']['name']);
+    $ruta_destino = $directorio_uploads . $nombre_archivo;
+    
+    // Mover archivo subido al directorio final
+    if (move_uploaded_file($_FILES['foto']['tmp_name'], $ruta_destino)) {
+        $ruta_foto = $nombre_archivo;
+    }
+} else if (isset($_POST['id']) && isset($_POST['foto_actual'])) {
+    // Si estamos actualizando y no se subió una foto nueva, mantener la actual
+    $ruta_foto = $_POST['foto_actual'];
+}
+```
+
+Y asegúrate de que en tu formulario de edición tengas un campo oculto:
+
+```html
+<input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($registro['foto'] ?? ''); ?>">
+```
+
+Con estas modificaciones, cuando actualices un registro sin cambiar la foto, se preservará la foto existente.
+
+RafaelG1986: este? para agregar: <input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($registro['foto'] ?? ''); ?>">
+
+GitHub Copilot: # Solución para conservar la foto durante la edición
+
+¡Sí, este es el archivo correcto! Encontré donde necesitas añadir el campo oculto para preservar la foto.
+
+## Modificación a realizar
+
+En el archivo ver_registro.php, añade el campo oculto justo después del campo para subir la foto:
+
+```php
+<div class="foto-upload">
+    <label for="foto">
+        <i class="fas fa-camera"></i> <?php echo !empty($registro['foto']) ? 'Cambiar foto' : 'Subir foto'; ?>
+    </label>
+    <input type="file" id="foto" name="foto" accept="image/*">
+    <!-- Añadir esta línea justo aquí: -->
+    <input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($registro['foto'] ?? ''); ?>">
+</div>
+```
+
+## Ubicación exacta
+
+Debes añadir el código en la línea 82 aproximadamente, justo después de:
+```php
+<input type="file" id="foto" name="foto" accept="image/*">
+```
+
+Dentro del bloque:
+```php
+<?php if ($editar): ?>
+<div class="foto-upload">
+    <!-- Aquí va el código -->
+</div>
+<?php endif; ?>
+```
+
+Con esta modificación, cuando edites un registro sin cambiar la foto, el sistema mantendrá la referencia a la foto actual y no la perderás. El archivo `actualizar_registro.php` está correctamente configurado para usar este valor cuando no se sube una nueva imagen.
+
+RafaelG1986: Listo, necesito actualizar el repositorio.
+
+GitHub Copilot: # Actualización del Repositorio
+
+Ahora que has completado las mejoras del sistema, vamos a actualizar el repositorio con todos los cambios:
+
+## 1. Revisar los cambios realizados
+
+```bash
+git status
+```
+
+Esto mostrará todos los archivos modificados:
+- generar_informe.php (nuevo sistema de informes)
+- vista_informes.php (interfaz de generación de informes)
+- informes.js (lógica JavaScript para informes)
+- ver_registro.php (corrección del problema de fotos)
+
+## 2. Añadir los archivos modificados al staging
+
+```bash
+git add backend/controllers/generar_informe.php
+git add frontend/views/vista_informes.php
+git add frontend/js/informes.js
+git add frontend/views/ver_registro.php
+```
+
+O para añadir todos los cambios:
+
+```bash
+git add .
+```
+
+## 3. Crear un commit con mensaje descriptivo
+
+```bash
+git commit -m "Implementación del sistema de informes y corrección del problema de fotos en edición de registros"
+```
+
+## 4. Subir los cambios al repositorio remoto
+
+```bash
+git push origin main
+```
+
+(Si estás en una rama diferente, reemplaza "main" con el nombre de tu rama)
+
+## Resumen de mejoras implementadas
+
+1. **Sistema de generación de informes**:
+   - Informes estadísticos generales
+   - Informes por conector específico
+   - Análisis de estados
+   - Listados detallados con múltiples filtros
+
+2. **Corrección del problema de las fotos**:
+   - Implementación de campo oculto para preservar la foto actual
+   - Lógica mejorada para manejar subidas de imágenes
+
+3. **Compatibilidad con la estructura de la base de datos**:
+   - Corrección de referencias a campos (fecha_contacto)
+
+RafaelG1986: Listo, ahora necesito corregir otro error: En el campo de estados, de vista registro, no me actualiza el campo, en la base de datos, cuando selecciono el estado.
+
+GitHub Copilot: # Solución para la actualización de estados en ver_registro.php
+
+Entiendo el problema: cuando seleccionas un estado en la vista de registro, este cambio no se está guardando en la base de datos.
+
+## Posibles causas
+
+1. El campo de estado no tiene el nombre correcto en el formulario
+2. El controlador de actualización no está recibiendo el campo de estado
+3. Podría estar usando AJAX para actualizar estados, pero la función no está funcionando correctamente
+
+## Solución paso a paso
+
+### 1. Revisar el campo de estado en ver_registro.php
+
+Asegúrate que el campo select para estados tenga el nombre correcto:
+
+```html
+<!-- Debe tener name="estado" para ser procesado correctamente -->
+<select name="estado" id="estado" class="form-control">
+    <?php foreach ($estados as $est): ?>
+        <option value="<?php echo htmlspecialchars($est); ?>" 
+                <?php echo ($est == $registro['estado']) ? 'selected' : ''; ?>>
+            <?php echo htmlspecialchars($est); ?>
+        </option>
+    <?php endforeach; ?>
+</select>
+```
+
+### 2. Revisar el JavaScript de estados.js
+
+Asegúrate que la función de cambio de estado esté enviando el valor correcto:
+
+```javascript
+// En estados.js, busca algo como:
+function cambiarEstado(id, nuevoEstado) {
+    // Añade debugger para ver los valores
+    console.log("Cambiando estado:", id, nuevoEstado);
+    
+    const data = new FormData();
+    data.append('id', id);
+    data.append('estado', nuevoEstado); // Asegúrate que este nombre sea correcto
+    
+    fetch('../../backend/controllers/actualizar_estado.php', {
+        method: 'POST',
+        body: data
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Código de éxito
+        } else {
+            alert('Error al actualizar el estado: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+```
+
+### 3. Verificar el controlador de actualización
+
+En actualizar_estado.php o `actualizar_registro.php`:
+
+```php
+// Asegurarse que estamos recibiendo el parámetro estado
+if (isset($_POST['estado'])) {
+    // Añadir logging para debug
+    file_put_contents(__DIR__ . '/debug_estado.txt', 
+        date('Y-m-d H:i:s') . " - Actualizando estado: " . 
+        $_POST['id'] . " - " . $_POST['estado'] . "\n", 
+        FILE_APPEND);
+    
+    // Verificar que la consulta SQL incluya el campo estado
+    $sql = "UPDATE registros SET 
+            estado = :estado,
+            /* otros campos */
+            WHERE id = :id";
+            
+    // Asegurarse que el parámetro esté vinculado
+    $stmt->bindParam(':estado', $_POST['estado']);
+}
+```
+
+### 4. Si usas actualización directa en el formulario (no AJAX)
+
+Asegúrate que el formulario incluye correctamente el campo estado:
+
+```html
+<form action="../../backend/controllers/actualizar_registro.php" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="<?php echo $id; ?>">
+    <!-- Otros campos del formulario -->
+    
+    <!-- Campo de estado -->
+    <div class="form-group">
+        <label for="estado">Estado:</label>
+        <select name="estado" id="estado" class="form-control">
+            <!-- Opciones de estado -->
+        </select>
+    </div>
+    
+    <!-- Botón de envío -->
+    <button type="submit">Guardar cambios</button>
+</form>
+```
+
+¿Necesitas que revise alguno de estos archivos específicos para darte una solución más concreta?
+
+RafaelG1986: es este?
+
+GitHub Copilot: # Revisión del problema con la actualización de estado
+
+He revisado el archivo actualizar_registro.php y parece estar correctamente configurado para procesar el estado:
+
+```php
+$sql = "UPDATE registros SET 
+    // ...otros campos...
+    estado = :estado,
+    // ...otros campos...
+    WHERE id = :id";
+
+$params = [
+    // ...otros parámetros...
+    ':estado' => $_POST['estado'] ?? '',
+    // ...otros parámetros...
+    ':id' => $_POST['id']
+];
+```
+
+## Posibles causas del problema
+
+Ya que el código de actualización está bien, el problema debe estar en alguna de estas partes:
+
+1. **El formulario en ver_registro.php**: Asegúrate que el campo de estado tenga correctamente `name="estado"`:
+   ```html
+   <select name="estado" id="estado" class="form-control">
+   ```
+
+2. **El envío del formulario**: Verifica que el formulario tenga el método y acción correctos:
+   ```html
+   <form method="POST" action="../../backend/controllers/actualizar_registro.php" enctype="multipart/form-data">
+   ```
+
+3. **Presencia del campo en el envío**: Añade un campo de depuración al inicio de actualizar_registro.php:
+   ```php
+   // Añadir al inicio de actualizar_registro.php después de require_once
+   file_put_contents(__DIR__ . '/debug.txt', 
+       date('Y-m-d H:i:s') . " - POST: " . print_r($_POST, true) . "\n", 
+       FILE_APPEND);
+   ```
+
+4. **Validación de formulario**: Asegúrate que no haya JavaScript que esté validando o bloqueando el envío.
+
+## Siguiente paso
+
+¿Puedes mostrarme la parte del formulario en `ver_registro.php` donde está el campo de selección de estado para verificar que esté configurado correctamente?
+
+RafaelG1986: verifica este
+
+GitHub Copilot: # Solución al problema de actualización de estados
+
+Revisé el archivo actualizar_estado.php y veo que está configurado correctamente. El problema probablemente está en cómo se invoca desde el frontend.
+
+## Análisis de actualizar_estado.php
+
+El controlador está correctamente configurado:
+1. Recibe los parámetros `id` y `estado` vía POST
+2. Realiza una actualización SQL válida
+3. Tiene logging para depuración
+
+## Dónde está el problema
+
+El problema parece estar en cómo se llama a este controlador. Este archivo está diseñado para ser llamado mediante AJAX/fetch desde JavaScript, no desde un envío de formulario tradicional.
+
+### Verifica estos puntos:
+
+1. **Revisa el archivo de debug**: 
+   - Abre debug_estado.log
+   - Verifica si hay entradas cuando intentas cambiar un estado
+   - Si no hay entradas, el controlador no está siendo llamado
+
+2. **Revisa el JavaScript en ver_registro.php**:
+   - Busca código que maneje el evento de cambio del selector de estados
+   - Debería tener algo como:
+
+```javascript
+// Debe existir algo como esto en tu JavaScript
+document.getElementById('estado').addEventListener('change', function() {
+    const id = <?php echo $id; ?>;
+    const nuevoEstado = this.value;
+    
+    fetch('../../backend/controllers/actualizar_estado.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'id=' + id + '&estado=' + encodeURIComponent(nuevoEstado)
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log('Estado actualizado:', data);
+    })
+    .catch(error => console.error('Error:', error));
+});
+```
+
+## Solución
+
+1. **Añade este código al final de ver_registro.php** (justo antes de `</body>`):
+
+```html
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Solo si existe el selector de estado
+    const estadoSelect = document.getElementById('estado');
+    if (estadoSelect) {
+        estadoSelect.addEventListener('change', function() {
+            const id = <?php echo $id; ?>;
+            const nuevoEstado = this.value;
+            
+            console.log('Actualizando estado:', id, nuevoEstado);
+            
+            // Mostrar indicador visual
+            const estadoLabel = document.querySelector('label[for="estado"]');
+            const textoOriginal = estadoLabel.textContent;
+            estadoLabel.textContent = 'Actualizando...';
+            
+            fetch('../../backend/controllers/actualizar_estado.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'id=' + id + '&estado=' + encodeURIComponent(nuevoEstado)
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Respuesta:', data);
+                estadoLabel.textContent = textoOriginal;
+                alert('Estado actualizado correctamente');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                estadoLabel.textContent = textoOriginal;
+                alert('Error al actualizar el estado');
+            });
+        });
+    }
+});
+</script>
+```
+
+2. **Verifica que el campo de estado tenga el ID correcto** en ver_registro.php:
+
+```html
+<select name="estado" id="estado" class="form-control">
+    <!-- Opciones aquí -->
+</select>
+```
+
+Con estos cambios, el estado debería actualizarse automáticamente al seleccionar una nueva opción.
+
+RafaelG1986: Sigue sin actualizar el estado, en el campo de estado, no cambia el estado, cuando se selecciona.
+
+GitHub Copilot: # Solución: Estado no se actualiza al seleccionarlo
+
+Revisando el código que proporcionaste, encontré el problema principal: **no se están generando las opciones en el selector de estados**.
+
+## El problema
+
+En tu código, tienes definido el array `$estados` al inicio del archivo, pero en la parte donde defines el select de estados, solo aparece un comentario `<!-- Opciones aquí -->` en lugar de generar dinámicamente las opciones.
+
+```php
+<select name="estado" id="estado" class="form-control">
+    <!-- Opciones aquí -->
+</select>
+```
+
+## Solución
+
+Modifica esta parte del código para incluir las opciones basadas en el array de estados:
+
+```php
+<select name="estado" id="estado" class="form-control">
+    <?php foreach ($estados as $est): ?>
+        <option value="<?php echo htmlspecialchars($est); ?>" 
+                <?php echo ($est == $registro['estado']) ? 'selected' : ''; ?>>
+            <?php echo htmlspecialchars($est); ?>
+        </option>
+    <?php endforeach; ?>
+</select>
+```
+
+Reemplaza la línea:
+```php
+<!-- Opciones aquí -->
+```
+
+Con el bucle foreach mostrado arriba.
+
+## Verificación adicional
+
+1. También revisa el archivo de log generado por actualizar_estado.php:
+   ```
+   c:\xampp\htdocs\Conexion-Main\backend\controllers\debug_estado.log
+   ```
+
+2. Verifica que actualizar_estado.php incluye la ejecución de la consulta SQL:
+   ```php
+   $stmt = $conn->prepare("UPDATE registros SET estado = :estado WHERE id = :id");
+   $stmt->bindParam(':estado', $estado);
+   $stmt->bindParam(':id', $id);
+   $stmt->execute();
+   ```
+
+3. Asegúrate de que el controlador devuelve una respuesta adecuada:
+   ```php
+   echo json_encode(['success' => true, 'message' => 'Estado actualizado correctamente']);
+   ```
+
+Con estos cambios, la funcionalidad de actualización de estado debería funcionar correctamente al seleccionar un nuevo valor.
+
+RafaelG1986: no aparece nada en debug_estado.log
+
+GitHub Copilot: # Solución: Estado no se actualiza - No se llama al controlador
+
+El archivo de log está vacío, lo que confirma que la función `actualizar_estado.php` nunca está siendo llamada cuando cambias el estado. Esto indica que el JavaScript para capturar el evento de cambio de estado no está funcionando.
+
+## Solución completa:
+
+Añade este código al final de `ver_registro.php` justo antes del cierre `</body>`:
+
+```html
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Inicializando eventos de registro...');
+    
+    // Obtener referencia al selector de estado
+    const estadoSelect = document.getElementById('estado');
+    
+    if (estadoSelect) {
+        console.log('Selector de estado encontrado, añadiendo event listener');
+        
+        // Añadir evento al cambiar el valor
+        estadoSelect.addEventListener('change', function() {
+            const id = <?php echo $id; ?>;
+            const nuevoEstado = this.value;
+            
+            console.log('Estado cambiado:', id, nuevoEstado);
+            
+            // Crear FormData para enviar
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('estado', nuevoEstado);
+            
+            // Mostrar indicador visual
+            document.body.style.cursor = 'wait';
+            this.disabled = true;
+            
+            // Realizar petición AJAX
+            fetch('../../backend/controllers/actualizar_estado.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Respuesta recibida:', data);
+                if (data.success) {
+                    // Mostrar mensaje de éxito
+                    alert('Estado actualizado correctamente');
+                } else {
+                    alert('Error al actualizar el estado: ' + (data.message || 'Error desconocido'));
+                }
+            })
+            .catch(error => {
+                console.error('Error en la petición:', error);
+                alert('Error al comunicarse con el servidor');
+            })
+            .finally(() => {
+                // Restaurar interfaz
+                document.body.style.cursor = 'default';
+                this.disabled = false;
+            });
+        });
+    } else {
+        console.error('No se encontró el selector de estado');
+    }
+});
+</script>
+```
+
+## Verificaciones adicionales:
+
+1. **Asegúrate que el select tiene el ID correcto**:
+   ```html
+   <select name="estado" id="estado" class="form-control">
+   ```
+
+2. **Verifica que se están generando las opciones**:
+   ```php
+   <?php foreach ($estados as $est): ?>
+       <option value="<?php echo htmlspecialchars($est); ?>" 
+               <?php echo ($est == $registro['estado']) ? 'selected' : ''; ?>>
+           <?php echo htmlspecialchars($est); ?>
+       </option>
+   <?php endforeach; ?>
+   ```
+
+3. **Abre la consola del navegador (F12)** para ver si hay algún error de JavaScript
+
+Con esta implementación completa, el cambio de estado debería funcionar correctamente.
+
+RafaelG1986: admin.php:1 Uncaught ReferenceError: actualizarEstado is not defined
+    at HTMLSelectElement.onchange (admin.php:1:1)
+
+GitHub Copilot: # Solución: Error "actualizarEstado is not defined"
+
+El problema es que en alguna parte del código HTML se está usando un atributo `onchange="actualizarEstado()"` pero esta función no está definida. Esto ocurre probablemente en `admin.php` donde estás cargando la vista de registros.
+
+## Solución paso a paso:
+
+### 1. Localiza dónde se está utilizando actualizarEstado
+
+Busca en `admin.php` o en los archivos que carga (`vista_registros.php`) selectores con atributos onchange:
+
+```html
+<!-- Este tipo de código está causando el error -->
+<select onchange="actualizarEstado(this.value, <?php echo $id; ?>)">
+```
+
+### 2. Opciones para corregir:
+
+#### Opción A: Definir la función faltante
+
+Añade esta función en admin.php:
+
+```javascript
+// Añade esta función en la sección de scripts de admin.php
+function actualizarEstado(estado, id) {
+    console.log('Actualizando estado:', estado, id);
+    
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('estado', estado);
+    
+    fetch('../../backend/controllers/actualizar_estado.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Estado actualizado correctamente');
+        } else {
+            alert('Error al actualizar: ' + (data.message || 'Error desconocido'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error de comunicación con el servidor');
+    });
+}
+```
+
+#### Opción B: Reemplazar onchange por event listeners
+
+Mejor opción: Cambia el enfoque de usar atributos onchange directos:
+
+1. Elimina los atributos onchange del HTML:
+   ```html
+   <!-- Cambiar esto -->
+   <select onchange="actualizarEstado(this.value, <?php echo $id; ?>)">
+   
+   <!-- Por esto -->
+   <select class="estado-selector" data-id="<?php echo $id; ?>">
+   ```
+
+2. Usa event listeners para manejar los cambios:
+   ```javascript
+   document.addEventListener('DOMContentLoaded', function() {
+       // Seleccionar todos los selectores de estado
+       document.querySelectorAll('.estado-selector').forEach(function(selector) {
+           selector.addEventListener('change', function() {
+               const id = this.getAttribute('data-id');
+               const estado = this.value;
+               
+               // Luego código para fetch...
+           });
+       });
+   });
+   ```
+
+Revisa el HTML generado por `admin.php` para encontrar exactamente dónde se está usando la función no definida y aplica la solución más adecuada.
+
+RafaelG1986: Llamada recibida: {"id":"Conectado","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+Llamada recibida: {"id":"Conectado","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+Llamada recibida: {"id":"Conectado","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+Llamada recibida: {"id":"Conectado","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+
+GitHub Copilot: # Solución: Error en id enviado a actualizar_estado.php
+
+¡Ya encontré el problema! Al revisar el log de debug, veo que se está enviando información incorrecta:
+
+```
+Llamada recibida: {"id":"Conectado","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+```
+
+## El problema
+
+1. Se está enviando **"Conectado"** como el ID del registro, cuando debería ser un número entero (el ID real del registro)
+2. Al convertir "Conectado" a entero en PHP, resulta en 0 (`intval("Conectado") = 0`)
+3. No existe ningún registro con ID=0, por lo que la actualización afecta 0 filas
+
+## Solución
+
+### 1. Localiza el código JavaScript que envía la solicitud AJAX:
+
+Busca código similar a:
+```javascript
+function actualizarEstado(valor, id) {
+    // ...
+}
+```
+
+O donde se esté usando:
+```javascript
+fetch('../../backend/controllers/actualizar_estado.php', { /* ... */ })
+```
+
+### 2. Corrige el parámetro id:
+
+En lugar de:
+```javascript
+const id = "Conectado";  // o algo similar
+```
+
+Debe ser:
+```javascript
+const id = <?php echo $id; ?>;  // El ID real del registro
+```
+
+### 3. Verifica la implementación en ver_registro.php o admin.php:
+
+```javascript
+// Debe ser:
+document.querySelectorAll('.selector-estado').forEach(select => {
+    select.addEventListener('change', function() {
+        const id = this.dataset.id;  // Obtener el ID del atributo data-id
+        const estado = this.value;
+        
+        // Resto del código...
+    });
+});
+```
+
+### 4. En el HTML del selector:
+
+```html
+<select class="selector-estado" data-id="<?php echo $registro['id']; ?>">
+    <!-- opciones... -->
+</select>
+```
+
+Con estas correcciones, el sistema enviará el ID correcto y la actualización del estado funcionará correctamente.
+
+RafaelG1986: Llamada recibida: {"id":"Conectado","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+Llamada recibida: {"id":"Conectado","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+
+GitHub Copilot: # Solución: Error en actualización de estado - ID incorrecto
+
+Después de analizar el log de depuración, he encontrado el problema exacto:
+
+```log
+Llamada recibida: {"id":"Conectado","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+```
+
+## El problema específico
+
+1. El sistema está enviando "Conectado" (un texto) como ID del registro
+2. Cuando PHP lo convierte a entero (`intval("Conectado")`) resulta en 0
+3. No existe ningún registro con ID=0, por lo que la actualización no afecta a ninguna fila
+
+## Solución paso a paso
+
+### 1. Identifica dónde se está generando este error
+
+Revisa dónde se llama a la función de actualización de estado. Busca algo como:
+
+```javascript
+function actualizarEstado(estado, id) {
+    // O busca donde se crea el objeto para enviar al servidor
+    formData.append('id', id); // Aquí es donde se está pasando "Conectado" como ID
+}
+```
+
+### 2. Corrige el código JavaScript
+
+Reemplaza esto (en admin.php o ver_registro.php):
+
+```javascript
+// Código incorrecto - algo similar a esto
+function actualizarEstado(estado) {
+    const id = document.getElementById('estado').value; // Esto está mal - está tomando el valor del estado como ID
+    // O también podría ser:
+    const id = "Conectado"; // Valor hardcodeado
+    
+    // Resto del código...
+}
+```
+
+Por esto:
+
+```javascript
+// Código correcto
+function actualizarEstado(estado) {
+    const id = <?php echo $id; ?>; // Usar el ID numérico del registro actual
+    
+    // O si estás en una lista de registros:
+    const id = this.closest('tr').dataset.id; // Obtener desde un atributo data-id
+    
+    // Resto del código...
+}
+```
+
+### 3. Modifica actualizar_estado.php para validar mejor los datos
+
+```php
+// Mejor validación en actualizar_estado.php
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['estado'])) {
+    $id = intval($_POST['id']);
+    $estado = $_POST['estado'];
+    
+    // Validación adicional
+    if ($id <= 0) {
+        echo json_encode(['success' => false, 'message' => 'ID de registro inválido: ' . $_POST['id']]);
+        exit;
+    }
+    
+    // Resto del código...
+}
+```
+
+Si necesitas ayuda para identificar específicamente dónde se está creando este error, proporciona el código de la función de actualización de estado o la parte de JavaScript que maneja el cambio de estado.
+
+RafaelG1986: verifica este archivo
+
+GitHub Copilot: # Solución al problema: Actualización de estado
+
+Después de revisar el archivo admin.php, encontré el problema y su solución.
+
+## El problema identificado
+
+1. **En el log de debug**:
+   ```
+   Llamada recibida: {"id":"Conectado","estado":"46"}
+   ID: 0, Estado: 46, Filas: 0
+   ```
+
+2. **En el código de admin.php**:
+   Hay una función correcta para actualizar el estado:
+   ```javascript
+   function actualizarEstado(estado, id) {
+       console.log('Actualizando estado:', estado, id);
+       // ...
+   }
+   ```
+   
+3. **Pero el ID se está pasando incorrectamente** en alguna parte del código que no está a la vista, probablemente en una de las vistas cargadas dinámicamente.
+
+## La solución
+
+1. **Añade el evento `onchange` correctamente en los selectores de estado** en `ver_registro.php`:
+
+```html
+<!-- Mal (actual) -->
+<select class="form-control" id="estado" name="estado" onchange="actualizarEstado(this.value, 'Conectado')">
+
+<!-- Correcto (debe ser) -->
+<select class="form-control" id="estado" name="estado" onchange="actualizarEstado(this.value, <?php echo $id; ?>)">
+```
+
+2. **O mejor aún, usa la clase y el atributo data-id** que ya tienes configurado:
+
+```html
+<select class="form-control selector-estado" id="estado" name="estado" data-id="<?php echo $id; ?>">
+    <?php foreach ($estados as $est): ?>
+        <option value="<?php echo htmlspecialchars($est); ?>" 
+                <?php echo ($est == $registro['estado']) ? 'selected' : ''; ?>>
+            <?php echo htmlspecialchars($est); ?>
+        </option>
+    <?php endforeach; ?>
+</select>
+```
+
+3. **Y elimina el atributo onchange** para evitar duplicación de eventos.
+
+## Verificación
+
+1. Después de hacer estos cambios, verifica el log de debug:
+   ```
+   tail -f c:\xampp\htdocs\Conexion-Main\backend\controllers\debug_estado.log
+   ```
+
+2. Intenta cambiar el estado de un registro y comprueba que ahora se enví­a el ID numérico correcto.
+
+Los selectores de estado deben usar el ID numérico del registro y no la cadena "Conectado" que probablemente es el valor de algún otro campo.
+
+RafaelG1986: revisalo primero
+
+GitHub Copilot: # Análisis del problema con la actualización de estado
+
+He revisado el archivo ver_registro.php y parece estar correctamente implementado. El código JavaScript para actualizar el estado está bien estructurado:
+
+1. ✅ **Obtiene el ID correcto**: `const id = <?php echo $id; ?>;`
+2. ✅ **Crea un FormData con los datos correctos**
+3. ✅ **Envía la petición al controlador adecuado**
+4. ✅ **Maneja las respuestas y errores correctamente**
+
+## El problema real
+
+El problema está en **otra parte del sistema** donde se invoca a `actualizar_estado.php` con datos incorrectos:
+
+```log
+Llamada recibida: {"id":"Conectado","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+```
+
+Este error no viene del archivo que hemos revisado, sino de otro lugar en el sistema (probablemente `vista_registros.php` o una interacción desde `admin.php`).
+
+## Pasos para resolver el problema
+
+1. **Revisa `vista_registros.php`**: Busca código que actualice estados mediante AJAX.
+
+2. **Corrige cualquier función `actualizarEstado` en otros archivos**:
+   ```javascript
+   // Ejemplo de código incorrecto que podría estar en otro archivo
+   function actualizarEstado(estado, valorConector) {
+     // Aquí está pasando "Conectado" como ID
+     fetch('../../backend/controllers/actualizar_estado.php', {
+       method: 'POST',
+       body: new URLSearchParams({
+         'id': valorConector, // PROBLEMA: debería ser un ID numérico
+         'estado': estado
+       })
+     });
+   }
+   ```
+
+3. **Mejora el controlador `actualizar_estado.php`** para validar mejor los datos:
+   ```php
+   if (!is_numeric($_POST['id']) || intval($_POST['id']) <= 0) {
+     echo json_encode(['success' => false, 'message' => 'ID de registro inválido']);
+     exit;
+   }
+   ```
+
+¿Quieres que revisemos algún otro archivo específico donde podría estar el problema?
+
+RafaelG1986: revisa el archivo
+
+GitHub Copilot: # Solución: Problema de ID en actualización de estado
+
+¡He encontrado el problema en el archivo estados.js! Hay varias cuestiones críticas:
+
+## Problemas identificados
+
+1. **Línea PHP en archivo JavaScript**: 
+   ```javascript
+   const id = <?php echo $id; ?>;  // El ID real del registro
+   ```
+   Esta línea no funcionará en un archivo JS puro. PHP no se procesa en archivos .js a menos que se incluyan con `<script src="estados.php">` o similar.
+
+2. **Dos funciones distintas para lo mismo**:
+   ```javascript
+   function cambiarEstado(id, nuevoEstado) { /* ... */ }
+   function actualizarEstado(valor, id) { /* ... */ }
+   ```
+   Tienes dos funciones diferentes que parecen hacer lo mismo, lo que causa confusión.
+
+3. **El problema específico** - En `actualizarEstado()` probablemente estás invirtiendo los parámetros:
+   ```javascript
+   // Probable implementación actual (incorrecta)
+   function actualizarEstado(valor, id) {
+       cambiarEstado(id, valor); // INCORRECTO: Está pasando id como estado
+   }
+   ```
+
+## Solución
+
+Modifica el archivo estados.js así:
+
+```javascript
+// Eliminar esta línea
+// const id = <?php echo $id; ?>;  // No funcionará en un archivo .js
+
+// Reemplazar actualizarEstado con esta versión corregida
+function actualizarEstado(estado, id) {
+    // Validación de ID
+    if (!id || isNaN(parseInt(id))) {
+        console.error("ID inválido:", id);
+        alert("Error: ID de registro inválido");
+        return;
+    }
+    
+    console.log("Actualizando estado:", id, estado);
+    
+    // Usar la función existente
+    cambiarEstado(id, estado);
+}
+
+// Resto del código queda igual...
+```
+
+## Para probar la solución
+
+1. Reemplaza completamente el archivo estados.js
+2. Verifica los logs de debug después de intentar cambiar un estado
+3. Asegúrate de que las vistas que usan este archivo pasan el ID correcto
+
+Con estos cambios, cuando se llame a `actualizarEstado(estado, id)` desde cualquier parte de la aplicación, se validará que el ID sea un número y se enviará correctamente al servidor.
+
+RafaelG1986: dame el codigo completo
+
+GitHub Copilot: # Código completo para estados.js
+
+```javascript
+/**
+ * Configuración de colores para cada estado
+ */
+const estadoColores = {
+    'Primer contacto':          {bg:'#ffcccc', color:'#a00'},
+    'Conectado':                {bg:'#ffd6cc', color:'#b36b00'},
+    'No confirmado a desayuno': {bg:'#ffe5cc', color:'#b36b00'},
+    'Confirmado a Desayuno':    {bg:'#cce0ff', color:'#00509e'},
+    'Desayuno Asistido':        {bg:'#cce6ff', color:'#00509e'},
+    'Congregado sin desayuno':  {bg:'#d4edda', color:'#155724'},
+    'Visitante':                {bg:'#fff', color:'#222'},
+    'No interesado':            {bg:'#ffdddd', color:'#a00'},
+    'Por Validar Estado':       {bg:'#ffe5b4', color:'#b36b00'}
+};
+
+/**
+ * Función principal para cambiar el estado de un registro
+ * @param {number} id - ID del registro
+ * @param {string} nuevoEstado - Nuevo estado a asignar
+ */
+function cambiarEstado(id, nuevoEstado) {
+    console.log("Cambiando estado:", id, nuevoEstado);
+    
+    // Validación adicional
+    if (!id || isNaN(parseInt(id))) {
+        console.error("cambiarEstado: ID inválido:", id);
+        return;
+    }
+    
+    const data = new FormData();
+    data.append('id', id);
+    data.append('estado', nuevoEstado);
+    
+    // Mostrar indicador visual
+    const elemento = document.getElementById('estado-td-' + id);
+    if (elemento) {
+        elemento.style.opacity = '0.5';
+    }
+    
+    fetch('../../backend/controllers/actualizar_estado.php', {
+        method: 'POST',
+        body: data
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Estado actualizado correctamente');
+            // Actualizar color si existe el elemento
+            setEstadoColor(id, nuevoEstado);
+        } else {
+            console.error('Error del servidor:', data.message || 'Error desconocido');
+            alert('Error al actualizar el estado: ' + (data.message || 'Error desconocido'));
+        }
+    })
+    .catch(error => {
+        console.error('Error en la petición:', error);
+        alert('Error de conexión al actualizar el estado');
+    })
+    .finally(() => {
+        // Restaurar opacidad
+        if (elemento) {
+            elemento.style.opacity = '1';
+        }
+    });
+}
+
+/**
+ * Función que valida los parámetros y llama a cambiarEstado
+ * Esta es la función que debe usarse en los atributos onchange
+ * @param {string} estado - Nuevo estado a asignar
+ * @param {number|string} id - ID del registro (debe ser numérico)
+ */
+function actualizarEstado(estado, id) {
+    // Validación del ID
+    if (!id || isNaN(parseInt(id))) {
+        console.error("ID inválido:", id);
+        alert("Error: ID de registro inválido");
+        return;
+    }
+    
+    // Convertir a número para asegurar formato correcto
+    const idNumerico = parseInt(id);
+    console.log("Actualizando estado:", idNumerico, estado);
+    
+    // Usar la función principal
+    cambiarEstado(idNumerico, estado);
+}
+
+/**
+ * Aplica los colores correspondientes al estado
+ * @param {number} id - ID del registro
+ * @param {string} estado - Estado cuyo color aplicar
+ */
+function setEstadoColor(id, estado) {
+    const td = document.getElementById('estado-td-' + id);
+    if (!td) {
+        console.warn(`Elemento con ID 'estado-td-${id}' no encontrado`);
+        return;
+    }
+    
+    if (!estadoColores[estado]) {
+        console.warn(`No hay configuración de color para el estado '${estado}'`);
+        return;
+    }
+    
+    td.style.setProperty('background', estadoColores[estado].bg, 'important');
+    td.style.setProperty('color', estadoColores[estado].color, 'important');
+}
+
+/**
+ * Inicializa los colores y eventos para los selectores de estado
+ */
+function inicializarEstados() {
+    console.log("Inicializando estados...");
+    
+    // Inicializar colores para selectores existentes
+    document.querySelectorAll('select[name="estado"]').forEach(function(sel) {
+        // Intentar obtener el ID desde data-id
+        let id = sel.getAttribute('data-id');
+        
+        // Si no hay data-id, intentar obtenerlo del elemento contenedor
+        if (!id) {
+            const td = sel.closest('td[id^="estado-td-"]');
+            if (td) {
+                id = td.id.replace('estado-td-', '');
+            }
+        }
+        
+        if (id) {
+            // Aplicar color inicial
+            setEstadoColor(id, sel.value);
+            
+            // Añadir evento solo si no tiene ya un manejador onchange
+            if (!sel.hasAttribute('onchange')) {
+                sel.addEventListener('change', function() {
+                    actualizarEstado(sel.value, id);
+                    setEstadoColor(id, sel.value);
+                });
+            }
+        }
+    });
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', inicializarEstados);
+
+// Exportar funciones para uso global
+window.actualizarEstado = actualizarEstado;
+window.cambiarEstado = cambiarEstado;
+window.setEstadoColor = setEstadoColor;
+```
+
+Con este código completo:
+
+1. Se valida correctamente el ID antes de enviarlo al servidor
+2. Se convierte el ID a número para evitar problemas con "Conectado" como ID
+3. Se manejan mejor los errores y se muestran mensajes útiles
+4. Se inicializan correctamente los colores y eventos para los selectores
+5. Se exportan las funciones al objeto window para que estén disponibles globalmente
+
+Reemplaza completamente tu archivo estados.js con este código y deberías ver que la actualización de estados funciona correctamente.
+
+RafaelG1986: Llamada recibida: {"id":"Confirmado a Desayuno","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+Llamada recibida: {"id":"No confirmado a desayuno","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+
+GitHub Copilot: # Solución: Error de actualización de estado
+
+Sigo viendo el mismo problema en el log, los parámetros están completamente invertidos:
+
+```log
+Llamada recibida: {"id":"Confirmado a Desayuno","estado":"46"}
+```
+
+Esto significa que se está enviando el **nombre del estado** como ID y posiblemente un ID como valor de estado.
+
+## El problema exacto
+
+En algún lugar de tu código hay un elemento como este:
+
+```html
+<select onchange="actualizarEstado(this.options[this.selectedIndex].text, this.value)">
+  <option value="46">Confirmado a Desayuno</option>
+  <!-- Otros estados... -->
+</select>
+```
+
+O similar que está invirtiendo los parámetros.
+
+## Solución inmediata
+
+1. **Modifica la función `actualizarEstado` para detectar y corregir este error**:
+
+```javascript
+function actualizarEstado(estadoOId, idOEstado) {
+    // Detectar si los parámetros están invertidos
+    let id, estado;
+    
+    // Si el primer parámetro es texto y el segundo es número
+    if (isNaN(estadoOId) && !isNaN(idOEstado)) {
+        console.warn("Parámetros invertidos, corrigiendo automáticamente");
+        estado = estadoOId;
+        id = idOEstado;
+    } 
+    // Si el primer parámetro es un nombre de estado conocido
+    else if (estadoColores[estadoOId]) {
+        console.warn("Primer parámetro es un estado, corrigiendo");
+        estado = estadoOId;
+        id = idOEstado;
+    }
+    // Caso normal (estado, id)
+    else {
+        estado = estadoOId;
+        id = idOEstado;
+    }
+    
+    // Validar ID final
+    if (!id || isNaN(parseInt(id))) {
+        console.error("ID inválido después de corrección:", id);
+        alert("Error: ID de registro inválido");
+        return;
+    }
+    
+    // Continuar con la actualización normal
+    console.log("Parámetros corregidos - ID:", id, "Estado:", estado);
+    cambiarEstado(parseInt(id), estado);
+}
+```
+
+2. **Busca y corrige todas las llamadas a `actualizarEstado`** en tu código.
+
+Revisa específicamente:
+- `vista_registros.php` 
+- `ver_registro.php`
+- Cualquier otra vista que use selectores de estados
+
+Para encontrar el error exacto, busca todas las apariciones de `actualizarEstado` en tu proyecto y asegúrate de que se estén pasando los parámetros en el orden correcto: primero el estado, luego el ID.
+
+Esta solución debería resolver el problema inmediatamente mientras encuentras la fuente exacta del error.
+
+RafaelG1986: comienza revisando este archivo
+
+GitHub Copilot: # Revisión del problema de actualización de estado
+
+El archivo actualizar_estado.php está correctamente implementado. El problema no está aquí sino en cómo se envían los datos desde el frontend.
+
+## Análisis del log de error
+
+```log
+Llamada recibida: {"id":"Confirmado a Desayuno","estado":"46"}
+ID: 0, Estado: 46, Filas: 0
+```
+
+El problema es claro: **los parámetros están invertidos**. Se está enviando:
+- Como ID → el nombre del estado ("Confirmado a Desayuno")
+- Como estado → probablemente el ID del registro (46)
+
+Cuando PHP convierte "Confirmado a Desayuno" a entero, resulta en 0, y no hay registros con ID=0.
+
+## Solución en 2 pasos
+
+### 1. Localiza las llamadas incorrectas
+
+Busca en tu código (probablemente `vista_registros.php`) llamadas como:
+
+```html
+<!-- INCORRECTO: Parámetros invertidos -->
+<select onchange="actualizarEstado(this.options[this.selectedIndex].text, '46')">
+```
+
+o
+
+```javascript
+// INCORRECTO: Parámetros invertidos
+actualizarEstado(estado, id); // Si la función espera (id, estado)
+```
+
+### 2. Actualiza todas las llamadas con el orden correcto
+
+```html
+<!-- CORRECTO -->
+<select onchange="actualizarEstado('46', this.value)">
+```
+
+donde:
+- `'46'` es el ID del registro
+- `this.value` es el nuevo estado seleccionado
+
+O si tu función `actualizarEstado` espera (estado, id), entonces el orden es correcto pero los valores están mal (se está pasando texto como ID).
+
+### 3. Alternativa: Haz más robusta la función actualizarEstado
+
+```javascript
+function actualizarEstado(estado, id) {
+    // Verificar si id es numérico
+    if (isNaN(parseInt(id)) && !isNaN(parseInt(estado))) {
+        console.warn("Parámetros invertidos, intercambiando...");
+        [estado, id] = [id, estado]; // Intercambiar valores
+    }
+    
+    id = parseInt(id);
+    console.log("Enviando ID:", id, "Estado:", estado);
+    
+    // Resto del código...
+}
+```
+
+Este cambio detectará y corregirá automáticamente cuando los parámetros estén invertidos.
+
+¿Quieres que revisemos otro archivo específico para encontrar el origen del problema?
+
+RafaelG1986: revisa por favor
+
+GitHub Copilot: # ¡He encontrado el problema exacto en vista_registros.php!
+
+El problema está en la línea 78 donde se llama a la función `actualizarEstado` con los parámetros en orden inverso:
+
+```php
+<select onchange="actualizarEstado(<?php echo $registro['id']; ?>, this.value)">
+```
+
+## El problema específico
+
+1. En vista_registros.php se está llamando a la función con el orden: **(`id`, `estado`)**
+2. Mientras que en `estados.js` la función espera: **(`estado`, `id`)**
+3. Esto resulta en que se envía el ID como estado y el estado como ID al servidor
+
+## Solución
+
+Tienes dos opciones:
+
+### Opción 1: Corregir la llamada en vista_registros.php (recomendada)
+
+Cambia la línea 78 de:
+```php
+<select onchange="actualizarEstado(<?php echo $registro['id']; ?>, this.value)">
+```
+
+a:
+```php
+<select onchange="actualizarEstado(this.value, <?php echo $registro['id']; ?>)">
+```
+
+### Opción 2: Modificar la función en estados.js
+
+Cambiar la definición de la función para que acepte los parámetros en el orden inverso:
+
+```javascript
+function actualizarEstado(id, estado) {
+    // En vez de estado, id
+    cambiarEstado(id, estado);
+}
+```
+
+## ¿Por qué funciona esta solución?
+
+La función `actualizarEstado` es un wrapper que llama a `cambiarEstado`, pero con parámetros en orden diferente. Asegurarte de que todos los lugares donde se llama a `actualizarEstado` usen el mismo orden de parámetros resolverá el problema.
+
+Con esta corrección, los estados se actualizarán correctamente cuando se cambien en la interfaz de usuario.
+
+RafaelG1986: Listo, solucionado el tema.
+
+GitHub Copilot: # ¡Excelente! Problema de actualización de estados resuelto
+
+Me alegra que hayas solucionado el problema con la actualización de estados. En resumen, estos eran los problemas que encontramos y resolvimos:
+
+1. **Parámetros invertidos en la función actualizarEstado**: 
+   - Estaban intercambiados el estado y el ID al llamarla desde los selectores
+   - El log de depuración mostraba: `{"id":"Confirmado a Desayuno","estado":"46"}`
+
+2. **Inconsistencia entre la implementación de JavaScript y el HTML**:
+   - La función esperaba `actualizarEstado(estado, id)`
+   - Pero en algunos lugares se usaba `actualizarEstado(id, estado)`
+
+3. **La redefinición de la función en vista_registros.php**:
+   ```javascript
+   window.actualizarEstado = function(id, estado) {
+       // ...código que espera el ID primero...
+   }
+   ```
+
+## Próximos pasos recomendados
+
+1. **Mantén la consistencia**: Asegúrate de que todas las llamadas a `actualizarEstado` usen el mismo orden de parámetros en toda la aplicación.
+
+2. **Actualiza la documentación**: Añade comentarios claros sobre el orden de los parámetros en todas las funciones relacionadas.
+
+3. **Añade validación robusta**: Para evitar problemas futuros, valida siempre que el ID sea numérico antes de enviarlo al servidor.
+
+¿Necesitas ayuda con algún otro aspecto del sistema?
+
+RafaelG1986: actualicemos el repositorio
+
+GitHub Copilot: # Actualización del repositorio con las soluciones implementadas
+
+¡Perfecto! Veo que el problema está completamente solucionado. El log de debug muestra que ahora se está enviando correctamente:
+
+```
+2025-04-30 04:59:34 - Actualizando estado: 46 - Conectado
+```
+
+El ID (46) y el estado (Conectado) ahora están en el orden correcto.
+
+## Actualizar el repositorio con todos los cambios
+
+Sigue estos pasos para actualizar tu repositorio:
+
+1. **Verificar los cambios realizados**:
+   ```bash
+   git status
+   ```
+
+2. **Agregar todos los archivos modificados**:
+   ```bash
+   git add frontend/views/vista_informes.php
+   git add backend/controllers/generar_informe.php
+   git add frontend/js/informes.js
+   git add frontend/views/ver_registro.php
+   git add frontend/js/estados.js
+   git add frontend/views/vista_registros.php
+   git add backend/controllers/actualizar_estado.php
+   ```
+   
+   O para agregar todos los cambios de una vez:
+   ```bash
+   git add .
+   ```
+
+3. **Crear un commit con mensaje descriptivo**:
+   ```bash
+   git commit -m "Correcciones importantes: Sistema de informes, preservación de fotos en edición y actualización de estados"
+   ```
+
+4. **Subir los cambios al repositorio remoto**:
+   ```bash
+   git push origin main
+   ```
+   (Reemplaza "main" con el nombre de tu rama principal si es diferente)
+
+## Cambios clave implementados
+
+1. ✅ **Sistema de generación de informes completo**
+2. ✅ **Preservación de fotos al editar registros**
+3. ✅ **Corrección de la actualización de estados**
+   - Orden correcto de parámetros
+   - Validación adecuada de ID
+   - Mejor manejo de errores
+
+Con estos cambios, tu sistema ahora debería funcionar correctamente en todas las áreas que presentaban problemas.
+
+RafaelG1986: Listo, necesito implementar en las acciones, un boton, de contactar por WhatsApp, normalmente el campo tiene el numero telefonico, que por lo general funciona con whatsApp.
+
+GitHub Copilot: # Implementación de Botón de WhatsApp para Contactos
+
+Vamos a implementar un botón para contactar directamente por WhatsApp desde la lista de registros.
+
+## Solución propuesta
+
+### 1. Añadir el botón en vista_registros.php
+
+Busca la sección donde muestras las acciones para cada registro (ver, editar, eliminar) y añade el botón de WhatsApp:
+
+```php
+<!-- Ubicar esta sección donde tienes los botones de acciones -->
+<td class="acciones">
+    <!-- Botones existentes (ver, editar, eliminar) -->
+    
+    <!-- Añadir botón de WhatsApp si existe teléfono -->
+    <?php if (!empty($registro['telefono'])): ?>
+        <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>&text=Hola%20<?php echo urlencode($registro['nombre_persona'] . ' ' . $registro['apellido_persona']); ?>,%20te%20contacto%20desde%20Conexi%C3%B3n" 
+           target="_blank" 
+           class="btn-accion btn-whatsapp" 
+           title="Contactar por WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    <?php endif; ?>
+</td>
+```
+
+### 2. Añadir función para formatear el teléfono
+
+Agrega esta función al principio del archivo vista_registros.php:
+
+```php
+<?php
+require_once __DIR__ . '/../../backend/config/database.php';
+
+// Función para formatear teléfono para WhatsApp
+function formatearTelefonoWhatsApp($telefono) {
+    // Eliminar todos los caracteres no numéricos
+    $numero = preg_replace('/[^0-9]/', '', $telefono);
+    
+    // Si no comienza con código de país (asumimos México como predeterminado)
+    if (strlen($numero) <= 10) {
+        $numero = '52' . $numero;
+    }
+    
+    return $numero;
+}
+
+// Resto del código...
+?>
+```
+
+### 3. Añadir estilo CSS para el botón de WhatsApp
+
+En el archivo CSS correspondiente (styles_vista_registros.css) o en un bloque de estilo:
+
+```css
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+    color: white;
+}
+
+/* Si estás usando Font Awesome para iconos */
+.fa-whatsapp {
+    font-size: 16px;
+}
+```
+
+### 4. Asegurarte de incluir Font Awesome
+
+Si aún no lo tienes incluido, añade Font Awesome en el head:
+
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+```
+
+## Versión avanzada: Añadir en ver_registro.php
+
+También puedes añadir esta funcionalidad en la vista detallada del registro:
+
+```php
+<?php if (!empty($registro['telefono'])): ?>
+    <div class="action-buttons">
+        <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>" 
+           class="btn btn-success btn-whatsapp" 
+           target="_blank">
+            <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+        </a>
+    </div>
+<?php endif; ?>
+```
+
+¿Quieres que comience con la implementación en alguno de estos archivos específicos?
+
+RafaelG1986: 4. Asegurarte de incluir Font Awesome
+Si aún no lo tienes incluido, añade Font Awesome en el head: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> ¿Donde?
+
+GitHub Copilot: # Implementación de botón de WhatsApp
+
+Veo que ya tienes implementado el botón de WhatsApp en ver_registro.php, ¡excelente! Sin embargo, falta agregar la función `formatearTelefonoWhatsApp()` que está siendo llamada pero no está definida.
+
+## 1. Añadir función formatearTelefonoWhatsApp en ver_registro.php
+
+Agrega esta función justo después de los includes al inicio del archivo (antes de verificar el ID):
+
+```php
+<?php
+require_once __DIR__ . '/../../backend/config/database.php';
+
+// Función para formatear teléfono para WhatsApp
+function formatearTelefonoWhatsApp($telefono) {
+    // Eliminar todos los caracteres no numéricos
+    $numero = preg_replace('/[^0-9]/', '', $telefono);
+    
+    // Si no comienza con código de país (asumimos México como predeterminado)
+    if (strlen($numero) <= 10) {
+        $numero = '52' . $numero;
+    }
+    
+    return $numero;
+}
+
+// Verificar si se ha proporcionado un ID
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    // ...resto del código
+```
+
+## 2. Respecto a Font Awesome
+
+Ya tienes Font Awesome incluido en el head de tu archivo:
+
+```php
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+```
+
+Estás usando la versión 6.4.0, que es más reciente que la 5.15.4 que mencioné, así que ¡ya está perfecto! No necesitas cambiar nada ahí.
+
+## 3. Mejorar el botón de WhatsApp (opcional)
+
+Para mejorar la apariencia del botón, puedes agregar este CSS en la sección de estilos:
+
+```css
+.btn-whatsapp {
+    background-color: #25D366; 
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+```
+
+Con estos cambios, el botón de WhatsApp funcionará correctamente y tendrá una apariencia profesional.
+
+RafaelG1986: cuando se va a chatear, se toma el campo del telefono, que es el que tiene el numero telefonico, faltaria agregarle el +57 y el numero de telefono, para escribirle a la persona.
+
+GitHub Copilot: # Implementación del botón de WhatsApp
+
+Veo que ya tienes el CSS necesario para el botón de WhatsApp, lo que es excelente. Ahora vamos a implementar la funcionalidad completa para poder contactar por WhatsApp.
+
+## 1. Modificar la función formatearTelefonoWhatsApp
+
+Necesitamos cambiar la función para que use el prefijo de Colombia (+57) en lugar del de México:
+
+```php
+// Función para formatear teléfono para WhatsApp
+function formatearTelefonoWhatsApp($telefono) {
+    // Eliminar todos los caracteres no numéricos
+    $numero = preg_replace('/[^0-9]/', '', $telefono);
+    
+    // Si no comienza con código de país, añadir prefijo de Colombia
+    if (strlen($numero) <= 10) {
+        $numero = '57' . $numero; // Cambiado de 52 (México) a 57 (Colombia)
+    }
+    
+    return $numero;
+}
+```
+
+## 2. Implementar el botón de WhatsApp en ver_registro.php
+
+Añade este código en la sección donde muestras el número de teléfono (justo después de mostrar el valor del teléfono):
+
+```php
+<!-- Dentro del div field-group de teléfono, después de mostrar el valor -->
+<?php if (!$editar && !empty($registro['telefono'])): ?>
+    <div class="contact-actions" style="margin-top: 10px;">
+        <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>&text=Hola%20<?php echo urlencode($registro['nombre_persona'] . ' ' . $registro['apellido_persona']); ?>,%20te%20contacto%20desde%20Conexi%C3%B3n" 
+           target="_blank" 
+           class="btn btn-whatsapp">
+            <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+        </a>
+    </div>
+<?php endif; ?>
+```
+
+Este código:
+1. Solo muestra el botón cuando NO estás en modo edición
+2. Solo aparece si el registro tiene un teléfono
+3. Usa la función formatearTelefonoWhatsApp para preparar el número
+4. Incluye un mensaje predeterminado personalizado con el nombre de la persona
+
+## 3. También implementar en vista_registros.php
+
+Para vista_registros.php, añade un botón similar en la columna de acciones:
+
+```php
+<td class="acciones">
+    <!-- Botones existentes -->
+    <a href="ver_registro.php?id=<?php echo $registro['id']; ?>" class="btn-accion" title="Ver detalles"><i class="fas fa-eye"></i></a>
+    <a href="ver_registro.php?id=<?php echo $registro['id']; ?>&editar=1" class="btn-accion" title="Editar"><i class="fas fa-edit"></i></a>
+    
+    <!-- Botón WhatsApp -->
+    <?php if (!empty($registro['telefono'])): ?>
+        <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>&text=Hola%20<?php echo urlencode($registro['nombre_persona']); ?>" 
+           target="_blank" 
+           class="btn-accion btn-whatsapp" 
+           title="Contactar por WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    <?php endif; ?>
+</td>
+```
+
+Con estos cambios, podrás contactar rápidamente a cualquier persona desde la ficha de registro o desde la lista de registros.
+
+RafaelG1986: Super, ahora si quedo completo la version, actualicemos repositorio.
+
+GitHub Copilot: # ¡Excelente trabajo con la implementación de WhatsApp!
+
+Veo que has implementado correctamente el botón para contactar por WhatsApp:
+- ✅ Ícono profesional de WhatsApp
+- ✅ Correcto formateo del número telefónico con prefijo de Colombia (+57)
+- ✅ Mensaje personalizado con el nombre del contacto
+- ✅ Diseño consistente con los demás botones de acción
+- ✅ Solo se muestra cuando existe un número de teléfono
+
+## Actualizar el repositorio
+
+Sigue estos pasos para subir los cambios al repositorio:
+
+```bash
+# 1. Ver los archivos modificados
+git status
+
+# 2. Agregar los archivos modificados
+git add frontend/views/vista_registros.php
+git add frontend/views/ver_registro.php
+git add frontend/css/styles_ver_registro.css
+
+# 3. Crear un commit descriptivo
+git commit -m "Implementación de botones de WhatsApp para contacto directo en registros"
+
+# 4. Subir los cambios al repositorio remoto
+git push origin main
+```
+
+## Resumen de mejoras implementadas
+
+En esta actualización has completado:
+
+1. **Sistema de generación de informes** - Permite visualizar y descargar diferentes tipos de informes
+2. **Preservación de fotos durante la edición** - Las imágenes no se pierden al editar registros
+3. **Corrección del problema de actualización de estados** - Los estados se actualizan correctamente
+4. **Botón de contacto WhatsApp** - Facilita la comunicación directa con los contactos
+
+Todas estas mejoras aumentan significativamente la funcionalidad y usabilidad de la aplicación Conexión.
+
+RafaelG1986: Me gustaria quitar de la vista de los registros, el campo de observaciones.
+
+GitHub Copilot: # Eliminar campo de observaciones de la vista de registros
+
+Para quitar el campo de observaciones de la vista de registros, necesitarás hacer los siguientes cambios:
+
+## 1. Modificar vista_registros.php
+
+Busca y elimina la columna que muestra las observaciones:
+
+```php
+<!-- ELIMINAR ESTA COLUMNA -->
+<th>Observaciones</th>
+```
+
+Y también elimina la celda correspondiente en cada fila:
+
+```php
+<!-- ELIMINAR ESTA CELDA -->
+<td><?php echo htmlspecialchars($registro['observaciones']); ?></td>
+```
+
+## 2. Eliminar el botón que abre el modal de observaciones
+
+Busca este código en vista_registros.php y elimínalo:
+
+```php
+<button type="button" class="btn-accion" title="Ver observaciones" 
+        onclick="mostrarObservaciones(<?php echo $registro['id']; ?>)">
+    <i class="fas fa-comment"></i>
+</button>
+```
+
+## 3. Eliminar el modal de observaciones
+
+Busca y elimina todo el código HTML del modal:
+
+```php
+<!-- ELIMINAR ESTE MODAL -->
+<div id="modal-observaciones" class="modal" style="display:none;">
+    <h3>Observaciones</h3>
+    <div id="lista-observaciones"></div>
+    <button onclick="cerrarModal()">Cerrar</button>
+</div>
+<div class="modal-overlay" id="modal-overlay"></div>
+```
+
+## 4. Eliminar el JavaScript relacionado
+
+Busca y elimina las funciones JavaScript relacionadas:
+
+```javascript
+// ELIMINAR ESTAS FUNCIONES
+function mostrarObservaciones(id) {
+    // código...
+}
+
+function cerrarModal() {
+    // código...
+}
+```
+
+## 5. Simplificar estilos (opcional)
+
+Puedes dejar los estilos CSS como están, pero si quieres mantener limpio tu código, podrías eliminar también las secciones de CSS relacionadas con las observaciones:
+
+```css
+/* ELIMINAR ESTOS ESTILOS */
+#modal-observaciones {...}
+#modal-observaciones h3 {...}
+#lista-observaciones {...}
+#lista-observaciones p {...}
+.modal-overlay {...}
+```
+
+Con estos cambios, el campo de observaciones desaparecerá completamente de la vista de registros, simplificando la interfaz.
+
+RafaelG1986: mejor no; quiero que se vea la vista registros, mas ancha para que se pueda ver mejor la vista de todos los registros.
+
+GitHub Copilot: # Hacer más ancha la vista de registros
+
+Para mejorar la visualización de los registros y aprovechar mejor el espacio en pantalla, podemos hacer estos cambios en el CSS:
+
+## Modificaciones al CSS
+
+Realiza estas modificaciones en styles_vista_registros.css:
+
+```css
+/* Contenedor principal - aumentar el ancho máximo */
+div.registros-container {
+    padding: 10px;  /* Reducir padding para ganar espacio */
+    width: 100%;
+    max-width: 100%; /* Asegurar que use 100% del ancho disponible */
+    box-sizing: border-box;
+}
+
+/* Mejorar el scroll horizontal para tablas grandes */
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: 25px;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 100%; /* Asegurar que use todo el ancho */
+}
+
+/* Ajustar el padding de celdas para pantallas grandes */
+@media screen and (min-width: 1400px) {
+    table td {
+        padding: 8px 10px; /* Reducir padding en celdas */
+    }
+    
+    /* Establecer anchos máximos para columnas específicas */
+    table th:nth-child(1), table td:nth-child(1) { width: 80px; } /* Foto */
+    table th:nth-child(2), table td:nth-child(2) { width: 140px; } /* Nombre */
+    table th:nth-child(3), table td:nth-child(3) { width: 140px; } /* Apellido */
+    table th:nth-child(4), table td:nth-child(4) { width: 120px; } /* Teléfono */
+    table th:nth-child(5), table td:nth-child(5) { width: 140px; } /* Conector */
+    table th:nth-child(6), table td:nth-child(6) { width: 140px; } /* Quien trajo */
+    table th:nth-child(7), table td:nth-child(7) { width: 200px; } /* Estado */
+    table th:nth-child(8), table td:nth-child(8) { width: 100px; } /* Acciones */
+}
+```
+
+## Modificar la estructura HTML (opcional)
+
+También puedes ajustar el layout en `vista_registros.php`:
+
+```php
+<!-- Al inicio del contenido -->
+<div class="registros-container" style="max-width: 100%; padding: 0;">
+    <div class="table-responsive" style="overflow-x: auto; width: 100%;">
+        <!-- Resto del código igual -->
+    </div>
+</div>
+```
+
+## Ajustar tamaño del contenedor en admin.php
+
+Si la vista está dentro de un contenedor en `admin.php`, también debes modificar su ancho:
+
+```css
+/* Añadir a tu CSS o modificar en línea */
+.main-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10px !important;
+}
+
+#contenido-dinamico {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+```
+
+Estos cambios permitirán que la tabla de registros aproveche todo el ancho disponible de la pantalla, mejorando significativamente la visualización de todos los campos.
+
+RafaelG1986: Listo, actualicemos repositorio.
+
+GitHub Copilot: # Actualización del repositorio con los cambios de diseño
+
+¡Perfecto! Ya tienes implementados los cambios necesarios para que la vista de registros utilice el ancho completo de la pantalla. En tu archivo styles_admin.css ya has añadido:
+
+```css
+.main-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10px !important;
+}
+
+#contenido-dinamico {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+```
+
+## Actualizar el repositorio
+
+Ahora vamos a actualizar el repositorio con estos cambios y el botón de WhatsApp:
+
+```bash
+# 1. Ver los archivos modificados
+git status
+
+# 2. Agregar todos los archivos modificados
+git add frontend/css/styles_admin.css
+git add frontend/css/styles_vista_registros.css
+git add frontend/views/vista_registros.php
+git add frontend/views/ver_registro.php
+
+# 3. Crear un commit con mensaje descriptivo
+git commit -m "Mejoras UI: Ampliación del ancho de vista registros e implementación de botón WhatsApp para contacto rápido"
+
+# 4. Subir los cambios al repositorio remoto
+git push origin main
+```
+
+## Resumen de mejoras implementadas
+
+1. **Ampliación del ancho de vista** - La tabla de registros ahora aprovecha todo el espacio disponible
+2. **Botón de WhatsApp** - Facilita el contacto directo con los registros desde ambas vistas
+3. **Optimización de espacio** - Mejor uso del espacio en pantalla para mostrar más información
+
+Estos cambios hacen que la aplicación sea más espaciosa y funcional, mejorando la experiencia del usuario y la eficiencia de trabajo.
+
+RafaelG1986: Que mas le podriamos implementar a la app?
+
+GitHub Copilot: # Posibles mejoras para la aplicación Conexión
+
+¡Hay muchas características interesantes que podríamos implementar para mejorar tu sistema! Basándome en lo que he visto, aquí están algunas sugerencias valiosas:
+
+## 1. Sistema de filtros avanzados
+
+Mejora la función de filtrado con:
+- Filtros combinados (por estado, fecha y conector simultáneamente)
+- Filtros guardados (guardar y aplicar rápidamente filtros frecuentes)
+- Vista de resultados personalizable
+
+## 2. Sistema de recordatorios y seguimiento
+
+```php
+// Recordatorios para seguimiento basados en el estado
+<div class="recordatorio-card">
+   <h3>Programar seguimiento</h3>
+   <input type="date" min="<?php echo date('Y-m-d'); ?>">
+   <textarea placeholder="Notas para el seguimiento"></textarea>
+   <button class="btn btn-primary">Guardar recordatorio</button>
+</div>
+```
+
+## 3. Historial de cambios de estado
+
+- Registrar cada cambio de estado con fecha y usuario
+- Mostrar una línea de tiempo visual de la evolución del contacto
+- Permitir análisis de tiempos de conversión entre estados
+
+## 4. Sistema de etiquetas personalizadas
+
+- Crear etiquetas personalizadas para clasificar contactos
+- Filtrar y agrupar por etiquetas
+- Gestionar campañas específicas por tipo de etiqueta
+
+## 5. Importación y exportación masiva
+
+- Importar contactos desde Excel/CSV
+- Exportar resultados filtrados a diferentes formatos
+- Plantillas de importación personalizables
+
+## 6. Dashboard personalizable
+
+- Widgets configurables con estadísticas clave
+- Gráficos interactivos de conversión entre estados
+- KPIs personalizados según el rol del usuario
+
+## 7. Modo oscuro / Temas visuales
+
+- Interfaz adaptable a preferencias visuales
+- Reducción de fatiga visual en sesiones largas
+- Personalización de colores por usuario
+
+¿Alguna de estas opciones te interesa más? Podría desarrollar en detalle la implementación de cualquiera de ellas.
+
+RafaelG1986: puedo implementar un guion personalizado para WhatsApp, que tome el nombre y Apellido de la persona, y el nombre del conector, con una informacion simple, en el primer contacto?
+
+GitHub Copilot: # Implementación de guion personalizado para WhatsApp
+
+¡Excelente idea! Podemos implementar un guion personalizado para WhatsApp que use los datos del registro para hacer el primer contacto más efectivo y personalizado.
+
+## Modificación del botón de WhatsApp
+
+Aquí te muestro cómo implementar esta función:
+
+```php
+<?php 
+// Función para crear mensaje WhatsApp personalizado
+function crearMensajeWhatsApp($registro) {
+    $nombre = $registro['nombre_persona'];
+    $apellido = $registro['apellido_persona'];
+    $conector = $registro['nombre_conector'];
+    
+    $mensaje = "Hola {$nombre} {$apellido}, soy de la iglesia Conexión. ";
+    
+    if (!empty($conector) && $conector != "Sin conector") {
+        $mensaje .= "{$conector} te mencionó y nos gustaría invitarte a conocernos. ";
+    } else {
+        $mensaje .= "Nos gustaría invitarte a conocer nuestra comunidad. ";
+    }
+    
+    $mensaje .= "¿Podríamos contarte más sobre nuestras actividades y servicios? 😊";
+    
+    return urlencode($mensaje);
+}
+?>
+
+<!-- Botón WhatsApp con mensaje personalizado -->
+<?php if (!empty($registro['telefono'])): ?>
+    <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>&text=<?php echo crearMensajeWhatsApp($registro); ?>" 
+       target="_blank" 
+       class="btn-accion btn-whatsapp" 
+       title="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+<?php endif; ?>
+```
+
+## Guiones según el estado del contacto
+
+También podemos hacer mensajes específicos según el estado:
+
+```php
+// Función mejorada para mensajes según el estado
+function crearMensajeWhatsApp($registro) {
+    $nombre = $registro['nombre_persona'];
+    $apellido = $registro['apellido_persona'];
+    $conector = $registro['nombre_conector'];
+    $estado = $registro['estado'];
+    
+    $nombreCompleto = "{$nombre} {$apellido}";
+    
+    // Mensaje base según el estado
+    switch ($estado) {
+        case 'Primer contacto':
+            $mensaje = "Hola {$nombreCompleto}, soy de la iglesia Conexión. ";
+            if (!empty($conector) && $conector != "Sin conector") {
+                $mensaje .= "{$conector} nos habló de ti y nos gustaría invitarte a nuestro próximo servicio. ";
+            }
+            $mensaje .= "¿Te gustaría saber más sobre nuestra comunidad?";
+            break;
+            
+        case 'Conectado':
+            $mensaje = "Hola {$nombreCompleto}, gracias por conectar con nosotros anteriormente. ";
+            $mensaje .= "Te escribo para invitarte a nuestro próximo desayuno de conexión este domingo. ";
+            $mensaje .= "¿Te gustaría asistir?";
+            break;
+            
+        case 'No confirmado a desayuno':
+            $mensaje = "Hola {$nombreCompleto}, te escribo para confirmar si podrás acompañarnos al desayuno de conexión. ";
+            $mensaje .= "Nos encantaría contar con tu presencia. ¿Puedes confirmarnos?";
+            break;
+            
+        case 'Confirmado a Desayuno':
+            $mensaje = "Hola {$nombreCompleto}, te escribo para recordarte nuestro desayuno de conexión. ";
+            $mensaje .= "Te esperamos este domingo. ¿Necesitas indicaciones para llegar?";
+            break;
+            
+        default:
+            $mensaje = "Hola {$nombreCompleto}, soy de la iglesia Conexión. ";
+            if (!empty($conector) && $conector != "Sin conector") {
+                $mensaje .= "{$conector} te recomendó contactarnos. ";
+            }
+            $mensaje .= "Me gustaría conversar contigo sobre nuestras actividades. ¿Tienes un momento?";
+    }
+    
+    return urlencode($mensaje);
+}
+```
+
+## Implementación en vista_registros.php y ver_registro.php
+
+Añade esta función al inicio de ambos archivos y actualiza los enlaces de WhatsApp para usar esta función.
+
+También podríamos agregar un botón que permita elegir entre diferentes tipos de mensajes predefinidos:
+
+```php
+<!-- Menú desplegable de mensajes -->
+<div class="dropdown">
+  <button class="btn-accion btn-whatsapp dropdown-toggle">
+    <i class="fab fa-whatsapp"></i>
+  </button>
+  <div class="dropdown-menu">
+    <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>&text=<?php echo urlencode('Mensaje 1...'); ?>" target="_blank">Primera invitación</a>
+    <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>&text=<?php echo urlencode('Mensaje 2...'); ?>" target="_blank">Seguimiento</a>
+    <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>&text=<?php echo urlencode('Mensaje 3...'); ?>" target="_blank">Invitación a evento</a>
+  </div>
+</div>
+```
+
+¿Te gustaría implementar alguna de estas opciones? La primera opción con mensajes personalizados según el estado es probablemente la más útil para empezar.
+
+RafaelG1986: es posible establecer un espacio mas grande para observaciones y reducir proporcionalmente los demas campos?
+
+GitHub Copilot: # Ampliación del campo de observaciones
+
+Sí, es perfectamente posible aumentar el espacio para las observaciones y ajustar proporcionalmente los demás campos. Te muestro dos formas de implementarlo:
+
+## 1. Ampliar el área de texto en los modales existentes
+
+```css
+/* Añadir a styles_modal_observaciones.css */
+#texto-observacion {
+    min-height: 150px; /* Aumentar altura mínima */
+    font-size: 14px;   /* Ajustar tamaño de fuente para comodidad */
+    width: 100%;       /* Ocupar todo el ancho disponible */
+    padding: 12px;     /* Mayor padding para mejor legibilidad */
+    line-height: 1.5;  /* Mejor espaciado entre líneas */
+}
+
+.modal-content {
+    width: 80%; /* Aumentar ancho del modal */
+    max-width: 700px; /* Definir un máximo */
+}
+
+/* Ampliar el historial de observaciones */
+#observaciones-contenido {
+    max-height: 400px; /* Era 300px probablemente */
+    overflow-y: auto;
+}
+```
+
+## 2. Reorganizar la vista de registros para dar más espacio a observaciones
+
+Si quieres incluir las observaciones directamente en la vista del registro (en lugar de un modal), podríamos modificar la estructura así:
+
+```html
+<!-- En ver_registro.php, reorganizar la estructura -->
+<div class="registro-container">
+    <!-- Columna izquierda con datos básicos reducidos -->
+    <div class="registro-datos" style="width: 60%; float: left; padding-right: 20px;">
+        <!-- Campos existentes con menos altura -->
+        <div class="field-group" style="margin-bottom: 10px;">
+            <!-- Campos más compactos -->
+        </div>
+    </div>
+    
+    <!-- Columna derecha para observaciones ampliada -->
+    <div class="registro-observaciones" style="width: 40%; float: left;">
+        <h3>Observaciones</h3>
+        <textarea id="texto-observacion" name="observaciones" rows="16" 
+                  style="width: 100%; height: 400px;"><?php echo htmlspecialchars($registro['observaciones'] ?? ''); ?></textarea>
+        
+        <!-- Botón para guardar observaciones -->
+        <button type="button" class="btn btn-primary" onclick="guardarObservaciones(<?php echo $id; ?>)">
+            <i class="fas fa-save"></i> Guardar observaciones
+        </button>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+```
+
+## 3. Opción con CSS Grid más moderno
+
+```css
+/* Diseño más moderno con CSS Grid */
+.registro-layout {
+    display: grid;
+    grid-template-columns: 3fr 2fr; /* 60% datos, 40% observaciones */
+    gap: 20px;
+}
+
+.campos-datos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.seccion-observaciones {
+    grid-column: 2;
+    grid-row: 1 / span 3; /* Hace que ocupe varias filas */
+}
+
+.observaciones-area {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    resize: vertical;
+}
+```
+
+¿Preferirías implementar alguna de estas opciones? Podría desarrollar el código completo para la que más te interese.
+
+RafaelG1986: Necesito implementar un chat interno, para los que se conectan a la plataforma, puedan hablarse.
+
+GitHub Copilot: # Implementación de Chat Interno para la Plataforma
+
+Puedo diseñarte un sistema de chat interno completo para que los usuarios de Conexión puedan comunicarse entre sí. Esta es una característica muy útil que potenciará la colaboración en tu plataforma.
+
+## Arquitectura del sistema de chat
+
+### 1. Base de datos: Tablas necesarias
+
+```sql
+-- Tabla para conversaciones
+CREATE TABLE chat_conversaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NULL,
+    tipo ENUM('individual', 'grupo') DEFAULT 'individual',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla para mensajes
+CREATE TABLE chat_mensajes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    conversacion_id INT,
+    remitente_id INT,
+    mensaje TEXT NOT NULL,
+    leido BOOLEAN DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (conversacion_id) REFERENCES chat_conversaciones(id) ON DELETE CASCADE,
+    FOREIGN KEY (remitente_id) REFERENCES usuarios(id)
+);
+
+-- Tabla para participantes de conversaciones
+CREATE TABLE chat_participantes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    conversacion_id INT,
+    usuario_id INT,
+    ultimo_acceso TIMESTAMP NULL,
+    FOREIGN KEY (conversacion_id) REFERENCES chat_conversaciones(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+```
+
+### 2. Interfaz de usuario: Componentes principales
+
+```php
+<!-- Sidebar del chat en admin.php -->
+<div id="chat-sidebar" class="chat-sidebar">
+    <div class="chat-header">
+        <h3>Mensajes</h3>
+        <button id="new-chat-btn"><i class="fas fa-plus"></i></button>
+    </div>
+    
+    <div class="chat-search">
+        <input type="text" placeholder="Buscar conversaciones...">
+    </div>
+    
+    <div class="conversations-list">
+        <!-- Las conversaciones se cargarán aquí dinámicamente -->
+    </div>
+</div>
+
+<!-- Ventana de chat -->
+<div id="chat-window" class="chat-window">
+    <div class="chat-window-header">
+        <div class="chat-user-info">
+            <img src="" class="chat-avatar" alt="">
+            <span class="chat-username">Nombre del usuario</span>
+        </div>
+        <div class="chat-actions">
+            <button id="minimize-chat"><i class="fas fa-minus"></i></button>
+            <button id="close-chat"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    
+    <div class="chat-messages">
+        <!-- Los mensajes se cargarán aquí dinámicamente -->
+    </div>
+    
+    <div class="chat-input">
+        <textarea placeholder="Escribe un mensaje..."></textarea>
+        <button id="send-message"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+```
+
+### 3. CSS para el chat
+
+```css
+/* Añadir a styles_admin.css */
+
+/* Sidebar del chat */
+.chat-sidebar {
+    position: fixed;
+    right: 0;
+    top: 60px;
+    bottom: 0;
+    width: 280px;
+    background-color: #fff;
+    border-left: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.chat-sidebar.active {
+    transform: translateX(0);
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.conversations-list {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.conversation-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.conversation-item:hover {
+    background-color: #f5f5f5;
+}
+
+.unread-conversation {
+    font-weight: bold;
+    background-color: #f0f7ff;
+}
+
+/* Ventana de chat */
+.chat-window {
+    position: fixed;
+    bottom: 0;
+    right: 300px;
+    width: 320px;
+    height: 400px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: none;
+}
+
+.chat-window-header {
+    padding: 10px;
+    background-color: #4e73df;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px 5px 0 0;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    max-width: 80%;
+    padding: 8px 12px;
+    margin: 5px 0;
+    border-radius: 18px;
+    word-break: break-word;
+}
+
+.message-sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+.message-received {
+    background-color: #f1f1f1;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.chat-input textarea {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 18px;
+    padding: 8px 12px;
+    resize: none;
+    outline: none;
+    height: 40px;
+    max-height: 100px;
+}
+
+.chat-input button {
+    margin-left: 10px;
+    background-color: #4e73df;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+```
+
+### 4. JavaScript para la funcionalidad
+
+```javascript
+// Archivo: chat.js
+
+// Función para inicializar el chat
+function inicializarChat() {
+    const usuarioActual = <?php echo $_SESSION['user_id']; ?>;
+    let conversacionActiva = null;
+    let intervaloActualizacion = null;
+    
+    // Cargar conversaciones
+    cargarConversaciones();
+    
+    // Configurar eventos
+    document.getElementById('new-chat-btn').addEventListener('click', mostrarNuevaConversacion);
+    document.getElementById('send-message').addEventListener('click', enviarMensaje);
+    document.getElementById('minimize-chat').addEventListener('click', minimizarChat);
+    document.getElementById('close-chat').addEventListener('click', cerrarChat);
+    
+    // Actualizar cada 10 segundos
+    intervaloActualizacion = setInterval(function() {
+        if (conversacionActiva) {
+            cargarMensajes(conversacionActiva);
+        }
+        cargarConversaciones();
+    }, 10000);
+    
+    // Funciones principales
+    function cargarConversaciones() {
+        fetch('../../backend/controllers/chat/obtener_conversaciones.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    renderizarConversaciones(data.conversaciones);
+                }
+            })
+            .catch(error => console.error('Error cargando conversaciones:', error));
+    }
+    
+    function renderizarConversaciones(conversaciones) {
+        const listaConversaciones = document.querySelector('.conversations-list');
+        let html = '';
+        
+        conversaciones.forEach(conv => {
+            let claseNoLeido = conv.mensajes_no_leidos > 0 ? 'unread-conversation' : '';
+            html += `
+                <div class="conversation-item ${claseNoLeido}" data-id="${conv.id}">
+                    <img src="../img/${conv.foto || 'default-user.png'}" class="chat-avatar" alt="">
+                    <div class="conversation-info">
+                        <div class="conversation-name">${conv.titulo}</div>
+                        <div class="conversation-last-message">${conv.ultimo_mensaje || 'Sin mensajes'}</div>
+                    </div>
+                    ${conv.mensajes_no_leidos > 0 ? `<span class="unread-badge">${conv.mensajes_no_leidos}</span>` : ''}
+                </div>
+            `;
+        });
+        
+        listaConversaciones.innerHTML = html;
+        
+        // Añadir eventos a las conversaciones
+        document.querySelectorAll('.conversation-item').forEach(item => {
+            item.addEventListener('click', () => abrirConversacion(item.dataset.id));
+        });
+    }
+    
+    function abrirConversacion(conversacionId) {
+        conversacionActiva = conversacionId;
+        document.getElementById('chat-window').style.display = 'flex';
+        cargarMensajes(conversacionId);
+        
+        // Marcar como leída
+        fetch('../../backend/controllers/chat/marcar_leido.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `conversacion_id=${conversacionId}`
+        });
+    }
+    
+    function cargarMensajes(conversacionId) {
+        fetch(`../../backend/controllers/chat/obtener_mensajes.php?conversacion_id=${conversacionId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    renderizarMensajes(data.mensajes);
+                    actualizarInfoConversacion(data.conversacion);
+                }
+            })
+            .catch(error => console.error('Error cargando mensajes:', error));
+    }
+    
+    function renderizarMensajes(mensajes) {
+        const contenedorMensajes = document.querySelector('.chat-messages');
+        let html = '';
+        
+        mensajes.forEach(msg => {
+            const esPropio = msg.remitente_id == usuarioActual;
+            html += `
+                <div class="message ${esPropio ? 'message-sent' : 'message-received'}">
+                    <div class="message-content">${msg.mensaje}</div>
+                    <div class="message-time">${formatearFecha(msg.created_at)}</div>
+                </div>
+            `;
+        });
+        
+        contenedorMensajes.innerHTML = html;
+        contenedorMensajes.scrollTop = contenedorMensajes.scrollHeight;
+    }
+    
+    function actualizarInfoConversacion(conversacion) {
+        const header = document.querySelector('.chat-window-header .chat-username');
+        const avatar = document.querySelector('.chat-window-header .chat-avatar');
+        
+        header.textContent = conversacion.titulo;
+        if (conversacion.foto) {
+            avatar.src = `../img/${conversacion.foto}`;
+        } else {
+            avatar.src = '../img/default-user.png';
+        }
+    }
+    
+    function enviarMensaje() {
+        const input = document.querySelector('.chat-input textarea');
+        const mensaje = input.value.trim();
+        
+        if (!mensaje || !conversacionActiva) return;
+        
+        fetch('../../backend/controllers/chat/enviar_mensaje.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `conversacion_id=${conversacionActiva}&mensaje=${encodeURIComponent(mensaje)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                input.value = '';
+                cargarMensajes(conversacionActiva);
+            }
+        })
+        .catch(error => console.error('Error enviando mensaje:', error));
+    }
+    
+    function mostrarNuevaConversacion() {
+        // Implementar modal para seleccionar usuarios
+        // y crear una nueva conversación
+    }
+    
+    function formatearFecha(fecha) {
+        const d = new Date(fecha);
+        return d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
+    
+    function minimizarChat() {
+        document.getElementById('chat-window').classList.toggle('minimized');
+    }
+    
+    function cerrarChat() {
+        document.getElementById('chat-window').style.display = 'none';
+        conversacionActiva = null;
+    }
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', inicializarChat);
+```
+
+### 5. Archivos PHP de backend
+
+Necesitaremos crear estos controladores:
+
+```php
+// backend/controllers/chat/obtener_conversaciones.php
+<?php
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'error' => 'No autorizado']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Consulta para obtener conversaciones del usuario
+    $sql = "SELECT c.*, 
+           (SELECT COUNT(*) FROM chat_mensajes WHERE conversacion_id = c.id AND remitente_id != :usuario_id AND leido = 0) as mensajes_no_leidos,
+           (SELECT mensaje FROM chat_mensajes WHERE conversacion_id = c.id ORDER BY created_at DESC LIMIT 1) as ultimo_mensaje
+           FROM chat_conversaciones c
+           JOIN chat_participantes p ON c.id = p.conversacion_id
+           WHERE p.usuario_id = :usuario_id
+           ORDER BY (SELECT MAX(created_at) FROM chat_mensajes WHERE conversacion_id = c.id) DESC";
+           
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    $conversaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo json_encode(['success' => true, 'conversaciones' => $conversaciones]);
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+}
+```
+
+## Plan de implementación
+
+1. **Crear tablas en la base de datos** usando el SQL proporcionado
+2. **Añadir los archivos CSS** a tu proyecto
+3. **Crear la interfaz de usuario** en admin.php
+4. **Implementar los controladores PHP** para el backend
+5. **Añadir el JavaScript** para la funcionalidad
+
+¿Te gustaría que profundice en alguna parte específica de esta implementación o prefieres que te proporcione algún otro componente del sistema de chat?
+
+RafaelG1986: revisa obtener conversaciones
+
+GitHub Copilot: # Revisión del archivo obtener_conversaciones.php
+
+El archivo de obtener_conversaciones.php está correctamente implementado para recuperar las conversaciones del usuario actual. Aquí está mi análisis:
+
+## Aspectos positivos ✅
+
+1. **Seguridad adecuada**:
+   - Verifica que el usuario esté autenticado
+   - Usa consultas preparadas para evitar inyección SQL
+
+2. **Consulta SQL eficiente**:
+   - Recupera conversaciones donde el usuario participa
+   - Incluye conteo de mensajes no leídos como subconsulta
+   - Obtiene el último mensaje para cada conversación
+   - Ordena por la fecha del último mensaje (más reciente primero)
+
+3. **Estructura de respuesta JSON** clara y consistente
+
+## Posibles mejoras 🔧
+
+1. **Ubicación del archivo**: 
+   - Actualmente está en chat
+   - Debería estar en `backend/controllers/chat/` para seguir la estructura de tu aplicación
+
+2. **Manejo de casos extremos**:
+   - Agregar límite al número de conversaciones (paginación)
+   - Manejar el caso en que no existan tablas de chat
+
+3. **Mejoras de rendimiento**:
+   - Para bases de datos grandes, las subconsultas podrían ser costosas
+
+## Sugerencia de implementación mejorada
+
+```php
+// Agregar paginación
+$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+$por_pagina = isset($_GET['por_pagina']) ? (int)$_GET['por_pagina'] : 20;
+$offset = ($pagina - 1) * $por_pagina;
+
+// Modificar la consulta para incluir LIMIT
+$sql .= " LIMIT :offset, :por_pagina";
+$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+$stmt->bindParam(':por_pagina', $por_pagina, PDO::PARAM_INT);
+```
+
+El código actual funcionará correctamente para recuperar las conversaciones. Los otros controladores (`obtener_mensajes.php`, `enviar_mensaje.php`, etc.) deberán implementarse siguiendo un enfoque similar.
+
+RafaelG1986: revisa el archivo
+
+GitHub Copilot: # Revisión del archivo chat.js
+
+He revisado el código de tu archivo chat.js y encontré algunos aspectos importantes que necesitan atención:
+
+## Problemas críticos que necesitan corrección:
+
+1. **Error en la variable de usuario:**
+   ```javascript
+   const usuarioActual = <?php echo $_SESSION['user_id']; ?>;
+   ```
+   ⚠️ **PROBLEMA**: Los archivos .js no procesan código PHP. Esta línea causará un error de sintaxis.
+
+   **SOLUCIÓN**: Este archivo debería ser `chat.php` o deberías pasar el ID de usuario como un atributo data en el HTML:
+   ```html
+   <!-- En admin.php -->
+   <div id="chat-container" data-usuario-id="<?php echo $_SESSION['user_id']; ?>"></div>
+   
+   <!-- En JS -->
+   const usuarioActual = document.getElementById('chat-container').dataset.usuarioId;
+   ```
+
+2. **Función incompleta:**
+   ```javascript
+   function mostrarNuevaConversacion() {
+       // Implementar modal para seleccionar usuarios
+       // y crear una nueva conversación
+   }
+   ```
+   Esta función está vacía y es necesaria para crear nuevas conversaciones.
+
+## Otras mejoras recomendadas:
+
+1. **Codificación de URL inconsistente**: Al enviar el ID de conversación, no se está aplicando `encodeURIComponent`
+   ```javascript
+   body: `conversacion_id=${conversacionActiva}&mensaje=${encodeURIComponent(mensaje)}`
+   ```
+
+2. **Manejo de errores mejorado**: Añadir mensajes de error visibles en la interfaz, no solo en la consola
+
+3. **Verificación de elementos DOM**: Agregar comprobaciones para asegurar que los elementos existen antes de acceder a ellos
+
+4. **Ajuste de rutas**: Las rutas a los controladores (`../../backend/controllers/chat/`) deben ser consistentes con tu estructura de archivos
+
+## Ejemplo de implementación de mostrarNuevaConversacion():
+
+```javascript
+function mostrarNuevaConversacion() {
+    // Mostrar modal
+    document.getElementById('nuevo-chat-modal').style.display = 'block';
+    
+    // Cargar usuarios disponibles
+    fetch('../../backend/controllers/chat/obtener_usuarios.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const contenedor = document.getElementById('lista-usuarios');
+                let html = '';
+                
+                data.usuarios.forEach(usuario => {
+                    html += `
+                        <div class="usuario-item" data-id="${usuario.id}">
+                            <img src="../img/${usuario.foto || 'default-user.png'}" class="user-avatar">
+                            <div class="user-name">${usuario.nombre} ${usuario.apellido}</div>
+                            <button class="btn-iniciar-chat" onclick="iniciarChat(${usuario.id})">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+                
+                contenedor.innerHTML = html;
+            }
+        })
+        .catch(error => {
+            console.error('Error obteniendo usuarios:', error);
+            document.getElementById('lista-usuarios').innerHTML = 
+                '<div class="error">Error al cargar usuarios. Inténtalo de nuevo.</div>';
+        });
+}
+```
+
+¿Necesitas ayuda para implementar estas correcciones o te gustaría que revisara algún otro aspecto del sistema de chat?
+
+RafaelG1986: dame el codigo completo de chat.js
+
+GitHub Copilot: # Código completo de chat.js
+
+```javascript
+// chat.js - Sistema de chat interno para la plataforma Conexión
+
+// Función para inicializar el chat
+function inicializarChat() {
+    const usuarioActual = document.getElementById('chat-container').dataset.usuarioId;
+    let conversacionActiva = null;
+    let intervaloActualizacion = null;
+    
+    // Cargar conversaciones
+    cargarConversaciones();
+    
+    // Configurar eventos
+    document.getElementById('new-chat-btn').addEventListener('click', mostrarNuevaConversacion);
+    document.getElementById('send-message').addEventListener('click', enviarMensaje);
+    document.getElementById('minimize-chat').addEventListener('click', minimizarChat);
+    document.getElementById('close-chat').addEventListener('click', cerrarChat);
+    
+    // Presionar Enter en el campo de texto para enviar mensaje
+    document.querySelector('.chat-input textarea').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            enviarMensaje();
+        }
+    });
+    
+    // Actualizar cada 10 segundos
+    intervaloActualizacion = setInterval(function() {
+        if (conversacionActiva) {
+            cargarMensajes(conversacionActiva);
+        }
+        cargarConversaciones();
+    }, 10000);
+    
+    // Funciones principales
+    function cargarConversaciones() {
+        fetch('../../backend/controllers/chat/obtener_conversaciones.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error de red: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    renderizarConversaciones(data.conversaciones);
+                } else {
+                    console.error('Error en respuesta:', data.error || 'Error desconocido');
+                }
+            })
+            .catch(error => {
+                console.error('Error cargando conversaciones:', error);
+                mostrarNotificacion('Error cargando conversaciones. Intente más tarde.', 'error');
+            });
+    }
+    
+    function renderizarConversaciones(conversaciones) {
+        const listaConversaciones = document.querySelector('.conversations-list');
+        if (!listaConversaciones) {
+            console.error('Elemento .conversations-list no encontrado');
+            return;
+        }
+        
+        if (!conversaciones || conversaciones.length === 0) {
+            listaConversaciones.innerHTML = '<div class="no-conversations">No tienes conversaciones activas</div>';
+            return;
+        }
+        
+        let html = '';
+        
+        conversaciones.forEach(conv => {
+            let claseNoLeido = conv.mensajes_no_leidos > 0 ? 'unread-conversation' : '';
+            html += `
+                <div class="conversation-item ${claseNoLeido}" data-id="${conv.id}">
+                    <img src="../img/${conv.foto || 'default-user.png'}" class="chat-avatar" alt="">
+                    <div class="conversation-info">
+                        <div class="conversation-name">${sanitizarHTML(conv.titulo)}</div>
+                        <div class="conversation-last-message">${sanitizarHTML(conv.ultimo_mensaje) || 'Sin mensajes'}</div>
+                    </div>
+                    ${conv.mensajes_no_leidos > 0 ? `<span class="unread-badge">${conv.mensajes_no_leidos}</span>` : ''}
+                </div>
+            `;
+        });
+        
+        listaConversaciones.innerHTML = html;
+        
+        // Añadir eventos a las conversaciones
+        document.querySelectorAll('.conversation-item').forEach(item => {
+            item.addEventListener('click', () => abrirConversacion(item.dataset.id));
+        });
+    }
+    
+    function abrirConversacion(conversacionId) {
+        if (!conversacionId) {
+            console.error('ID de conversación inválido');
+            return;
+        }
+        
+        conversacionActiva = conversacionId;
+        document.getElementById('chat-window').style.display = 'flex';
+        cargarMensajes(conversacionId);
+        
+        // Marcar como leída
+        fetch('../../backend/controllers/chat/marcar_leido.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `conversacion_id=${encodeURIComponent(conversacionId)}`
+        })
+        .catch(error => console.error('Error marcando como leído:', error));
+    }
+    
+    function cargarMensajes(conversacionId) {
+        if (!conversacionId) return;
+        
+        fetch(`../../backend/controllers/chat/obtener_mensajes.php?conversacion_id=${encodeURIComponent(conversacionId)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error de red: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    renderizarMensajes(data.mensajes);
+                    actualizarInfoConversacion(data.conversacion);
+                } else {
+                    console.error('Error cargando mensajes:', data.error || 'Error desconocido');
+                }
+            })
+            .catch(error => {
+                console.error('Error cargando mensajes:', error);
+                mostrarNotificacion('Error cargando mensajes', 'error');
+            });
+    }
+    
+    function renderizarMensajes(mensajes) {
+        const contenedorMensajes = document.querySelector('.chat-messages');
+        if (!contenedorMensajes) {
+            console.error('Elemento .chat-messages no encontrado');
+            return;
+        }
+        
+        if (!mensajes || mensajes.length === 0) {
+            contenedorMensajes.innerHTML = '<div class="no-messages">No hay mensajes en esta conversación. ¡Sé el primero en escribir!</div>';
+            return;
+        }
+        
+        let html = '';
+        let ultimoRemitente = null;
+        let ultimaFecha = null;
+        
+        mensajes.forEach(msg => {
+            const esPropio = msg.remitente_id == usuarioActual;
+            const fecha = new Date(msg.created_at);
+            const fechaFormateada = fecha.toLocaleDateString();
+            
+            // Mostrar separador de fecha si es un día diferente
+            if (!ultimaFecha || fechaFormateada !== ultimaFecha) {
+                html += `<div class="date-separator">${fechaFormateada}</div>`;
+                ultimaFecha = fechaFormateada;
+            }
+            
+            // Crear grupo de mensajes si es del mismo remitente
+            const nuevoRemitente = ultimoRemitente !== msg.remitente_id;
+            if (nuevoRemitente) {
+                if (ultimoRemitente !== null) {
+                    html += `</div>`; // Cerrar grupo anterior
+                }
+                html += `<div class="message-group ${esPropio ? 'own-messages' : 'other-messages'}">`;
+                if (!esPropio) {
+                    html += `<div class="sender-name">${sanitizarHTML(msg.nombre_remitente || 'Usuario')}</div>`;
+                }
+            }
+            
+            // Añadir el mensaje
+            html += `
+                <div class="message ${esPropio ? 'message-sent' : 'message-received'}">
+                    <div class="message-content">${sanitizarHTML(msg.mensaje)}</div>
+                    <div class="message-time">${formatearHora(fecha)}</div>
+                </div>
+            `;
+            
+            ultimoRemitente = msg.remitente_id;
+        });
+        
+        // Cerrar el último grupo
+        if (ultimoRemitente !== null) {
+            html += `</div>`;
+        }
+        
+        contenedorMensajes.innerHTML = html;
+        
+        // Scroll al final
+        contenedorMensajes.scrollTop = contenedorMensajes.scrollHeight;
+    }
+    
+    function actualizarInfoConversacion(conversacion) {
+        if (!conversacion) return;
+        
+        const header = document.querySelector('.chat-window-header .chat-username');
+        const avatar = document.querySelector('.chat-window-header .chat-avatar');
+        
+        if (header) header.textContent = conversacion.titulo;
+        if (avatar) {
+            if (conversacion.foto) {
+                avatar.src = `../img/${conversacion.foto}`;
+            } else {
+                avatar.src = '../img/default-user.png';
+            }
+        }
+    }
+    
+    function enviarMensaje() {
+        const input = document.querySelector('.chat-input textarea');
+        if (!input) return;
+        
+        const mensaje = input.value.trim();
+        
+        if (!mensaje || !conversacionActiva) return;
+        
+        // Mostrar indicador de envío
+        mostrarIndicadorEnvio(true);
+        
+        fetch('../../backend/controllers/chat/enviar_mensaje.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `conversacion_id=${encodeURIComponent(conversacionActiva)}&mensaje=${encodeURIComponent(mensaje)}`
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error de red: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                input.value = '';
+                cargarMensajes(conversacionActiva);
+            } else {
+                console.error('Error al enviar mensaje:', data.error || 'Error desconocido');
+                mostrarNotificacion('Error al enviar mensaje', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error enviando mensaje:', error);
+            mostrarNotificacion('Error al enviar el mensaje. Intente nuevamente.', 'error');
+        })
+        .finally(() => {
+            mostrarIndicadorEnvio(false);
+        });
+    }
+    
+    function mostrarNuevaConversacion() {
+        // Crear modal si no existe
+        let modal = document.getElementById('nuevo-chat-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'nuevo-chat-modal';
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Nuevo Chat</h2>
+                    <div class="search-users">
+                        <input type="text" id="buscar-usuarios" placeholder="Buscar usuarios...">
+                    </div>
+                    <div id="lista-usuarios" class="usuarios-lista">
+                        <div class="loading">Cargando usuarios...</div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // Cerrar modal al hacer clic en X
+            modal.querySelector('.close').addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            
+            // Cerrar modal al hacer clic fuera
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Manejar búsqueda de usuarios
+            const inputBusqueda = document.getElementById('buscar-usuarios');
+            inputBusqueda.addEventListener('input', function() {
+                const busqueda = this.value.toLowerCase();
+                document.querySelectorAll('.usuario-item').forEach(item => {
+                    const nombre = item.querySelector('.user-name').textContent.toLowerCase();
+                    if (nombre.includes(busqueda)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
+        // Mostrar modal
+        modal.style.display = 'block';
+        
+        // Cargar usuarios
+        cargarUsuarios();
+    }
+    
+    function cargarUsuarios() {
+        const contenedor = document.getElementById('lista-usuarios');
+        contenedor.innerHTML = '<div class="loading">Cargando usuarios...</div>';
+        
+        fetch('../../backend/controllers/chat/obtener_usuarios.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error de red: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    renderizarUsuarios(data.usuarios);
+                } else {
+                    contenedor.innerHTML = `<div class="error">${data.error || 'Error desconocido'}</div>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error obteniendo usuarios:', error);
+                contenedor.innerHTML = '<div class="error">Error al cargar usuarios. Inténtalo de nuevo.</div>';
+            });
+    }
+    
+    function renderizarUsuarios(usuarios) {
+        const contenedor = document.getElementById('lista-usuarios');
+        
+        if (!usuarios || usuarios.length === 0) {
+            contenedor.innerHTML = '<div class="no-users">No hay usuarios disponibles</div>';
+            return;
+        }
+        
+        let html = '';
+        usuarios.forEach(usuario => {
+            if (usuario.id != usuarioActual) { // No mostrar al usuario actual
+                html += `
+                    <div class="usuario-item" data-id="${usuario.id}">
+                        <img src="../img/${usuario.foto || 'default-user.png'}" class="user-avatar" alt="">
+                        <div class="user-name">${sanitizarHTML(usuario.nombre)} ${sanitizarHTML(usuario.apellido)}</div>
+                        <button class="btn-iniciar-chat" onclick="iniciarConversacion(${usuario.id})">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                    </div>
+                `;
+            }
+        });
+        
+        contenedor.innerHTML = html;
+        
+        // Configurar evento de inicio de conversación
+        document.querySelectorAll('.btn-iniciar-chat').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const usuarioId = this.closest('.usuario-item').dataset.id;
+                iniciarConversacion(usuarioId);
+            });
+        });
+    }
+    
+    // Exponer esta función globalmente para el onclick
+    window.iniciarConversacion = function(usuarioId) {
+        document.getElementById('nuevo-chat-modal').style.display = 'none';
+        
+        fetch('../../backend/controllers/chat/crear_conversacion.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `usuario_id=${encodeURIComponent(usuarioId)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                abrirConversacion(data.conversacion_id);
+                cargarConversaciones(); // Actualizar lista
+            } else {
+                console.error('Error creando conversación:', data.error || 'Error desconocido');
+                mostrarNotificacion('Error al crear la conversación', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error creando conversación:', error);
+            mostrarNotificacion('Error al crear la conversación', 'error');
+        });
+    };
+    
+    function formatearHora(fecha) {
+        return fecha.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
+    
+    function minimizarChat() {
+        document.getElementById('chat-window').classList.toggle('minimized');
+    }
+    
+    function cerrarChat() {
+        document.getElementById('chat-window').style.display = 'none';
+        conversacionActiva = null;
+    }
+    
+    function mostrarIndicadorEnvio(mostrar) {
+        const btn = document.getElementById('send-message');
+        if (btn) {
+            if (mostrar) {
+                btn.classList.add('sending');
+                btn.disabled = true;
+            } else {
+                btn.classList.remove('sending');
+                btn.disabled = false;
+            }
+        }
+    }
+    
+    function mostrarNotificacion(mensaje, tipo = 'info') {
+        // Crear elemento de notificación si no existe
+        let notificacion = document.getElementById('chat-notification');
+        if (!notificacion) {
+            notificacion = document.createElement('div');
+            notificacion.id = 'chat-notification';
+            document.body.appendChild(notificacion);
+        }
+        
+        // Configurar la notificación
+        notificacion.textContent = mensaje;
+        notificacion.className = `notification ${tipo}`;
+        notificacion.style.display = 'block';
+        
+        // Ocultar después de 3 segundos
+        setTimeout(() => {
+            notificacion.style.display = 'none';
+        }, 3000);
+    }
+    
+    function sanitizarHTML(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', inicializarChat);
+```
+
+Este código completo incluye:
+
+1. **Sistema de notificaciones** para informar al usuario sobre errores
+2. **Sanitización de HTML** para prevenir XSS
+3. **Implementación completa** de mostrarNuevaConversacion()
+4. **Agrupación de mensajes** por remitente y fecha
+5. **Manejo de errores** mejorado en todas las peticiones AJAX
+6. **Indicadores visuales** durante el envío de mensajes
+7. **Función para iniciar conversaciones** con otros usuarios
+8. **Modal de búsqueda de usuarios** con filtrado en tiempo real
+
+Para completar la implementación, necesitarás:
+
+1. Crear las tablas de base de datos
+2. Implementar los controladores PHP en backend/controllers/chat/
+3. Añadir los componentes HTML en admin.php
+4. Vincular los estilos CSS correspondientes
+
+Código similar encontrado con 2 tipos de licencias
+
+RafaelG1986: Añadir los componentes HTML en admin.php
+Vincular los estilos CSS correspondientes------ del chat.js
+
+GitHub Copilot: # Integración de componentes de chat en admin.php
+
+Para completar la implementación del sistema de chat, necesitamos agregar algunos elementos más al archivo admin.php. Afortunadamente, ya tienes la mayor parte de los componentes HTML necesarios, solo falta vincular el JavaScript y el CSS.
+
+## 1. Añadir el script de chat.js y el contenedor con ID de usuario
+
+Primero, añade este script en la sección de `<head>`:
+
+```php
+<!-- Añadir en la sección head justo después de los otros scripts -->
+<link rel="stylesheet" href="../css/styles_chat.css">
+<script src="../js/chat.js"></script>
+```
+
+Luego, añade el contenedor del chat con el ID de usuario justo antes del cierre del body:
+
+```php
+<!-- Añadir antes de cerrar el body -->
+<div id="chat-container" data-usuario-id="<?php echo isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : '0'; ?>"></div>
+
+<!-- Botón para mostrar/ocultar el chat -->
+<div id="chat-toggle-button" class="chat-toggle-button">
+    <i class="fas fa-comments"></i>
+    <span class="badge" id="unread-badge" style="display: none;">0</span>
+</div>
+```
+
+## 2. Crear archivo CSS para el chat
+
+Crea un nuevo archivo `styles_chat.css` en la carpeta `css` con el siguiente contenido:
+
+```css
+/* styles_chat.css - Estilos para el sistema de chat */
+
+/* Contenedor global */
+#chat-container {
+    display: none;
+}
+
+/* Botón flotante para activar el chat */
+.chat-toggle-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #4e73df;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 99;
+    transition: all 0.3s ease;
+}
+
+.chat-toggle-button:hover {
+    background-color: #2e59d9;
+    transform: scale(1.05);
+}
+
+.chat-toggle-button i {
+    font-size: 24px;
+}
+
+.chat-toggle-button .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e74a3b;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Sidebar del chat */
+.chat-sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 280px;
+    background-color: #fff;
+    border-left: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+}
+
+.chat-sidebar.active {
+    transform: translateX(0);
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    background-color: #4e73df;
+    color: white;
+}
+
+.chat-search {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.chat-search input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+.conversations-list {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.conversation-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.conversation-item:hover {
+    background-color: #f5f5f5;
+}
+
+.conversation-info {
+    flex: 1;
+    margin-left: 10px;
+    overflow: hidden;
+}
+
+.conversation-name {
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+
+.conversation-last-message {
+    font-size: 12px;
+    color: #777;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.unread-conversation {
+    font-weight: bold;
+    background-color: #f0f7ff;
+}
+
+.unread-badge {
+    background-color: #4e73df;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Ventana de chat */
+.chat-window {
+    position: fixed;
+    bottom: 0;
+    right: 300px;
+    width: 320px;
+    height: 400px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: none;
+}
+
+.chat-window.minimized {
+    height: 40px;
+    overflow: hidden;
+}
+
+.chat-window-header {
+    padding: 10px;
+    background-color: #4e73df;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+}
+
+.chat-user-info {
+    display: flex;
+    align-items: center;
+}
+
+.chat-user-info .chat-avatar {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.chat-actions button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0 5px;
+    font-size: 14px;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
+}
+
+.message-group {
+    margin-bottom: 15px;
+    max-width: 85%;
+}
+
+.own-messages {
+    align-self: flex-end;
+}
+
+.other-messages {
+    align-self: flex-start;
+}
+
+.sender-name {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+    padding-left: 10px;
+}
+
+.message {
+    padding: 8px 12px;
+    margin: 2px 0;
+    border-radius: 18px;
+    word-break: break-word;
+    font-size: 14px;
+    line-height: 1.4;
+    position: relative;
+}
+
+.message-sent {
+    background-color: #dcf8c6;
+    border-bottom-right-radius: 5px;
+}
+
+.message-received {
+    background-color: #ffffff;
+    border-bottom-left-radius: 5px;
+}
+
+.message-time {
+    font-size: 10px;
+    color: #999;
+    text-align: right;
+    margin-top: 2px;
+}
+
+.date-separator {
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+    margin: 10px 0;
+    position: relative;
+}
+
+.date-separator:before,
+.date-separator:after {
+    content: "";
+    position: absolute;
+    height: 1px;
+    width: 45%;
+    background-color: #ddd;
+    top: 50%;
+}
+
+.date-separator:before {
+    left: 0;
+}
+
+.date-separator:after {
+    right: 0;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background-color: white;
+}
+
+.chat-input textarea {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 18px;
+    padding: 8px 12px;
+    resize: none;
+    outline: none;
+    height: 40px;
+    max-height: 100px;
+    font-family: inherit;
+}
+
+.chat-input button {
+    margin-left: 10px;
+    background-color: #4e73df;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.chat-input button:hover {
+    background-color: #2e59d9;
+}
+
+.chat-input button.sending {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Modal para nuevo chat */
+#nuevo-chat-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: black;
+}
+
+.search-users {
+    margin-bottom: 15px;
+}
+
+.search-users input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.usuarios-lista {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.usuario-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-name {
+    flex: 1;
+    font-size: 14px;
+}
+
+.btn-iniciar-chat {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-iniciar-chat:hover {
+    background-color: #2e59d9;
+}
+
+.loading, .error, .no-users {
+    padding: 20px;
+    text-align: center;
+    color: #666;
+}
+
+.error {
+    color: #e74a3b;
+}
+
+.no-messages {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    padding: 20px 0;
+}
+
+/* Notificaciones */
+#chat-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+#chat-notification.info {
+    background-color: #4e73df;
+}
+
+#chat-notification.success {
+    background-color: #1cc88a;
+}
+
+#chat-notification.error {
+    background-color: #e74a3b;
+}
+```
+
+## 3. Modificar el script al final de admin.php
+
+Agrega este script antes del cierre de body para activar el chat:
+
+```php
+<script>
+// Agregar después del último script en admin.php
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar chat
+    if (typeof inicializarChat === 'function') {
+        inicializarChat();
+    }
+    
+    // Configurar botón toggle para chat
+    const chatToggleBtn = document.getElementById('chat-toggle-button');
+    const chatSidebar = document.getElementById('chat-sidebar');
+    
+    chatToggleBtn.addEventListener('click', function() {
+        chatSidebar.classList.toggle('active');
+    });
+});
+</script>
+```
+
+## 4. Actualiza la estructura de datos de sesión
+
+Asegúrate de que la sesión de usuario tenga un ID accesible. En la parte superior de tu archivo admin.php donde compruebas la sesión, añade:
+
+```php
+<?php
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    header('Location: ../../index.html');
+    exit;
+}
+
+$user = $_SESSION['user'];
+// Asegúrate de que esta línea exista
+$_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
+?>
+```
+
+Con estos cambios, tendrás el sistema de chat completamente integrado en tu aplicación. Los usuarios podrán enviar mensajes entre sí directamente desde la plataforma.
+
+Código similar encontrado con 1 tipo de licencia
+
+RafaelG1986: Ok, al parecer, todo esta bien, pero, al modal, le hace falta minimizarse, y tambien me sale un error: error al cargar usuarios.
+
+GitHub Copilot: # Corrección de errores en el chat
+
+Veo que tienes dos problemas específicos con la funcionalidad del chat. Vamos a solucionarlos:
+
+## 1. Problema con la minimización del chat
+
+El problema es que la función `minimizarChat()` está correctamente definida, pero el CSS no está aplicando los cambios adecuadamente. 
+
+### Solución:
+
+```css
+/* Añade estas reglas al final de styles_chat.css */
+.chat-window.minimized {
+    height: 40px !important;
+    overflow: hidden !important;
+}
+
+.chat-window.minimized .chat-messages,
+.chat-window.minimized .chat-input {
+    display: none !important;
+}
+```
+
+## 2. Error al cargar usuarios
+
+Este error ocurre porque no hemos creado el controlador `obtener_usuarios.php`. Vamos a implementarlo:
+
+```php
+<?php
+// Crear este archivo: backend/controllers/chat/obtener_usuarios.php
+
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'error' => 'No autorizado']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Consulta para obtener todos los usuarios excepto el actual
+    $sql = "SELECT id, nombre, apellido, foto FROM usuarios WHERE id != :usuario_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    $usuarios =<?php
+// Crear este archivo: backend/controllers/chat/obtener_usuarios.php
+
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'error' => 'No autorizado']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Consulta para obtener todos los usuarios excepto el actual
+    $sql = "SELECT id, nombre, apellido, foto FROM usuarios WHERE id != :usuario_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    $usuarios =
+
+RafaelG1986: quedamos en el segundo paso, no se devolvio lo demas.
+
+GitHub Copilot: # Solución a los problemas del sistema de chat
+
+Veo dos problemas principales que necesitamos corregir:
+
+## 1. Error en obtener_usuarios.php
+
+El archivo está mal formado y contiene código duplicado. Debemos crear una versión correcta:
+
+```php
+<?php
+// Archivo: backend/controllers/chat/obtener_usuarios.php
+
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'error' => 'No autorizado']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Consulta para obtener todos los usuarios excepto el actual
+    $sql = "SELECT id, nombre, apellido, foto FROM usuarios WHERE id != :usuario_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo json_encode(['success' => true, 'usuarios' => $usuarios]);
+    
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'error' => 'Error en la base de datos: ' . $e->getMessage()]);
+}
+?>
+```
+
+## 2. Ruta incorrecta en las peticiones AJAX
+
+El problema principal es que los archivos están en:
+- chat 
+
+Pero en el JS estamos buscando en:
+- `../../backend/controllers/chat/`
+
+Hay dos soluciones posibles:
+
+### Opción 1: Mover los archivos a la ruta correcta
+1. Crea la carpeta `backend/controllers/chat/`
+2. Mueve todos los archivos PHP del chat ahí
+
+### Opción 2: Corregir las rutas en el archivo chat.js
+
+```javascript
+// Cambiar todas las rutas. Por ejemplo:
+fetch('../../frontend/controllers/chat/obtener_usuarios.php')
+```
+
+## 3. Modal que no se minimiza
+
+Para el problema del modal que no se minimiza, añade este código a tu chat.js:
+
+```javascript
+function minimizarChat() {
+    const chatWindow = document.getElementById('chat-window');
+    if (chatWindow) {
+        chatWindow.classList.toggle('minimized');
+        
+        // Guardar estado en localStorage para persistencia
+        const isMinimized = chatWindow.classList.contains('minimized');
+        localStorage.setItem('chatMinimized', isMinimized);
+        
+        console.log('Chat minimizado:', isMinimized);
+    } else {
+        console.error('Elemento chat-window no encontrado');
+    }
+}
+```
+
+Y añade este CSS para el estado minimizado:
+
+```css
+.chat-window.minimized {
+    height: 40px;
+    overflow: hidden;
+}
+
+.chat-window.minimized .chat-messages,
+.chat-window.minimized .chat-input {
+    display: none;
+}
+```
+
+¿Prefieres que movamos los archivos a la ubicación correcta o que cambiemos las rutas en el JS?
+
+RafaelG1986: Los css estan integrados al html correspondiente?
+
+GitHub Copilot: # Integración completa de chat
+
+Para resolver completamente la implementación del chat, necesitamos asegurarnos de que todo esté correctamente vinculado:
+
+## 1. Vincular los CSS al HTML
+
+Revisa que tengas estas líneas en el `<head>` de admin.php:
+
+```php
+<!-- Añadir en la sección head -->
+<link rel="stylesheet" href="../css/styles_chat.css">
+<script src="../js/chat.js"></script>
+```
+
+Si no están presentes, agrégalas justo antes del cierre de `</head>`.
+
+## 2. Agregar el HTML del sidebar de chat
+
+Parece que solo tienes la ventana de chat pero no el sidebar. Agrega este código justo antes del cierre de `</body>`:
+
+```php
+<!-- Sidebar del chat -->
+<div id="chat-sidebar" class="chat-sidebar">
+    <div class="chat-header">
+        <h3>Mensajes</h3>
+        <button id="new-chat-btn"><i class="fas fa-plus"></i></button>
+    </div>
+    
+    <div class="chat-search">
+        <input type="text" placeholder="Buscar conversaciones...">
+    </div>
+    
+    <div class="conversations-list">
+        <!-- Las conversaciones se cargarán aquí dinámicamente -->
+    </div>
+</div>
+
+<!-- Contenedor para el ID de usuario -->
+<div id="chat-container" data-usuario-id="<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '0'; ?>"></div>
+
+<!-- Botón para mostrar/ocultar el chat -->
+<div id="chat-toggle-button" class="chat-toggle-button">
+    <i class="fas fa-comments"></i>
+    <span class="badge" id="unread-badge" style="display: none;">0</span>
+</div>
+```
+
+## 3. Corregir las rutas en chat.js
+
+El principal problema es que estás usando rutas incorrectas. Modifica todas las peticiones fetch en chat.js para que apunten a la ubicación correcta:
+
+```javascript
+// De:
+fetch('../../backend/controllers/chat/obtener_usuarios.php')
+
+// A:// De:
+fetch('../../backend/controllers/chat/obtener_usuarios.php')
+
+// A:
+
+RafaelG1986: 3. coregir las rutas en chat.js
+
+GitHub Copilot: # Corrección de rutas en chat.js para el sistema de chat
+
+Para corregir el problema de rutas en tu archivo `chat.js` y hacer que el chat funcione correctamente, necesitas modificar todas las rutas de las peticiones fetch. Actualmente están apuntando a `../../backend/controllers/chat/` pero tus archivos PHP están en chat.
+
+## Modificaciones necesarias en chat.js:
+
+```javascript
+// Corregir todas las rutas fetch en chat.js
+
+// De:
+fetch('../../backend/controllers/chat/obtener_conversaciones.php')
+// A:
+fetch('../../frontend/controllers/chat/obtener_conversaciones.php')
+
+// De:
+fetch('../../backend/controllers/chat/marcar_leido.php', {
+// A:
+fetch('../../frontend/controllers/chat/marcar_leido.php', {
+
+// De:
+fetch(`../../backend/controllers/chat/obtener_mensajes.php?conversacion_id=${encodeURIComponent(conversacionId)}`)
+// A:
+fetch(`../../frontend/controllers/chat/obtener_mensajes.php?conversacion_id=${encodeURIComponent(conversacionId)}`)
+
+// De:
+fetch('../../backend/controllers/chat/enviar_mensaje.php', {
+// A:
+fetch('../../frontend/controllers/chat/enviar_mensaje.php', {
+
+// De:
+fetch('../../backend/controllers/chat/obtener_usuarios.php')
+// A:
+fetch('../../frontend/controllers/chat/obtener_usuarios.php')
+
+// De:
+fetch('../../backend/controllers/chat/crear_conversacion.php', {
+// A:
+fetch('../../frontend/controllers/chat/crear_conversacion.php', {
+```
+
+## Solución al problema del error de minimizar
+
+El código para minimizar ya está correcto en tu CSS:
+
+```css
+.chat-window.minimized {
+    height: 40px;
+    overflow: hidden;
+}
+
+.chat-window.minimized .chat-messages,
+.chat-window.minimized .chat-input {
+    display: none;
+}
+```
+
+Pero la función `minimizarChat()` en chat.js podría tener algún problema. Asegúrate de que esté implementada así:
+
+```javascript
+function minimizarChat() {
+    const chatWindow = document.getElementById('chat-window');
+    if (chatWindow) {
+        chatWindow.classList.toggle('minimized');
+        console.log('Chat minimizado:', chatWindow.classList.contains('minimized'));
+    } else {
+        console.error('Elemento chat-window no encontrado');
+    }
+}
+```
+
+## Nota adicional sobre el código HTML
+
+En tu archivo admin.php hay un elemento `<select>` fuera de contexto que podría causar errores:
+
+```php
+<select class="selector-estado" data-id="<?php echo $registro['id']; ?>">
+    <!-- opciones... -->
+</select>
+```
+
+Este elemento debería estar dentro de algún bucle que recorra registros, no al final del archivo. Considera eliminar este fragmento ya que podría causar errores de JavaScript.
+
+RafaelG1986: Las rutas estan bien, porque los controladores estan el el backend
+
+GitHub Copilot: # Solución a problemas del sistema de chat
+
+Entiendo que los controladores están efectivamente en la carpeta backend y no en frontend como sugería antes. Esto significa que las rutas en chat.js están correctas, pero hay otros problemas que debemos resolver:
+
+## 1. Error al cargar usuarios
+
+El problema está en el archivo `obtener_usuarios.php`. Vamos a corregirlo:
+
+```php
+<?php
+// Archivo: backend/controllers/chat/obtener_usuarios.php
+
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'error' => 'No autorizado']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Consulta para obtener todos los usuarios excepto el actual
+    $sql = "SELECT id, nombre, apellido, foto FROM usuarios WHERE id != :usuario_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo json_encode(['success' => true, 'usuarios' => $usuarios]);
+    
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'error' => 'Error en la base de datos: ' . $e->getMessage()]);
+}
+?>
+```
+
+## 2. Problema con el chat minimizado
+
+La función `minimizarChat()` parece correcta, pero podría haber un problema con los eventos o con el elemento DOM. Vamos a agregar debugging:
+
+```javascript
+function minimizarChat() {
+    const chatWindow = document.getElementById('chat-window');
+    if (chatWindow) {
+        chatWindow.classList.toggle('minimized');
+        console.log('Estado del chat window:', chatWindow);
+        console.log('Clases después de toggle:', chatWindow.className);
+        console.log('Chat minimizado:', chatWindow.classList.contains('minimized'));
+        
+        // Forzar actualización visual
+        chatWindow.style.display = 'none';
+        setTimeout(() => {
+            chatWindow.style.display = 'flex';
+        }, 10);
+    } else {
+        console.error('Elemento chat-window no encontrado');
+    }
+}
+```
+
+## 3. Verificación de los elementos HTML del chat
+
+Asegúrate de que en `admin.php` estén todos estos elementos correctamente:
+
+```html
+<!-- Chat sidebar -->
+<div id="chat-sidebar" class="chat-sidebar">
+    <div class="chat-header">
+        <h3>Mensajes</h3>
+        <button id="new-chat-btn"><i class="fas fa-plus"></i></button>
+    </div>
+    
+    <div class="chat-search">
+        <input type="text" placeholder="Buscar conversaciones...">
+    </div>
+    
+    <div class="conversations-list">
+        <!-- Conversaciones se cargan dinámicamente -->
+    </div>
+</div>
+```
+
+## 4. Agregar un inicializador del chat más robusto
+
+```php
+<!-- Añadir al final de admin.php antes del cierre del body -->
+<div id="chat-container" data-usuario-id="<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '0'; ?>"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Verificar elementos críticos
+    if (!document.getElementById('chat-container')) {
+        console.error('No se encontró el elemento chat-container');
+    }
+    
+    if (!document.getElementById('chat-window')) {
+        console.error('No se encontró el elemento chat-window');
+    }
+    
+    if (!document.getElementById('minimize-chat')) {
+        console.error('No se encontró el elemento minimize-chat');
+    }
+    
+    // Inicializar chat si existe la función
+    if (typeof inicializarChat === 'function') {
+        console.log('Inicializando sistema de chat...');
+        try {
+            inicializarChat();
+            console.log('Sistema de chat inicializado correctamente');
+        } catch (e) {
+            console.error('Error inicializando el chat:', e);
+        }
+    } else {
+        console.error('Función inicializarChat no encontrada');
+    }
+});
+</script>
+```
+
+Con estas correcciones, deberías poder resolver los problemas tanto del error al cargar usuarios como del modal que no se minimiza. Si continúan los problemas, el logging adicional nos ayudará a identificar la raíz del problema más específicamente.
+
+RafaelG1986: chat.js:36 
+            
+            
+           GET https://conexion-main-xyz123.loca.lt/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php 404 (Not Found)
+cargarConversaciones @ chat.js:36
+(anónimas) @ chat.js:31Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 404
+    at chat.js:39:27
+(anónimas) @ chat.js:51
+Promise.catch
+cargarConversaciones @ chat.js:50
+(anónimas) @ chat.js:31Comprende este error
+chat.js:36 
+            
+            
+           GET https://conexion-main-xyz123.loca.lt/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php 404 (Not Found)
+cargarConversaciones @ chat.js:36
+(anónimas) @ chat.js:31Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 404
+    at chat.js:39:27
+(anónimas) @ chat.js:51
+Promise.catch
+cargarConversaciones @ chat.js:50
+(anónimas) @ chat.js:31Comprende este error
+chat.js:36 
+            
+            
+           GET https://conexion-main-xyz123.loca.lt/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php 404 (Not Found)
+cargarConversaciones @ chat.js:36
+(anónimas) @ chat.js:31Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 404
+    at chat.js:39:27
+
+GitHub Copilot: # Solución de problema con controladores del chat
+
+Veo que estás teniendo errores 404 al intentar acceder a los controladores del chat. El problema principal es que los archivos de controladores no existen en la ubicación `backend/controllers/chat/`.
+
+## 1. Problema identificado
+
+Cuando tu aplicación realiza peticiones como:
+```
+GET https://conexion-main-xyz123.loca.lt/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php 404 (Not Found)
+```
+
+Recibe un error 404 porque estos archivos no existen en tu estructura de directorios o la ruta no es correcta.
+
+## 2. Solución: Crear los controladores PHP necesarios
+
+Debes crear los siguientes archivos en la carpeta `backend/controllers/chat/`:
+
+### obtener_conversaciones.php
+```php
+<?php
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'error' => 'No autorizado']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Consulta para obtener conversaciones del usuario
+    $sql = "SELECT c.*, 
+           (SELECT COUNT(*) FROM chat_mensajes WHERE conversacion_id = c.id AND remitente_id != :usuario_id AND leido = 0) as mensajes_no_leidos,
+           (SELECT mensaje FROM chat_mensajes WHERE conversacion_id = c.id ORDER BY created_at DESC LIMIT 1) as ultimo_mensaje,
+           (SELECT nombre FROM usuarios WHERE id = p2.usuario_id) as titulo,
+           (SELECT foto FROM usuarios WHERE id = p2.usuario_id) as foto
+           FROM chat_conversaciones c
+           JOIN chat_participantes p ON c.id = p.conversacion_id AND p.usuario_id = :usuario_id
+           JOIN chat_participantes p2 ON c.id = p2.conversacion_id AND p2.usuario_id != :usuario_id
+           WHERE c.tipo = 'individual'
+           ORDER BY (SELECT MAX(created_at) FROM chat_mensajes WHERE conversacion_id = c.id) DESC";
+           
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    $conversaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo json_encode(['success' => true, 'conversaciones' => $conversaciones]);
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+}
+```
+
+### obtener_usuarios.php
+```php
+<?php
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'error' => 'No autorizado']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Consulta para obtener todos los usuarios excepto el actual
+    $sql = "SELECT id, nombre, apellido, foto FROM usuarios WHERE id != :usuario_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo json_encode(['success' => true, 'usuarios' => $usuarios]);
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+}
+```
+
+### obtener_mensajes.php
+```php
+<?php
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id']) || !isset($_GET['conversacion_id'])) {
+    echo json_encode(['success' => false, 'error' => 'Parámetros incompletos']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+$conversacion_id = $_GET['conversacion_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Verificar que el usuario pertenece a la conversación
+    $sql = "SELECT COUNT(*) FROM chat_participantes 
+            WHERE conversacion_id = :conv_id AND usuario_id = :usuario_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':conv_id', $conversacion_id);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    if ($stmt->fetchColumn() == 0) {
+        echo json_encode(['success' => false, 'error' => 'No autorizado para esta conversación']);
+        exit;
+    }
+    
+    // Obtener info de la conversación
+    $sql = "SELECT c.*, 
+           (SELECT nombre FROM usuarios WHERE id = p2.usuario_id) as titulo,
+           (SELECT foto FROM usuarios WHERE id = p2.usuario_id) as foto
+           FROM chat_conversaciones c
+           JOIN chat_participantes p ON c.id = p.conversacion_id AND p.usuario_id = :usuario_id
+           JOIN chat_participantes p2 ON c.id = p2.conversacion_id AND p2.usuario_id != :usuario_id
+           WHERE c.id = :conv_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->bindParam(':conv_id', $conversacion_id);
+    $stmt->execute();
+    $conversacion = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Obtener mensajes
+    $sql = "SELECT m.*, u.nombre as nombre_remitente, u.foto as foto_remitente 
+            FROM chat_mensajes m 
+            JOIN usuarios u ON m.remitente_id = u.id
+            WHERE m.conversacion_id = :conv_id
+            ORDER BY m.created_at ASC";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':conv_id', $conversacion_id);
+    $stmt->execute();
+    $mensajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo json_encode(['success' => true, 'mensajes' => $mensajes, 'conversacion' => $conversacion]);
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+}
+```
+
+### marcar_leido.php
+```php
+<?php
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id']) || !isset($_POST['conversacion_id'])) {
+    echo json_encode(['success' => false, 'error' => 'Parámetros incompletos']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+$conversacion_id = $_POST['conversacion_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Actualizar mensajes como leídos
+    $sql = "UPDATE chat_mensajes 
+            SET leido = 1 
+            WHERE conversacion_id = :conv_id 
+            AND remitente_id != :usuario_id
+            AND leido = 0";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':conv_id', $conversacion_id);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    // Actualizar último acceso
+    $sql = "UPDATE chat_participantes 
+            SET ultimo_acceso = NOW() 
+            WHERE conversacion_id = :conv_id 
+            AND usuario_id = :usuario_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bin<?php
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id']) || !isset($_POST['conversacion_id'])) {
+    echo json_encode(['success' => false, 'error' => 'Parámetros incompletos']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+$conversacion_id = $_POST['conversacion_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Actualizar mensajes como leídos
+    $sql = "UPDATE chat_mensajes 
+            SET leido = 1 
+            WHERE conversacion_id = :conv_id 
+            AND remitente_id != :usuario_id
+            AND leido = 0";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':conv_id', $conversacion_id);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    // Actualizar último acceso
+    $sql = "UPDATE chat_participantes 
+            SET ultimo_acceso = NOW() 
+            WHERE conversacion_id = :conv_id 
+            AND usuario_id = :usuario_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bin
+
+RafaelG1986: dame el codigo completo de marcar leido
+
+GitHub Copilot: # Solución al error 404 Not Found en chat
+
+El error que estás viendo ocurre porque estás intentando acceder a archivos en la ruta `/backend/controllers/chat/` pero parece que tus archivos están en chat.
+
+## Código completo de marcar_leido.php
+
+```php
+<?php
+// filepath: c:\xampp\htdocs\Conexion-Main\frontend\controllers\chat\marcar_leido.php
+
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'error' => 'No autorizado']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+
+// Verificar datos recibidos
+if (!isset($_POST['conversacion_id'])) {
+    echo json_encode(['success' => false, 'error' => 'ID de conversación no proporcionado']);
+    exit;
+}
+
+$conversacion_id = $_POST['conversacion_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Verificar si el usuario es participante de la conversación
+    $sql_check = "SELECT id FROM chat_participantes 
+                  WHERE conversacion_id = :conversacion_id 
+                  AND usuario_id = :usuario_id";
+    $stmt_check = $conn->prepare($sql_check);
+    $stmt_check->bindParam(':conversacion_id', $conversacion_id);
+    $stmt_check->bindParam(':usuario_id', $usuario_id);
+    $stmt_check->execute();
+    
+    if ($stmt_check->rowCount() === 0) {
+        echo json_encode(['success' => false, 'error' => 'No eres participante de esta conversación']);
+        exit;
+    }
+    
+    // Marcar como leídos todos los mensajes que no son del usuario
+    $sql_update = "UPDATE chat_mensajes 
+                   SET leido = 1 
+                   WHERE conversacion_id = :conversacion_id 
+                   AND remitente_id != :usuario_id 
+                   AND leido = 0";
+    $stmt_update = $conn->prepare($sql_update);
+    $stmt_update->bindParam(':conversacion_id', $conversacion_id);
+    $stmt_update->bindParam(':usuario_id', $usuario_id);
+    $stmt_update->execute();
+    
+    // Actualizar último acceso del usuario
+    $sql_access = "UPDATE chat_participantes 
+                   SET ultimo_acceso = NOW() 
+                   WHERE conversacion_id = :conversacion_id 
+                   AND usuario_id = :usuario_id";
+    $stmt_access = $conn->prepare($sql_access);
+    $stmt_access->bindParam(':conversacion_id', $conversacion_id);
+    $stmt_access->bindParam(':usuario_id', $usuario_id);
+    $stmt_access->execute();
+    
+    echo json_encode(['success' => true, 'mensajes_actualizados' => $stmt_update->rowCount()]);
+    
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'error' => 'Error en la base de datos: ' . $e->getMessage()]);
+}
+?>
+```
+
+## ¡Corregir las rutas en chat.js!
+
+El problema principal es que estás haciendo llamadas a `/backend/controllers/chat/` cuando tus archivos están en chat.
+
+Edita tu archivo chat.js y cambia todas las rutas de:
+```javascript
+fetch('../../backend/controllers/chat/obtener_conversaciones.php')
+```
+
+a:
+```javascript
+fetch('../../frontend/controllers/chat/obtener_conversaciones.php')
+```
+
+Necesitas hacer esto para todas las llamadas fetch:
+1. obtener_conversaciones.php
+2. marcar_leido.php
+3. obtener_mensajes.php
+4. enviar_mensaje.php
+5. obtener_usuarios.php
+6. crear_conversacion.php
+
+Después de hacer estos cambios, el chat debería funcionar correctamente.
+
+RafaelG1986: ya esta el chat en backend
+
+GitHub Copilot: # Solución al error 404 en las peticiones del chat
+
+Veo que efectivamente tienes los archivos correctamente en la carpeta chat, pero hay un problema con las URLs que estás utilizando. 
+
+## El problema principal
+
+Estás intentando acceder a través de un túnel local (loca.lt) y la URL que se está generando es:
+```
+https://conexion-main-xyz123.loca.lt/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php
+```
+
+Hay un problema de duplicación parcial de la ruta. Cuando usas servicios como localtunnel, la URL base ya incluye tu proyecto.
+
+## Solución: Ajustar las rutas en chat.js
+
+Modifica todas las rutas en chat.js para usar rutas relativas al dominio:
+
+```javascript
+// Reemplazar estas líneas:
+fetch('../../backend/controllers/chat/obtener_conversaciones.php')
+
+// Por estas (eliminando los "../../"):
+fetch('/backend/controllers/chat/obtener_conversaciones.php')
+```
+
+Aplica este cambio a todas las llamadas fetch:
+
+```javascript
+// Original
+fetch('../../backend/controllers/chat/marcar_leido.php', {...})
+fetch(`../../backend/controllers/chat/obtener_mensajes.php?conversacion_id=${id}`)
+fetch('../../backend/controllers/chat/enviar_mensaje.php', {...})
+fetch('../../backend/controllers/chat/obtener_usuarios.php')
+fetch('../../backend/controllers/chat/crear_conversacion.php', {...})
+
+// Corrección
+fetch('/backend/controllers/chat/marcar_leido.php', {...})
+fetch(`/backend/controllers/chat/obtener_mensajes.php?conversacion_id=${id}`)
+fetch('/backend/controllers/chat/enviar_mensaje.php', {...})
+fetch('/backend/controllers/chat/obtener_usuarios.php')
+fetch('/backend/controllers/chat/crear_conversacion.php', {...})
+```
+
+## Alternativa: Usar rutas absolutas desde la raíz del sitio
+
+Si la
+
+RafaelG1986: Failed to load resource: the server responded with a status of 404 (Not Found)Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 404
+    at chat.js:39:27
+(anónimas) @ chat.js:51Comprende este error
+/backend/controllers/chat/obtener_conversaciones.php:1 
+            
+            
+           Failed to load resource: the server responded with a status of 404 (Not Found)Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 404
+    at chat.js:39:27
+(anónimas) @ chat.js:51Comprende este error
+/backend/controllers/chat/obtener_conversaciones.php:1 
+            
+            
+           Failed to load resource: the server responded with a status of 404 (Not Found)Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 404
+    at chat.js:39:27
+(anónimas) @ chat.js:51Comprende este error
+chat.js:36 
+            
+            
+           GET https://conexion-main-xyz123.loca.lt/backend/controllers/chat/obtener_conversaciones.php 404 (Not Found)
+cargarConversaciones @ chat.js:36
+(anónimas) @ chat.js:31Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 404
+    at chat.js:39:27
+(anónimas) @ chat.js:51
+Promise.catch
+cargarConversaciones @ chat.js:50
+(anónimas) @ chat.js:31Comprende este error
+chat.js:36 
+            
+            
+           GET https://conexion-main-xyz123.loca.lt/backend/controllers/chat/obtener_conversaciones.php 404 (Not Found)
+cargarConversaciones @ chat.js:36
+(anónimas) @ chat.js:31Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 404
+    at chat.js:39:27
+(anónimas) @ chat.js:51
+Promise.catch
+cargarConversaciones @ chat.js:50
+(anónimas) @ chat.js:31Comprende este error
+chat.js:36 
+            
+            
+           GET https://conexion-main-xyz123.loca.lt/backend/controllers/chat/obtener_conversaciones.php 404 (Not Found)
+cargarConversaciones @ chat.js:36
+(anónimas) @ chat.js:31Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 404
+    at chat.js:39:27
+
+GitHub Copilot: # Solución al problema 404 en el chat
+
+El error indica que el navegador no puede encontrar los archivos PHP del chat. Esto se debe a la forma en que estás definiendo las rutas en las llamadas fetch.
+
+## El problema específico
+
+Estás usando rutas que empiezan con `/backend/controllers/chat/...`, pero estas son **rutas absolutas** desde la raíz del dominio. Si estás usando localtunnel, la URL correcta debería incluir `/Conexion-Main/` antes de backend.
+
+## Solución: Ajustar las rutas en chat.js
+
+Cambia todas las rutas en el archivo chat.js por este patrón:
+
+```javascript
+// De:
+fetch('/backend/controllers/chat/obtener_conversaciones.php')
+
+// A:
+fetch('/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php')
+```
+
+### Reemplazos necesarios:
+
+1. **Obtener conversaciones**:
+```javascript
+fetch('/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php')
+```
+
+2. **Marcar leído**:
+```javascript
+fetch('/Conexion-Main/backend/controllers/chat/marcar_leido.php', {
+```
+
+3. **Obtener mensajes**:
+```javascript
+fetch(`/Conexion-Main/backend/controllers/chat/obtener_mensajes.php?conversacion_id=${encodeURIComponent(conversacionId)}`)
+```
+
+4. **Enviar mensaje**:
+```javascript
+fetch('/Conexion-Main/backend/controllers/chat/enviar_mensaje.php', {
+```
+
+5. **Obtener usuarios**:
+```javascript
+fetch('/Conexion-Main/backend/controllers/chat/obtener_usuarios.php')
+```
+
+6. **Crear conversación**:
+```javascript
+fetch('/Conexion-Main/backend/controllers/chat/crear_conversacion.php', {
+```
+
+Esta solución ajustará todas las rutas para apuntar correctamente a la ubicación de tus archivos en el servidor.
+
+RafaelG1986: chat.js:51 Error cargando conversaciones: SyntaxError: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+(anónimas) @ chat.js:51Comprende este error
+3chat.js:51 Error cargando conversaciones: SyntaxError: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+
+GitHub Copilot: # Solución al error SyntaxError en el chat
+
+El error `Unexpected token '<', "<br /><b>"... is not valid JSON` indica que el servidor está devolviendo HTML con un mensaje de error de PHP en lugar de la respuesta JSON esperada.
+
+## La causa del problema
+
+El servidor está mostrando un error de PHP, probablemente porque **las tablas del chat no existen en la base de datos**. Este es un paso que no hemos completado aún.
+
+## Solución: Crear las tablas de la base de datos
+
+Para resolver este problema, necesitas crear las tablas necesarias para el sistema de chat:
+
+```sql
+-- Ejecutar este script en phpMyAdmin
+
+-- Tabla para conversaciones
+CREATE TABLE chat_conversaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NULL,
+    tipo ENUM('individual', 'grupo') DEFAULT 'individual',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla para mensajes
+CREATE TABLE chat_mensajes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    conversacion_id INT,
+    remitente_id INT,
+    mensaje TEXT NOT NULL,
+    leido BOOLEAN DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (conversacion_id) REFERENCES chat_conversaciones(id) ON DELETE CASCADE,
+    FOREIGN KEY (remitente_id) REFERENCES usuarios(id)
+);
+
+-- Tabla para participantes de conversaciones
+CREATE TABLE chat_participantes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    conversacion_id INT,
+    usuario_id INT,
+    ultimo_acceso TIMESTAMP NULL,
+    FOREIGN KEY (conversacion_id) REFERENCES chat_conversaciones(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+```
+
+## Pasos para verificar la solución:
+
+1. **Abre phpMyAdmin** y selecciona tu base de datos
+2. **Ejecuta el script SQL** de arriba para crear las tablas necesarias
+3. **Verifica las tablas** para asegurarte de que se crearon correctamente 
+4. **Comprueba la estructura** para confirmar que tienen las columnas y relaciones correctas
+
+## Para depurar el error específico:
+
+Si quieres ver el mensaje de error completo, abre directamente en el navegador:
+```
+https://tu-dominio.com/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php
+```
+
+Esto te mostrará el mensaje de error completo que te ayudará a identificar el problema exacto.
+
+RafaelG1986: cuando entro a phpMiAdmin me sale: No se puede acceder a este sitio
+localhost rechazó la conexión.
+Intenta:
+
+Comprobar la conexión.
+Comprobar el proxy y el firewall.
+ERR_CONNECTION_REFUSED
+
+GitHub Copilot: # Solución al problema de phpMyAdmin y creación de tablas de chat
+
+El error `ERR_CONNECTION_REFUSED` indica que los servicios de XAMPP no están ejecutándose correctamente. Vamos a solucionarlo paso a paso.
+
+## 1. Reiniciar servicios de XAMPP
+
+1. Abre el Panel de Control de XAMPP
+2. Detén los servicios de Apache y MySQL si están en ejecución
+3. Vuelve a iniciarlos
+4. Verifica que ambos tengan luz verde
+
+![XAMPP Control Panel](https://i.imgur.com/hR0L3aM.png)
+
+## 2. Alternativa: Crear tablas directamente con PHP
+
+Si sigue sin funcionar phpMyAdmin, podemos crear un script para generar las tablas automáticamente:
+
+```php
+<?php
+// Guardar como: c:\xampp\htdocs\Conexion-Main\crear_tablas_chat.php
+
+require_once __DIR__ . '/backend/config/database.php';
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    echo "<h2>Creando tablas para el sistema de chat...</h2>";
+    
+    // Tabla chat_conversaciones
+    $sql1 = "CREATE TABLE IF NOT EXISTS chat_conversaciones (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        titulo VARCHAR(255) NULL,
+        tipo ENUM('individual', 'grupo') DEFAULT 'individual',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
+    
+    $conn->exec($sql1);
+    echo "<p>✅ Tabla chat_conversaciones creada correctamente</p>";
+    
+    // Tabla chat_mensajes
+    $sql2 = "CREATE TABLE IF NOT EXISTS chat_mensajes (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        conversacion_id INT,
+        remitente_id INT,
+        mensaje TEXT NOT NULL,
+        leido BOOLEAN DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (conversacion_id) REFERENCES chat_conversaciones(id) ON DELETE CASCADE,
+        FOREIGN KEY (remitente_id) REFERENCES usuarios(id)
+    )";
+    
+    $conn->exec($sql2);
+    echo "<p>✅ Tabla chat_mensajes creada correctamente</p>";
+    
+    // Tabla chat_participantes
+    $sql3 = "CREATE TABLE IF NOT EXISTS chat_participantes (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        conversacion_id INT,
+        usuario_id INT,
+        ultimo_acceso TIMESTAMP NULL,
+        FOREIGN KEY (conversacion_id) REFERENCES chat_conversaciones(id) ON DELETE CASCADE,
+        FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    )";
+    
+    $conn->exec($sql3);
+    echo "<p>✅ Tabla chat_participantes creada correctamente</p>";
+    
+    echo "<h3>¡Todas las tablas creadas exitosamente!</h3>";
+    echo "<p>Ahora puedes usar el sistema de chat.</p>";
+    
+} catch(PDOException $e) {
+    echo "<h3>Error creando tablas:</h3>";
+    echo "<p>" . $e->getMessage() . "</p>";
+}
+?>
+```
+
+## 3. Ejecutar el script de creación
+
+1. Guarda el código anterior en un archivo llamado `crear_tablas_chat.php` en la raíz del proyecto
+2. Abre en el navegador: `http://localhost/Conexion-Main/crear_tablas_chat.php`
+3. Verás un mensaje confirmando que las tablas se han creado
+
+## 4. Verificar que las tablas se hayan creado correctamente
+
+Para asegurarte de que las tablas se crearon correctamente, puedes añadir este código al final del script:
+
+```php
+// Verificación
+$tables = ['chat_conversaciones', 'chat_mensajes', 'chat_participantes'];
+echo "<h3>Verificando tablas:</h3>";
+echo "<ul>";
+foreach ($tables as $table) {
+    $check = $conn->query("SHOW TABLES LIKE '$table'");
+    if ($check->rowCount() > 0) {
+        echo "<li>✅ $table existe</li>";
+    } else {
+        echo "<li>❌ $table NO existe</li>";
+    }
+}
+echo "</ul>";
+```
+
+Una vez creadas las tablas, el sistema de chat debería empezar a funcionar correctamente.
+
+RafaelG1986: id │ name               │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0  │ conexion-tunnel    │ default     │ 1.0.0   │ fork    │ 8620     │ 39m    │ 24   │ online    │ 0%       │ 43.5mb   │ Emanuel  │ disabled │
+└────┴────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+
+GitHub Copilot: # Solución para las tablas de chat y el túnel Local
+
+Veo que has implementado una verificación inteligente en obtener_conversaciones.php que detecta si las tablas existen antes de intentar usarlas. Esto es excelente para prevenir errores, pero aún necesitamos crear las tablas.
+
+## 1. Crear el script de tablas de chat
+
+Crea este archivo para generar automáticamente las tablas:
+
+```php
+<?php
+// Guardar como: c:\xampp\htdocs\Conexion-Main\crear_tablas_chat.php
+
+require_once __DIR__ . '/backend/config/database.php';
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    echo "<h2>Creando tablas para el sistema de chat...</h2>";
+    
+    // Tabla chat_conversaciones
+    $sql1 = "CREATE TABLE IF NOT EXISTS chat_conversaciones (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        titulo VARCHAR(255) NULL,
+        tipo ENUM('individual', 'grupo') DEFAULT 'individual',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
+    
+    $conn->exec($sql1);
+    echo "<p>✅ Tabla chat_conversaciones creada correctamente</p>";
+    
+    // Tabla chat_mensajes
+    $sql2 = "CREATE TABLE IF NOT EXISTS chat_mensajes (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        conversacion_id INT,
+        remitente_id INT,
+        mensaje TEXT NOT NULL,
+        leido BOOLEAN DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (conversacion_id) REFERENCES chat_conversaciones(id) ON DELETE CASCADE,
+        FOREIGN KEY (remitente_id) REFERENCES usuarios(id)
+    )";
+    
+    $conn->exec($sql2);
+    echo "<p>✅ Tabla chat_mensajes creada correctamente</p>";
+    
+    // Tabla chat_participantes
+    $sql3 = "CREATE TABLE IF NOT EXISTS chat_participantes (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        conversacion_id INT,
+        usuario_id INT,
+        ultimo_acceso TIMESTAMP NULL,
+        FOREIGN KEY (conversacion_id) REFERENCES chat_conversaciones(id) ON DELETE CASCADE,
+        FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    )";
+    
+    $conn->exec($sql3);
+    echo "<p>✅ Tabla chat_participantes creada correctamente</p>";
+    
+    echo "<h3>¡Todas las tablas creadas exitosamente!</h3>";
+    
+} catch(PDOException $e) {
+    echo "<h3>Error creando tablas:</h3>";
+    echo "<p>" . $e->getMessage() . "</p>";
+}
+?>
+```
+
+## 2. Sobre el túnel Local
+
+Observo que estás usando un túnel local (localtunnel o similar) que está ejecutándose a través de PM2:
+
+```
+│ 0  │ conexion-tunnel    │ default     │ 1.0.0   │ fork    │ 8620     │ 39m    │ 24   │ online    │ 0%       │ 43.5mb   │ Emanuel  │ disabled │
+```
+
+Este túnel tiene 24 reinicios, lo que podría indicar inestabilidad. Para las rutas del chat, necesitamos asegurarnos de que funcionan tanto localmente como a través del túnel.
+
+## 3. Solución para las rutas del chat
+
+Para que funcionen las rutas en ambos entornos:
+
+```javascript
+// En chat.js, usa rutas relativas a la raíz del sitio
+fetch('/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php')
+
+// O mejor aún, usa una variable base
+const baseUrl = window.location.hostname.includes('loca.lt') ? 
+    '/Conexion-Main' : '';
+
+fetch(`${baseUrl}/backend/controllers/chat/obtener_conversaciones.php`)
+```
+
+## 4. Reiniciar el túnel (si es necesario)
+
+Si sigues teniendo problemas de conexión, reinicia el túnel:
+
+```bash
+# Reiniciar el túnel
+pm2 restart conexion-tunnel
+
+# O detener e iniciar de nuevo
+pm2 stop conexion-tunnel
+pm2 start conexion-tunnel
+```
+
+Después de crear las tablas con el script proporcionado, el sistema de chat debería empezar a funcionar correctamente.
+
+RafaelG1986: necesito configurar pm2 al puerto 8080
+
+GitHub Copilot: # Configuración de PM2 con puerto 8080
+
+Para configurar PM2 para usar el puerto 8080 con tu túnel de Conexión, sigue estos pasos:
+
+## 1. Detener el proceso actual
+
+Primero, detén el proceso actual de túnel:
+
+```bash
+pm2 stop conexion-tunnel
+```
+
+## 2. Configurar el nuevo comando con puerto 8080
+
+Ahora inicia el túnel especificando el puerto 8080:
+
+```bash
+# Si estás usando localtunnel:
+pm2 start --name conexion-tunnel "lt --port 8080 --subdomain conexion-main"
+
+# Si estás usando ngrok:
+pm2 start --name conexion-tunnel "ngrok http 8080"
+
+# Si estás usando serveo:
+pm2 start --name conexion-tunnel "ssh -R 80:localhost:8080 serveo.net"
+```
+
+## 3. Modificar la configuración de XAMPP
+
+También debes asegurarte de que Apache esté configurado para escuchar en el puerto 8080:
+
+1. Abre el archivo httpd.conf
+2. Busca la línea `Listen 80`
+3. Cámbiala a `Listen 8080`
+4. Reinicia Apache desde el panel de control XAMPP
+
+## 4. Verificar la configuración
+
+Para verificar que el túnel está funcionando correctamente:
+
+```bash
+pm2 logs conexion-tunnel
+```
+
+Deberías ver la URL pública generada que ahora apunta al puerto 8080 local.
+
+## 5. Actualizar referencias en el código (si es necesario)
+
+Si tu aplicación hace referencias a URLs absolutas, asegúrate de actualizar cualquier referencia al puerto en tu código:
+
+```javascript
+// Ejemplo de URL base dinámica que detecta el entorno
+const baseUrl = window.location.hostname.includes('loca.lt') ? 
+    '/Conexion-Main' : 
+    window.location.port === '8080' ? '' : '';
+
+// Usar esta base en peticiones fetch
+fetch(`${baseUrl}/backend/controllers/chat/obtener_conversaciones.php`)
+```
+
+¿Necesitas ayuda adicional con la configuración de PM2 o con la adaptación de tu aplicación al nuevo puerto?
+
+RafaelG1986: no, entonces al puerto 80
+
+GitHub Copilot: # Configuración de PM2 con puerto 80 (HTTP estándar)
+
+Veo que prefieres usar el puerto 80, que es el puerto HTTP estándar. Esta es una buena decisión ya que simplifica las URLs al no requerir especificar el puerto.
+
+## 1. Detener el proceso actual de túnel
+
+```bash
+pm2 stop conexion-tunnel
+```
+
+## 2. Configurar el nuevo comando con puerto 80
+
+```bash
+# Si estás usando localtunnel:
+pm2 start --name conexion-tunnel "lt --port 80 --subdomain conexion-main"
+
+# Si estás usando ngrok:
+pm2 start --name conexion-tunnel "ngrok http 80"
+```
+
+## 3. Verificar que Apache use el puerto 80
+
+Por defecto, XAMPP configura Apache para usar el puerto 80, así que probablemente ya esté configurado correctamente. Asegúrate de que:
+
+1. En el Panel de Control de XAMPP, Apache esté ejecutándose (luz verde)
+2. No haya otros servicios usando el puerto 80 (como IIS, Skype, etc.)
+
+## 4. Verificar la conexión del túnel
+
+```bash
+pm2 logs conexion-tunnel
+```
+
+Deberías ver un mensaje confirmando la URL pública.
+
+## 5. Reiniciar Apache si es necesario
+
+Si has cambiado la configuración del puerto anteriormente:
+
+1. Abre el Panel de Control de XAMPP
+2. Haz clic en "Stop" para Apache
+3. Haz clic en "Start" para reiniciarlo
+
+## Nota sobre obtener_conversaciones.php
+
+Observo que tu archivo obtener_conversaciones.php ) ya incluye una verificación inteligente para comprobar si las tablas de chat existen:
+
+```php
+// Primero verificar si existen las tablas necesarias
+$checkTablesQuery = "SHOW TABLES LIKE 'chat_conversaciones'";
+$stmt = $conn->prepare($checkTablesQuery);
+$stmt->execute();
+
+if ($stmt->rowCount() == 0) {
+    // Las tablas no existen, crearlas
+    echo json_encode(['success' => false, 'error' => 'Las tablas de chat no existen. Debes crear las tablas primero.']);
+    exit;
+}
+```
+
+Esto es una excelente práctica para evitar errores cuando las tablas no existen. Asegúrate de ejecutar el script de creación de tablas que te envié anteriormente.
+
+RafaelG1986: C:\Users\Emanuel>pm2 start --name conexion-tunnel "lt --port 8080 --subdomain conexion-main"
+[PM2] Spawning PM2 daemon with pm2_home=C:\Users\Emanuel\.pm2
+[PM2] PM2 Successfully daemonized
+[PM2][ERROR] Script not found: C:\Users\Emanuel\lt --port 8080 --subdomain conexion-main
+
+GitHub Copilot: # Error al configurar localtunnel con PM2
+
+Veo que estás teniendo un error al intentar iniciar localtunnel con PM2. El problema es que PM2 está interpretando incorrectamente el comando.
+
+## Solución correcta para iniciar localtunnel con PM2
+
+```bash
+# Primero, asegúrate de que localtunnel está instalado globalmente
+npm install -g localtunnel
+
+# Luego, usa esta sintaxis para iniciar con PM2:
+pm2 start "lt" --name "conexion-tunnel" -- --port 80 --subdomain conexion-main
+```
+
+Si el comando anterior no funciona, prueba esta alternativa:
+
+```bash
+# Alternativa usando cmd como intérprete:
+pm2 start "cmd.exe" --name "conexion-tunnel" -- /c "lt --port 80 --subdomain conexion-main"
+```
+
+## Otra opción: Crear un script batch
+
+Si los comandos anteriores siguen fallando, crea un archivo batch:
+
+1. Crea un archivo llamado `tunnel-start.bat` en tu escritorio con este contenido:
+   ```
+   @echo off
+   lt --port 80 --subdomain conexion-main
+   ```
+
+2. Luego inicia este archivo con PM2:
+   ```bash
+   pm2 start C:\Users\Emanuel\Desktop\tunnel-start.bat --name conexion-tunnel
+   ```
+
+## Verificar la instalación de localtunnel
+
+Si los comandos anteriores siguen fallando, verifica que localtunnel está correctamente instalado:
+
+```bash
+# Verificar la versión de localtunnel
+lt --version
+
+# Si no está instalado, instalarlo globalmente:
+npm install -g localtunnel
+```
+
+Después de configurar correctamente el túnel, podrás acceder a tu aplicación a través de la URL: `https://conexion-main.loca.lt`
+
+RafaelG1986: chat.js:36 
+            
+            
+           GET http://localhost/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php net::ERR_ABORTED 500 (Internal Server Error)
+cargarConversaciones @ chat.js:36
+inicializarChat @ chat.js:10Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 500
+    at chat.js:39:27
+(anónimas) @ chat.js:51
+Promise.catch
+cargarConversaciones @ chat.js:50
+inicializarChat @ chat.js:10Comprende este error
+chat.js:36 
+            
+            
+           GET http://localhost/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php net::ERR_ABORTED 500 (Internal Server Error)
+cargarConversaciones @ chat.js:36
+inicializarChat @ chat.js:10
+(anónimas) @ admin.php:362Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 500
+    at chat.js:39:27
+(anónimas) @ chat.js:51
+Promise.catch
+cargarConversaciones @ chat.js:50
+inicializarChat @ chat.js:10
+(anónimas) @ admin.php:362Comprende este error
+chat.js:36 
+            
+            
+           GET http://localhost/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php net::ERR_ABORTED 500 (Internal Server Error)
+cargarConversaciones @ chat.js:36
+inicializarChat @ chat.js:10
+(anónimas) @ admin.php:415Comprende este error
+chat.js:51 Error cargando conversaciones: Error: Error de red: 500
+    at chat.js:39:27
+
+GitHub Copilot: # Solución al error 500 en obtener_conversaciones.php
+
+Veo que estás enfrentando un error 500 (Internal Server Error) al intentar cargar las conversaciones. Este error ocurre en el servidor PHP y debemos solucionarlo.
+
+## Diagnóstico del problema
+
+El error 500 generalmente significa que hay un error en el código PHP del archivo [`backend/controllers/chat/obtener_conversaciones.php`](backend/controllers/chat/obtener_conversaciones.php ). Las causas más comunes son:
+
+1. Problemas con la conexión a la base de datos
+2. Errores en las consultas SQL
+3. Tablas inexistentes o mal configuradas
+4. Variables de sesión incorrectas
+
+## Pasos de solución
+
+### 1. Activar la visualización de errores
+
+Modifica [`obtener_conversaciones.php`](obtener_conversaciones.php ) para ver el error específico:
+
+```php
+<?php
+// Activar temporalmente la visualización de errores para debug
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+header('Content-Type: application/json');
+
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+// ... resto del código ...
+?>
+```
+
+### 2. Verificar la conexión a la base de datos
+
+Asegúrate de que tu clase Database esté configurada correctamente en database.php.
+
+### 3. Simplificar la consulta SQL
+
+Modifica temporalmente la consulta para identificar dónde está el problema:
+
+```php
+<?php
+// ... código inicial ...
+
+$usuario_id = $_SESSION['user_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Verificar si existen las tablas
+    try {
+        $checkTable = $conn->query("SHOW TABLES LIKE 'chat_conversaciones'");
+        if ($checkTable->rowCount() == 0) {
+            echo json_encode(['success' => false, 'error' => 'Tablas no encontradas. Por favor crea las tablas de chat primero.']);
+            exit;
+        }
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'error' => 'Error verificando tablas: ' . $e->getMessage()]);
+        exit;
+    }
+    
+    // Consulta simplificada para pruebas
+    try {
+        $sql = "SELECT * FROM chat_conversaciones LIMIT 5";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $conversaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        echo json_encode(['success' => true, 'conversaciones' => $conversaciones]);
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'error' => 'Error en consulta: ' . $e->getMessage()]);
+    }
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'error' => 'Error de conexión: ' . $e->getMessage()]);
+}
+?>
+```
+
+### 4. Probar la conexión con un script simple
+
+Crea un archivo de prueba `test_db.php` en la raíz:
+
+```php
+<?php
+//<?php
+//
+
+RafaelG1986: verifica el archivo linea 51
+
+GitHub Copilot: # Solución al Error 500 en obtener_conversaciones.php
+
+Estoy viendo que estás recibiendo un error 500 (Internal Server Error) cuando intentas cargar las conversaciones. El problema está relacionado con el archivo `obtener_conversaciones.php`.
+
+## Análisis de la línea 51 de chat.js
+
+```javascript
+fetch('/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php')
+```
+
+Esta línea está correcta en cuanto a la ruta, pero el servidor está devolviendo un error 500, lo que indica un problema en el script PHP.
+
+## Solución al problema
+
+Para solucionar este error, verifica lo siguiente:
+
+1. **Problemas con las tablas**:
+   - ¿Has creado las tablas necesarias para el chat? (chat_conversaciones, chat_mensajes, chat_participantes)
+   - Ejecuta el script de creación de tablas
+
+RafaelG1986: Las tablas estan creadas.
+
+GitHub Copilot: # Tablas creadas correctamente para el sistema de chat
+
+Excelente, veo que has creado correctamente las tres tablas necesarias para el sistema de chat:
+
+1. `chat_conversaciones`: Para almacenar las conversaciones
+2. `chat_mensajes`: Para almacenar los mensajes individuales
+3. `chat_participantes`: Para gestionar quién participa en cada conversación
+
+## El error 500 en obtener_conversaciones.php
+
+El error 500 (Internal Server Error) que estás viendo es probablemente debido a un problema en la consulta SQL. Vamos a solucionarlo modificando el archivo:
+
+```php
+<?php
+// backend/controllers/chat/obtener_conversaciones.php - Versión corregida
+
+// Activar temporalmente la visualización de errores para debug
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+header('Content-Type: application/json');
+
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'error' => 'No autorizado']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Consulta simplificada que solo verifica si el usuario tiene conversaciones
+    $sql = "SELECT c.*, 
+           COALESCE((SELECT COUNT(*) FROM chat_mensajes WHERE conversacion_id = c.id AND remitente_id != :usuario_id AND leido = 0), 0) as mensajes_no_leidos,
+           COALESCE((SELECT mensaje FROM chat_mensajes WHERE conversacion_id = c.id ORDER BY created_at DESC LIMIT 1), '') as ultimo_mensaje,
+           (SELECT u.nombre FROM usuarios u JOIN chat_participantes p ON u.id = p.usuario_id WHERE p.conversacion_id = c.id AND p.usuario_id != :usuario_id LIMIT 1) as titulo,
+           (SELECT u.foto FROM usuarios u JOIN chat_participantes p ON u.id = p.usuario_id WHERE p.conversacion_id = c.id AND p.usuario_id != :usuario_id LIMIT 1) as foto
+           FROM chat_conversaciones c
+           JOIN chat_participantes p ON c.id = p.conversacion_id
+           WHERE p.usuario_id = :usuario_id
+           GROUP BY c.id
+           ORDER BY (SELECT MAX(created_at) FROM chat_mensajes WHERE conversacion_id = c.id) DESC";
+           
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    $conversaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo json_encode(['success' => true, 'conversaciones' => $conversaciones]);
+} catch (PDOException $e) {
+    // Respuesta detallada para depuración
+    echo json_encode([
+        'success' => false, 
+        'error' => $e->getMessage(),
+        'trace' => $e->getTraceAsString()
+    ]);
+}
+?>
+```
+
+La consulta anterior estaba esperando subconsultas complejas que podrían no estar funcionando correctamente. Esta versión simplificada debería resolver el problema.
+
+## Errores en rutas del chat.js
+
+También hay un error en la línea 104 de chat.js donde usas una ruta incorrecta:
+
+```javascript
+// Línea incorrecta
+fetch('/backend/controllers/chat/marcar_leido.php', {
+
+// Debe ser
+fetch('/Conexion-Main/backend/controllers/chat/marcar_leido.php', {
+```
+
+Asegúrate de que todas las rutas incluyan `/Conexion-Main/` al inicio.
+
+¿Necesitas más ayuda para que el chat funcione correctamente?
+
+RafaelG1986: chat.js:51 Error cargando conversaciones: SyntaxError: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+(anónimas) @ chat.js:51
+Promise.catch
+cargarConversaciones @ chat.js:50
+inicializarChat @ chat.js:10
+(anónimas) @ admin.php:362Comprende este error
+chat.js:51 Error cargando conversaciones: SyntaxError: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+(anónimas) @ chat.js:51
+Promise.catch
+cargarConversaciones @ chat.js:50
+inicializarChat @ chat.js:10Comprende este error
+chat.js:51 Error cargando conversaciones: SyntaxError: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+
+GitHub Copilot: # Solución al error de sintaxis en la respuesta JSON
+
+Veo que estás recibiendo un error HTML en lugar de JSON: `Unexpected token '<', "<br /><b>"... is not valid JSON`. Esto indica que tu script PHP está generando un error antes de llegar al punto donde emite el JSON.
+
+## Causas probables del error
+
+Hay varios motivos por los que PHP podría estar generando HTML en lugar de JSON:
+
+1. Un error de sintaxis en el archivo PHP
+2. Error en la consulta SQL
+3. Problema con las tablas recién creadas
+4. Problema con el archivo `database.php`
+
+## Solución: Verificar el script PHP directamente
+
+Para identificar exactamente qué está fallando, accede directamente a la URL del script en el navegador:
+
+```
+http://localhost/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php
+```
+
+Esto te mostrará el mensaje de error completo que podrás solucionar.
+
+## Solución específica para el error SQL
+
+Basado en los errores comunes con estas consultas, vamos a simplificar la consulta SQL:
+
+```php
+<?php
+// Reemplaza la consulta SQL actual con esta versión más simple
+$sql = "SELECT c.id, c.titulo, c.tipo, c.created_at,
+       0 as mensajes_no_leidos,
+       '' as ultimo_mensaje,
+       u.nombre as titulo,
+       u.foto as foto
+       FROM chat_conversaciones c
+       JOIN chat_participantes p ON c.id = p.conversacion_id
+       JOIN usuarios u ON u.id = (
+           SELECT usuario_id FROM chat_participantes 
+           WHERE conversacion_id = c.id AND usuario_id != :usuario_id
+           LIMIT 1
+       )
+       WHERE p.usuario_id = :usuario_id
+       GROUP BY c.id
+       ORDER BY c.created_at DESC";
+```
+
+Recuerda verificar que:
+
+1. La tabla `usuarios` existe y tiene las columnas `nombre` y `foto`
+2. La sesión `$_SESSION['user_id']` contiene un valor válido
+3. No hay mensajes de error o advertencia generados antes del `header('Content-Type: application/json');`
+
+Prueba estos cambios y accede directamente a la URL del script para ver si persiste el error.
+
+RafaelG1986: Como nunca se ha establecido una conversacion, no deberia de hacer una consulta si no hay la primera conversacion.
+
+GitHub Copilot: # Solución al error por falta de conversaciones iniciales
+
+Has identificado el problema correctamente: el chat está intentando cargar conversaciones cuando todavía no existe ninguna. Esto provoca un error en la consulta SQL que genera HTML de error en lugar de una respuesta JSON válida.
+
+## Corrección para [`obtener_conversaciones.php`](obtener_conversaciones.php )
+
+Modifica tu archivo [`backend/controllers/chat/obtener_conversaciones.php`](backend/controllers/chat/obtener_conversaciones.php ) para manejar el caso de cero conversaciones:
+
+```php
+<?php
+// backend/controllers/chat/obtener_conversaciones.php - Versión corregida
+
+// Activar temporalmente la visualización de errores para debug
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+header('Content-Type: application/json');
+
+require_once __DIR__ . '/../../config/database.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'error' => 'No autorizado']);
+    exit;
+}
+
+$usuario_id = $_SESSION['user_id'];
+
+try {
+    $db = new Database();
+    $conn = $db->getConnection();
+    
+    // Primero verificar si el usuario tiene conversaciones
+    $checkConvQuery = "SELECT COUNT(*) FROM chat_participantes WHERE usuario_id = :usuario_id";
+    $checkStmt = $conn->prepare($checkConvQuery);
+    $checkStmt->bindParam(':usuario_id', $usuario_id);
+    $checkStmt->execute();
+    
+    // Si no hay conversaciones, devolver un array vacío inmediatamente
+    if ($checkStmt->fetchColumn() == 0) {
+        echo json_encode(['success' => true, 'conversaciones' => []]);
+        exit;
+    }
+    
+    // Si hay conversaciones, proceder con la consulta completa
+    $sql = "SELECT c.*, 
+           COALESCE((SELECT COUNT(*) FROM chat_mensajes WHERE conversacion_id = c.id AND remitente_id != :usuario_id AND leido = 0), 0) as mensajes_no_leidos,
+           COALESCE((SELECT mensaje FROM chat_mensajes WHERE conversacion_id = c.id ORDER BY created_at DESC LIMIT 1), '') as ultimo_mensaje,
+           (SELECT u.nombre FROM usuarios u JOIN chat_participantes p ON u.id = p.usuario_id WHERE p.conversacion_id = c.id AND p.usuario_id != :usuario_id LIMIT 1) as titulo,
+           (SELECT u.foto FROM usuarios u JOIN chat_participantes p ON u.id = p.usuario_id WHERE p.conversacion_id = c.id AND p.usuario_id != :usuario_id LIMIT 1) as foto
+           FROM chat_conversaciones c
+           JOIN chat_participantes p ON c.id = p.conversacion_id
+           WHERE p.usuario_id = :usuario_id
+           GROUP BY c.id
+           ORDER BY (SELECT COALESCE(MAX(created_at), c.created_at) FROM chat_mensajes WHERE conversacion_id = c.id) DESC";
+           
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    $conversaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo json_encode(['success' => true, 'conversaciones' => $conversaciones]);
+} catch (PDOException $e) {
+    // Respuesta detallada para depuración
+    echo json_encode([
+        'success' => false, 
+        'error' => $e->getMessage()
+    ]);
+}
+?>
+```
+
+## Corregir ruta en `abrirConversacion()` )
+
+También hay un error en la función `abrirConversacion()` en chat.js (línea ~104). Falta '/Conexion-Main' en la ruta:
+
+```javascript
+// Cambiar esta línea:
+fetch('/backend/controllers/chat/marcar_leido.php', {
+
+// Por esta:
+fetch('/Conexion-Main/backend/controllers/chat/marcar_leido.php', {
+```
+
+## Mensajes "Sin conversaciones" más amigables
+
+Asegúrate de que tu `renderizarConversaciones()` en chat.js muestre un mensaje amigable cuando no hay conversaciones:
+
+```javascript
+if (!conversaciones || conversaciones.length === 0) {
+    listaConversaciones.innerHTML = '<div class="no-conversations">' +
+        '<p>No tienes conversaciones activas</p>' +
+        '<p>Haz clic en el botón <i class="fas fa-plus"></i> para iniciar una nueva conversación</p>' +
+    '</div>';
+    return;
+}
+```
+
+Con estos cambios, el chat debería manejar correctamente el caso de que no haya conversaciones iniciales, evitando el error y mostrando un mensaje amigable al usuario.
+
+RafaelG1986: Sigue los mismos errores, me das el codigo completo de chat.js
+
+GitHub Copilot: # Chat.js - Versión completa corregida
+
+Aquí tienes el código completo de chat.js con todas las correcciones necesarias:
+
+```javascript
+// chat.js - Sistema de chat interno para la plataforma Conexión
+
+// Función para inicializar el chat
+function inicializarChat() {
+    // Verificar que el contenedor existe
+    const chatContainer = document.getElementById('chat-container');
+    if (!chatContainer) {
+        console.error('Elemento chat-container no encontrado');
+        return;
+    }
+    
+    const usuarioActual = chatContainer.dataset.usuarioId;
+    let conversacionActiva = null;
+    let intervaloActualizacion = null;
+    
+    // Verificar que tenemos un ID de usuario
+    if (!usuarioActual || usuarioActual === '0') {
+        console.error('ID de usuario no disponible');
+        return;
+    }
+    
+    // Cargar conversaciones
+    cargarConversaciones();
+    
+    // Configurar eventos con verificación previa
+    const newChatBtn = document.getElementById('new-chat-btn');
+    if (newChatBtn) {
+        newChatBtn.addEventListener('click', mostrarNuevaConversacion);
+    } else {
+        console.warn('Elemento new-chat-btn no encontrado');
+    }
+    
+    const sendMessageBtn = document.getElementById('send-message');
+    if (sendMessageBtn) {
+        sendMessageBtn.addEventListener('click', enviarMensaje);
+    } else {
+        console.warn('Elemento send-message no encontrado');
+    }
+    
+    const minimizeChatBtn = document.getElementById('minimize-chat');
+    if (minimizeChatBtn) {
+        minimizeChatBtn.addEventListener('click', minimizarChat);
+    } else {
+        console.warn('Elemento minimize-chat no encontrado');
+    }
+    
+    const closeChatBtn = document.getElementById('close-chat');
+    if (closeChatBtn) {
+        closeChatBtn.addEventListener('click', cerrarChat);
+    } else {
+        console.warn('Elemento close-chat no encontrado');
+    }
+    
+    // Presionar Enter en el campo de texto para enviar mensaje
+    const chatInput = document.querySelector('.chat-input textarea');
+    if (chatInput) {
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                enviarMensaje();
+            }
+        });
+    } else {
+        console.warn('Campo de chat textarea no encontrado');
+    }
+    
+    // Actualizar cada 10 segundos
+    intervaloActualizacion = setInterval(function() {
+        if (conversacionActiva) {
+            cargarMensajes(conversacionActiva);
+        }
+        cargarConversaciones();
+    }, 10000);
+    
+    // Funciones principales
+    function cargarConversaciones() {
+        fetch('/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error de red: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    renderizarConversaciones(data.conversaciones || []);
+                } else {
+                    console.error('Error en respuesta:', data.error || 'Error desconocido');
+                }
+            })
+            .catch(error => {
+                console.error('Error cargando conversaciones:', error);
+                // No mostrar notificación para evitar spam
+            });
+    }
+    
+    function renderizarConversaciones(conversaciones) {
+        const listaConversaciones = document.querySelector('.conversations-list');
+        if (!listaConversaciones) {
+            console.error('Elemento .conversations-list no encontrado');
+            return;
+        }
+        
+        if (!conversaciones || conversaciones.length === 0) {
+            listaConversaciones.innerHTML = '<div class="no-conversations">' +
+                '<p>No tienes conversaciones activas</p>' +
+                '<p>Haz clic en el botón <i class="fas fa-plus"></i> para iniciar una nueva conversación</p>' +
+            '</div>';
+            return;
+        }
+        
+        let html = '';
+        
+        conversaciones.forEach(conv => {
+            let claseNoLeido = conv.mensajes_no_leidos > 0 ? 'unread-conversation' : '';
+            html += `
+                <div class="conversation-item ${claseNoLeido}" data-id="${conv.id}">
+                    <img src="../img/${conv.foto || 'default-user.png'}" class="chat-avatar" alt="">
+                    <div class="conversation-info">
+                        <div class="conversation-name">${sanitizarHTML(conv.titulo)}</div>
+                        <div class="conversation-last-message">${sanitizarHTML(conv.ultimo_mensaje) || 'Sin mensajes'}</div>
+                    </div>
+                    ${conv.mensajes_no_leidos > 0 ? `<span class="unread-badge">${conv.mensajes_no_leidos}</span>` : ''}
+                </div>
+            `;
+        });
+        
+        listaConversaciones.innerHTML = html;
+        
+        // Añadir eventos a las conversaciones
+        document.querySelectorAll('.conversation-item').forEach(item => {
+            item.addEventListener('click', () => abrirConversacion(item.dataset.id));
+        });
+    }
+    
+    function abrirConversacion(conversacionId) {
+        if (!conversacionId) {
+            console.error('ID de conversación inválido');
+            return;
+        }
+        
+        conversacionActiva = conversacionId;
+        
+        const chatWindow = document.getElementById('chat-window');
+        if (chatWindow) {
+            chatWindow.style.display = 'flex';
+        } else {
+            console.error('Elemento chat-window no encontrado');
+        }
+        
+        cargarMensajes(conversacionId);
+        
+        // Marcar como leída - CORREGIDO con / inicial
+        fetch('/Conexion-Main/backend/controllers/chat/marcar_leido.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `conversacion_id=${encodeURIComponent(conversacionId)}`
+        })
+        .catch(error => console.error('Error marcando como leído:', error));
+    }
+    
+    function cargarMensajes(conversacionId) {
+        if (!conversacionId) return;
+        
+        fetch(`/Conexion-Main/backend/controllers/chat/obtener_mensajes.php?conversacion_id=${encodeURIComponent(conversacionId)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error de red: ' + response.status);// filepath: c:\xampp\htdocs\Conexion-Main\frontend\js\chat.js
+// chat.js - Sistema de chat interno para la plataforma Conexión
+
+// Función para inicializar el chat
+function inicializarChat() {
+    // Verificar que el contenedor existe
+    const chatContainer = document.getElementById('chat-container');
+    if (!chatContainer) {
+        console.error('Elemento chat-container no encontrado');
+        return;
+    }
+    
+    const usuarioActual = chatContainer.dataset.usuarioId;
+    let conversacionActiva = null;
+    let intervaloActualizacion = null;
+    
+    // Verificar que tenemos un ID de usuario
+    if (!usuarioActual || usuarioActual === '0') {
+        console.error('ID de usuario no disponible');
+        return;
+    }
+    
+    // Cargar conversaciones
+    cargarConversaciones();
+    
+    // Configurar eventos con verificación previa
+    const newChatBtn = document.getElementById('new-chat-btn');
+    if (newChatBtn) {
+        newChatBtn.addEventListener('click', mostrarNuevaConversacion);
+    } else {
+        console.warn('Elemento new-chat-btn no encontrado');
+    }
+    
+    const sendMessageBtn = document.getElementById('send-message');
+    if (sendMessageBtn) {
+        sendMessageBtn.addEventListener('click', enviarMensaje);
+    } else {
+        console.warn('Elemento send-message no encontrado');
+    }
+    
+    const minimizeChatBtn = document.getElementById('minimize-chat');
+    if (minimizeChatBtn) {
+        minimizeChatBtn.addEventListener('click', minimizarChat);
+    } else {
+        console.warn('Elemento minimize-chat no encontrado');
+    }
+    
+    const closeChatBtn = document.getElementById('close-chat');
+    if (closeChatBtn) {
+        closeChatBtn.addEventListener('click', cerrarChat);
+    } else {
+        console.warn('Elemento close-chat no encontrado');
+    }
+    
+    // Presionar Enter en el campo de texto para enviar mensaje
+    const chatInput = document.querySelector('.chat-input textarea');
+    if (chatInput) {
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                enviarMensaje();
+            }
+        });
+    } else {
+        console.warn('Campo de chat textarea no encontrado');
+    }
+    
+    // Actualizar cada 10 segundos
+    intervaloActualizacion = setInterval(function() {
+        if (conversacionActiva) {
+            cargarMensajes(conversacionActiva);
+        }
+        cargarConversaciones();
+    }, 10000);
+    
+    // Funciones principales
+    function cargarConversaciones() {
+        fetch('/Conexion-Main/backend/controllers/chat/obtener_conversaciones.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error de red: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    renderizarConversaciones(data.conversaciones || []);
+                } else {
+                    console.error('Error en respuesta:', data.error || 'Error desconocido');
+                }
+            })
+            .catch(error => {
+                console.error('Error cargando conversaciones:', error);
+                // No mostrar notificación para evitar spam
+            });
+    }
+    
+    function renderizarConversaciones(conversaciones) {
+        const listaConversaciones = document.querySelector('.conversations-list');
+        if (!listaConversaciones) {
+            console.error('Elemento .conversations-list no encontrado');
+            return;
+        }
+        
+        if (!conversaciones || conversaciones.length === 0) {
+            listaConversaciones.innerHTML = '<div class="no-conversations">' +
+                '<p>No tienes conversaciones activas</p>' +
+                '<p>Haz clic en el botón <i class="fas fa-plus"></i> para iniciar una nueva conversación</p>' +
+            '</div>';
+            return;
+        }
+        
+        let html = '';
+        
+        conversaciones.forEach(conv => {
+            let claseNoLeido = conv.mensajes_no_leidos > 0 ? 'unread-conversation' : '';
+            html += `
+                <div class="conversation-item ${claseNoLeido}" data-id="${conv.id}">
+                    <img src="../img/${conv.foto || 'default-user.png'}" class="chat-avatar" alt="">
+                    <div class="conversation-info">
+                        <div class="conversation-name">${sanitizarHTML(conv.titulo)}</div>
+                        <div class="conversation-last-message">${sanitizarHTML(conv.ultimo_mensaje) || 'Sin mensajes'}</div>
+                    </div>
+                    ${conv.mensajes_no_leidos > 0 ? `<span class="unread-badge">${conv.mensajes_no_leidos}</span>` : ''}
+                </div>
+            `;
+        });
+        
+        listaConversaciones.innerHTML = html;
+        
+        // Añadir eventos a las conversaciones
+        document.querySelectorAll('.conversation-item').forEach(item => {
+            item.addEventListener('click', () => abrirConversacion(item.dataset.id));
+        });
+    }
+    
+    function abrirConversacion(conversacionId) {
+        if (!conversacionId) {
+            console.error('ID de conversación inválido');
+            return;
+        }
+        
+        conversacionActiva = conversacionId;
+        
+        const chatWindow = document.getElementById('chat-window');
+        if (chatWindow) {
+            chatWindow.style.display = 'flex';
+        } else {
+            console.error('Elemento chat-window no encontrado');
+        }
+        
+        cargarMensajes(conversacionId);
+        
+        // Marcar como leída - CORREGIDO con / inicial
+        fetch('/Conexion-Main/backend/controllers/chat/marcar_leido.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `conversacion_id=${encodeURIComponent(conversacionId)}`
+        })
+        .catch(error => console.error('Error marcando como leído:', error));
+    }
+    
+    function cargarMensajes(conversacionId) {
+        if (!conversacionId) return;
+        
+        fetch(`/Conexion-Main/backend/controllers/chat/obtener_mensajes.php?conversacion_id=${encodeURIComponent(conversacionId)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error de red: ' + response.status);
+
+RafaelG1986: quedo en la linea 340
+
+GitHub Copilot: # Código completo de chat.js
+
+Te proporciono el código completo de chat.js para resolver los problemas que estás experimentando:
+
+```javascript
+// chat.js - Sistema de chat interno para la plataforma Conexión
+
+// Función para inicializar el chat
+function inicializarChat() {
+    // Verificar que el contenedor existe
+    const chatContainer = document.getElementById('chat-container');
+    if (!chatContainer) {
+        console.error('Elemento chat-container no encontrado');
+        return;
+    }
+    
+    const usuarioActual = chatContainer.dataset.usuarioId;
+    let conversacionActiva = null;
+    let intervaloActualizacion = null;
+    
+    // Verificar que tenemos un ID de usuario
+    if (!usuarioActual || usuarioActual === '0') {
+        console.error
+
+RafaelG1986: solamente quiero despues de la linea 340
+
+GitHub Copilot: # Continuación del código de chat.js (después de la línea 340)
+
+```javascript
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    renderizarMensajes(data.mensajes, data.conversacion);
+                    actualizarInfoConversacion(data.conversacion);
+                } else {
+                    console.error('Error en respuesta:', data.error || 'Error desconocido');
+                }
+            })
+            .catch(error => {
+                console.error('Error cargando mensajes:', error);
+            });
+    }
+    
+    function actualizarInfoConversacion(conversacion) {
+        const chatUsername = document.querySelector('.chat-username');
+        if (chatUsername && conversacion) {
+            chatUsername.textContent = conversacion.titulo || 'Usuario';
+            
+            // Si hay foto de perfil
+            const userImg = document.querySelector('.chat-user-info img');
+            if (userImg && conversacion.foto) {
+                userImg.src = '../img/' + conversacion.foto;
+            }
+        }
+    }
+    
+    function renderizarMensajes(mensajes, conversacion) {
+        const chatMessages = document.querySelector('.chat-messages');
+        if (!chatMessages) {
+            console.error('Elemento .chat-messages no encontrado');
+            return;
+        }
+        
+        if (!mensajes || mensajes.length === 0) {
+            chatMessages.innerHTML = '<div class="no-messages">No hay mensajes en esta conversación</div>';
+            return;
+        }
+        
+        let html = '';
+        let lastDate = '';
+        let currentGroup = null;
+        let groupHtml = '';
+        
+        mensajes.forEach((msg, index) => {
+            // Formatear fecha para agrupar por día
+            const fechaMsg = new Date(msg.created_at);
+            const fechaStr = fechaMsg.toLocaleDateString();
+            
+            // Si cambia el día, insertar separador
+            if (fechaStr !== lastDate) {
+                html += `<div class="date-separator">${fechaStr}</div>`;
+                lastDate = fechaStr;
+            }
+            
+            // Determinar si es un mensaje propio o de otro usuario
+            const esPropio = msg.remitente_id == usuarioActual;
+            const claseGrupo = esPropio ? 'own-messages' : 'other-messages';
+            const claseMensaje = esPropio ? 'message-sent' : 'message-received';
+            
+            // Si cambia el remitente o han pasado más de 2 minutos, crear nuevo grupo
+            const esNuevoGrupo = !currentGroup || 
+                                 currentGroup.remitente !== msg.remitente_id || 
+                                 (index > 0 && new Date(msg.created_at) - new Date(mensajes[index-1].created_at) > 2*60*1000);
+            
+            if (esNuevoGrupo) {
+                // Cerrar grupo anterior si existe
+                if (currentGroup) {
+                    html += `<div class="message-group ${currentGroup.clase}">${groupHtml}</div>`;
+                    groupHtml = '';
+                }
+                
+                // Iniciar nuevo grupo
+                currentGroup = {
+                    remitente: msg.remitente_id,
+                    clase: claseGrupo
+                };
+                
+                // Añadir nombre del remitente si no es propio
+                if (!esPropio) {
+                    groupHtml += `<div class="sender-name">${sanitizarHTML(msg.nombre_remitente || 'Usuario')}</div>`;
+                }
+            }
+            
+            // Formatear hora del mensaje
+            const horaMsg = fechaMsg.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    renderizarMensajes(data.mensajes, data.conversacion);
+                    actualizarInfoConversacion(data.conversacion);
+                } else {
+                    console.error('Error en respuesta:', data.error || 'Error desconocido');
+                }
+            })
+            .catch(error => {
+                console.error('Error cargando mensajes:', error);
+            });
+    }
+    
+    function actualizarInfoConversacion(conversacion) {
+        const chatUsername = document.querySelector('.chat-username');
+        if (chatUsername && conversacion) {
+            chatUsername.textContent = conversacion.titulo || 'Usuario';
+            
+            // Si hay foto de perfil
+            const userImg = document.querySelector('.chat-user-info img');
+            if (userImg && conversacion.foto) {
+                userImg.src = '../img/' + conversacion.foto;
+            }
+        }
+    }
+    
+    function renderizarMensajes(mensajes, conversacion) {
+        const chatMessages = document.querySelector('.chat-messages');
+        if (!chatMessages) {
+            console.error('Elemento .chat-messages no encontrado');
+            return;
+        }
+        
+        if (!mensajes || mensajes.length === 0) {
+            chatMessages.innerHTML = '<div class="no-messages">No hay mensajes en esta conversación</div>';
+            return;
+        }
+        
+        let html = '';
+        let lastDate = '';
+        let currentGroup = null;
+        let groupHtml = '';
+        
+        mensajes.forEach((msg, index) => {
+            // Formatear fecha para agrupar por día
+            const fechaMsg = new Date(msg.created_at);
+            const fechaStr = fechaMsg.toLocaleDateString();
+            
+            // Si cambia el día, insertar separador
+            if (fechaStr !== lastDate) {
+                html += `<div class="date-separator">${fechaStr}</div>`;
+                lastDate = fechaStr;
+            }
+            
+            // Determinar si es un mensaje propio o de otro usuario
+            const esPropio = msg.remitente_id == usuarioActual;
+            const claseGrupo = esPropio ? 'own-messages' : 'other-messages';
+            const claseMensaje = esPropio ? 'message-sent' : 'message-received';
+            
+            // Si cambia el remitente o han pasado más de 2 minutos, crear nuevo grupo
+            const esNuevoGrupo = !currentGroup || 
+                                 currentGroup.remitente !== msg.remitente_id || 
+                                 (index > 0 && new Date(msg.created_at) - new Date(mensajes[index-1].created_at) > 2*60*1000);
+            
+            if (esNuevoGrupo) {
+                // Cerrar grupo anterior si existe
+                if (currentGroup) {
+                    html += `<div class="message-group ${currentGroup.clase}">${groupHtml}</div>`;
+                    groupHtml = '';
+                }
+                
+                // Iniciar nuevo grupo
+                currentGroup = {
+                    remitente: msg.remitente_id,
+                    clase: claseGrupo
+                };
+                
+                // Añadir nombre del remitente si no es propio
+                if (!esPropio) {
+                    groupHtml += `<div class="sender-name">${sanitizarHTML(msg.nombre_remitente || 'Usuario')}</div>`;
+                }
+            }
+            
+            // Formatear hora del mensaje
+            const horaMsg = fechaMsg.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'

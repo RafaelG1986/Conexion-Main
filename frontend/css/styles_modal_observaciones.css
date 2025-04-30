@@ -64,8 +64,8 @@
     border-radius: 5px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     position: relative;
-    width: 80%;
-    max-width: 800px;
+    width: 80%; /* Aumentar ancho del modal */
+    max-width: 700px; /* Definir un máximo */
     max-height: 80vh;
     overflow-y: auto;
     z-index: 1001; /* Superior al modal */
@@ -167,4 +167,19 @@
     background: rgba(0,0,0,0.7);
     z-index: 9999;
     display: none;
+}
+
+/* Añadir a styles_modal_observaciones.css */
+#texto-observacion {
+    min-height: 150px; /* Aumentar altura mínima */
+    font-size: 14px;   /* Ajustar tamaño de fuente para comodidad */
+    width: 100%;       /* Ocupar todo el ancho disponible */
+    padding: 12px;     /* Mayor padding para mejor legibilidad */
+    line-height: 1.5;  /* Mejor espaciado entre líneas */
+}
+
+/* Ampliar el historial de observaciones */
+#observaciones-contenido {
+    max-height: 600px; /* Era 300px probablemente */
+    overflow-y: auto;
 }
