@@ -1,6 +1,19 @@
 <?php
 require_once __DIR__ . '/../../backend/config/database.php';
 
+// Función para formatear teléfono para WhatsApp
+function formatearTelefonoWhatsApp($telefono) {
+    // Eliminar todos los caracteres no numéricos
+    $numero = preg_replace('/[^0-9]/', '', $telefono);
+    
+    // Si no comienza con código de país (asumimos México como predeterminado)
+    if (strlen($numero) <= 10) {
+        $numero = '52' . $numero;
+    }
+    
+    return $numero;
+}
+
 // Verificar si se ha proporcionado un ID
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     echo "Error: ID de registro no proporcionado.";
@@ -129,7 +142,27 @@ $colores = [
                     <?php else: ?>
                         <div class="field-value"><?php echo htmlspecialchars($registro['telefono'] ?? 'No especificado'); ?></div>
                     <?php endif; ?>
+                    
+                    <?php if (!$editar && !empty($registro['telefono'])): ?>
+                        <div class="contact-actions" style="margin-top: 10px;">
+                            <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>&text=Hola%20<?php echo urlencode($registro['nombre_persona'] . ' ' . $registro['apellido_persona']); ?>,%20te%20contacto%20desde%20Conexi%C3%B3n" 
+                               target="_blank" 
+                               class="btn btn-whatsapp">
+                                <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+                            </a>
+                        </div>
+                    <?php endif; ?>
                 </div>
+                
+                <?php if (!empty($registro['telefono'])): ?>
+                    <div class="action-buttons">
+                        <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>" 
+                           class="btn btn-success btn-whatsapp" 
+                           target="_blank">
+                            <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+                        </a>
+                    </div>
+                <?php endif; ?>
                 
                 <div class="field-group">
                     <label for="cumpleanos">Cumpleaños</label>

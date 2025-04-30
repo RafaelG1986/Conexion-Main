@@ -1,5 +1,18 @@
 <?php
 require_once __DIR__ . '/../../backend/config/database.php';
+
+// Función para formatear teléfono para WhatsApp
+function formatearTelefonoWhatsApp($telefono) {
+    // Eliminar todos los caracteres no numéricos
+    $numero = preg_replace('/[^0-9]/', '', $telefono);
+    
+    // Si no comienza con código de país (asumimos México como predeterminado)
+    if (strlen($numero) <= 10) {
+        $numero = '57' . $numero;
+    }
+    
+    return $numero;
+}
 ?>
 
 <link rel="stylesheet" href="../css/styles_vista_registros.css">
@@ -124,6 +137,16 @@ try {
                                     onclick="eliminarRegistro(<?php echo $registro['id']; ?>)">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
+                            
+                            <!-- Añadir botón de WhatsApp si existe teléfono -->
+                            <?php if (!empty($registro['telefono'])): ?>
+                                <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>&text=Hola%20<?php echo urlencode($registro['nombre_persona'] . ' ' . $registro['apellido_persona']); ?>,%20te%20contacto%20desde%20Conexi%C3%B3n" 
+                                   target="_blank" 
+                                   class="btn-accion btn-whatsapp" 
+                                   title="Contactar por WhatsApp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            <?php endif; ?>
                         </div>
                     </td>
                 </tr>
@@ -492,6 +515,11 @@ document.addEventListener('DOMContentLoaded', function() {
 .btn-accion:nth-child(5) { /* Eliminar */
     background-color: #ffebee;
     color: #b71c1c;
+}
+
+.btn-whatsapp { /* WhatsApp */
+    background-color: #e0f7fa;
+    color: #00796b;
 }
 
 /* Tamaño fijo para la columna de acciones */
