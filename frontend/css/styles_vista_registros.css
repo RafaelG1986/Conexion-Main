@@ -416,3 +416,24 @@ table tr {
     max-height: 200px;
     overflow: hidden;
 }
+
+/* Estilos para el botón de WhatsApp */
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+    color: white;
+}
+
+/* Si estás usando Font Awesome para iconos */
+.fa-whatsapp {
+    font-size: 16px;
+}
