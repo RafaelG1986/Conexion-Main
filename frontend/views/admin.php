@@ -102,17 +102,23 @@ $_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
         <div class="chat-header">
             <h2>Mensajes</h2>
             <div class="chat-controls">
+                <button id="new-chat-btn" class="btn-new-chat"><i class="fas fa-plus"></i></button>
                 <button id="minimize-chat-sidebar" class="btn-control"><i class="fas fa-minus"></i></button>
                 <button id="close-chat-sidebar" class="btn-control"><i class="fas fa-times"></i></button>
             </div>
         </div>
         
-        <div class="chat-search">
-            <input type="text" placeholder="Buscar conversaciones...">
+        <div class="search-chat">
+            <input type="text" id="buscar-conversaciones" placeholder="Buscar conversaciones...">
         </div>
         
         <div class="conversations-list">
-            <!-- Conversaciones se cargan dinámicamente -->
+            <!-- Estado de vacío -->
+            <div class="empty-state" id="empty-conversations">
+                <p>No tienes conversaciones activas</p>
+                <p>Haz clic en <i class="fas fa-plus"></i> para iniciar una nueva</p>
+            </div>
+            <!-- Aquí se cargarán las conversaciones -->
         </div>
     </div>
 

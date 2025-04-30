@@ -1,12 +1,12 @@
 // chat.js - Sistema de chat interno para la plataforma Conexión
 
 function inicializarChat() {
+    // Obtener referencias a elementos DOM
     const chatContainer = document.getElementById('chat-container');
     const usuarioActual = chatContainer.dataset.usuarioId;
     let conversacionActiva = null;
     let intervaloActualizacion = null;
 
-    // Elementos del DOM que se repiten
     const btnNuevoChat = document.getElementById('new-chat-btn');
     const btnEnviar = document.getElementById('send-message');
     const btnMinimizar = document.getElementById('minimize-chat');
@@ -18,11 +18,16 @@ function inicializarChat() {
     const headerUserDOM = document.querySelector('.chat-window-header .chat-username');
     const avatarDOM = document.querySelector('.chat-window-header .chat-avatar');
 
-    // Cargar conversaciones iniciales
-    cargarConversaciones();
+    // Agregar event listeners
+    if (btnNuevoChat) {
+        btnNuevoChat.addEventListener('click', function() {
+            console.log('Botón nueva conversación clickeado');
+            mostrarNuevaConversacion();
+        });
+    } else {
+        console.error('No se encontró el botón de nueva conversación');
+    }
 
-    // Configurar eventos
-    if (btnNuevoChat) btnNuevoChat.addEventListener('click', mostrarNuevaConversacion);
     if (btnEnviar) btnEnviar.addEventListener('click', enviarMensaje);
     if (btnMinimizar) btnMinimizar.addEventListener('click', minimizarChat);
     if (btnCerrar) btnCerrar.addEventListener('click', cerrarChat);
