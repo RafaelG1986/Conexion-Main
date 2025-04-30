@@ -31,6 +31,7 @@ $user = $_SESSION['user'];
     <link rel="stylesheet" href="../css/alertas.css">
     <link rel="stylesheet" href="../css/styles_modal_observaciones.css">
     <script src="../js/ver_observaciones.js"></script>
+    <script src="../js/informes.js"></script>
 </head>
 <body>
     <div id="debug-info" style="position:fixed; bottom:0; right:0; background:rgba(0,0,0,0.7); color:white; padding:10px; z-index:9999;"></div>
@@ -201,6 +202,30 @@ $user = $_SESSION['user'];
                 console.log('Inicializando filtro');
                 inicializarFiltro();
             }
+        } 
+        // Informes
+        else if (ruta === 'vista_informes.php') {
+            if (typeof inicializarInformes === 'function') {
+                console.log('Inicializando módulo de informes');
+                inicializarInformes();
+            }
+        }
+    }
+
+    // Nueva función para cargar módulo con espera
+    function cargarModulo(ruta) {
+        // Código existente de carga...
+        
+        // Añade esta parte después de cargar la vista de informes
+        if (ruta === 'vista_informes.php') {
+            // Esperar un momento para que el DOM se actualice
+            setTimeout(function() {
+                if (typeof inicializarInformes === 'function') {
+                    inicializarInformes();
+                } else {
+                    console.error('La función inicializarInformes no está disponible');
+                }
+            }, 100);
         }
     }
 

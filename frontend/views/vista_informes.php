@@ -29,7 +29,7 @@ try {
         <p>Selecciona los datos que deseas incluir en tu informe y haz clic en "Generar informe".</p>
     </div>
     
-    <form id="form-informe">
+    <form id="informeForm" class="informe-form">
         <div class="form-section">
             <h3>Tipo de informe</h3>
             <select id="tipo-informe" name="tipo-informe" required>
@@ -79,15 +79,15 @@ try {
             <h3>Opciones de formato</h3>
             <div class="checkbox-group">
                 <label>
-                    <input type="checkbox" name="incluir-cabecera" checked> 
+                    <input type="checkbox" id="incluir-cabecera" name="incluir-cabecera" checked>
                     Incluir cabecera con fecha de generación
                 </label>
                 <label>
-                    <input type="checkbox" name="incluir-detalle" checked> 
+                    <input type="checkbox" id="incluir-detalle" name="incluir-detalle" checked>
                     Incluir detalles específicos
                 </label>
                 <label>
-                    <input type="checkbox" name="incluir-resumen" checked> 
+                    <input type="checkbox" id="incluir-resumen" name="incluir-resumen" checked>
                     Incluir resumen al final
                 </label>
             </div>
@@ -131,17 +131,25 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function generarInforme(esPrevista) {
-    const formData = new FormData(document.getElementById('form-informe'));
-    formData.append('vista_previa', esPrevista ? '1' : '0');
-    
-    // Mostrar indicador de carga
+    // Obtener referencia al botón usado
     const btnUsado = esPrevista ? 
         document.getElementById('btn-vista-previa') : 
         document.getElementById('btn-generar');
     
+    // Guardar texto original y mostrar estado de procesamiento
     const textoOriginal = btnUsado.textContent;
     btnUsado.textContent = 'Procesando...';
     btnUsado.disabled = true;
+    
+    // Crear el FormData desde el formulario
+    const formData = new FormData(document.getElementById('informeForm'));
+    formData.append('vista_previa', esPrevista ? '1' : '0');
+    
+    // Mostrar datos que se envían (para depuración)
+    console.log("Enviando datos al servidor:");
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
     
     // Realizar la petición AJAX
     fetch('../../backend/controllers/generar_informe.php', {
@@ -161,47 +169,22 @@ function generarInforme(esPrevista) {
     })
     .then(data => {
         if (esPrevista) {
-            // Mostrar vista previa
-            document.getElementById('vista-previa').style.display = 'block';
-            document.getElementById('contenido-informe').innerHTML = 
-                '<pre>' + data.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
+            // Vista previa: mostrar en el área de resultados
+            const vistaPrevia = document.getElementById('vista-previa');
+            vistaPrevia.style.display = 'block';
+            
+            const contenidoInforme = document.getElementById('contenido-informe');
+            contenidoInforme.innerHTML = '<pre>' + data + '</pre>';
         } else {
-            // Verificar que tenemos datos para descargar
-            if (!data || data.size === 0) {
-                throw new Error('El archivo generado está vacío');
-            }
-            
-            // Descargar el archivo
-            const blob = new Blob([data], { type: 'text/plain;charset=utf-8' });
-            
-            // Método alternativo de descarga para mayor compatibilidad
-            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                // Para Internet Explorer
-                const fecha = new Date();
-                const fechaStr = fecha.toISOString().split('T')[0];
-                window.navigator.msSaveOrOpenBlob(blob, `informe_${fechaStr}.txt`);
-            } else {
-                // Para navegadores modernos
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                
-                // Generar nombre de archivo con fecha
-                const fecha = new Date();
-                const fechaStr = fecha.toISOString().split('T')[0];
-                a.download = `informe_${fechaStr}.txt`;
-                
-                // Hacer el enlace invisible
-                a.style.display = 'none';
-                document.body.appendChild(a);
-                
-                // Simular click y limpiar
-                a.click();
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-                }, 100);
-            }
+            // Descarga: generar archivo
+            const url = window.URL.createObjectURL(data);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'informe_conexion_' + new Date().toISOString().split('T')[0] + '.txt';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
             
             // Mostrar mensaje de éxito
             alert('Informe generado con éxito');

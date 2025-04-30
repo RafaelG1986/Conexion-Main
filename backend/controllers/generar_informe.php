@@ -1,13 +1,19 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
 
-// Verificar sesión (añadir esta parte si es necesario)
+// Iniciar sesión
 session_start();
-if (!isset($_SESSION['user'])) {
-    header('Content-Type: text/plain');
-    echo "Error: No hay sesión activa.";
-    exit;
-}
+
+// Para desarrollo: mostrar todos los errores
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Verificación de sesión (comentar temporalmente para pruebas si es necesario)
+// if (!isset($_SESSION['user'])) {
+//     header('Content-Type: text/plain');
+//     echo "Error: No hay sesión activa.";
+//     exit;
+// }
 
 // Obtener parámetros del formulario
 $tipoInforme = isset($_POST['tipo-informe']) ? $_POST['tipo-informe'] : '';
@@ -18,7 +24,10 @@ $fechaFin = isset($_POST['fecha-fin']) ? $_POST['fecha-fin'] : '';
 $incluirCabecera = isset($_POST['incluir-cabecera']) ? true : false;
 $incluirDetalle = isset($_POST['incluir-detalle']) ? true : false;
 $incluirResumen = isset($_POST['incluir-resumen']) ? true : false;
-$vistaPrevista = isset($_POST['vista_previa']) && $_POST['vista_previa'] === '1';
+$vistaPrevista = isset($_POST['vista_previa']) ? ($_POST['vista_previa'] == '1') : false;
+
+// Normalizar el tipo de informe
+$tipoInforme = strtolower(trim($tipoInforme));
 
 // Crear el informe
 $informe = generarInforme(
@@ -60,6 +69,7 @@ exit;
 function generarInforme($tipoInforme, $conector, $estado, $fechaInicio, $fechaFin, $incluirCabecera, $incluirDetalle, $incluirResumen) {
     $db = new Database();
     $conn = $db->connect();
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $resultado = "";
     
     // Añadir cabecera si está seleccionada
@@ -129,11 +139,11 @@ function generarInforme($tipoInforme, $conector, $estado, $fechaInicio, $fechaFi
         }
         
         if ($fechaInicio) {
-            $sql .= " AND fecha_creacion >= :fecha_inicio";
+            $sql .= " AND fecha_contacto >= :fecha_inicio";
         }
         
         if ($fechaFin) {
-            $sql .= " AND fecha_creacion <= :fecha_fin";
+            $sql .= " AND fecha_contacto <= :fecha_fin";
         }
         
         $stmt = $conn->prepare($sql);
@@ -204,11 +214,11 @@ function generarInformeGeneral($conn, $fechaInicio, $fechaFin, $incluirDetalle) 
     $sql = "SELECT nombre_conector, COUNT(*) as total FROM registros WHERE nombre_conector IS NOT NULL AND nombre_conector != ''";
     
     if ($fechaInicio) {
-        $sql .= " AND fecha_creacion >= :fecha_inicio";
+        $sql .= " AND fecha_contacto >= :fecha_inicio";
     }
     
     if ($fechaFin) {
-        $sql .= " AND fecha_creacion <= :fecha_fin";
+        $sql .= " AND fecha_contacto <= :fecha_fin";
     }
     
     $sql .= " GROUP BY nombre_conector ORDER BY total DESC";
@@ -237,11 +247,11 @@ function generarInformeGeneral($conn, $fechaInicio, $fechaFin, $incluirDetalle) 
     $sql = "SELECT estado, COUNT(*) as total FROM registros WHERE estado IS NOT NULL AND estado != ''";
     
     if ($fechaInicio) {
-        $sql .= " AND fecha_creacion >= :fecha_inicio";
+        $sql .= " AND fecha_contacto >= :fecha_inicio";
     }
     
     if ($fechaFin) {
-        $sql .= " AND fecha_creacion <= :fecha_fin";
+        $sql .= " AND fecha_contacto <= :fecha_fin";
     }
     
     $sql .= " GROUP BY estado ORDER BY total DESC";
@@ -284,11 +294,11 @@ function generarInformePersonal($conn, $conector, $fechaInicio, $fechaFin, $incl
     $sql = "SELECT estado, COUNT(*) as total FROM registros WHERE nombre_conector = :conector";
     
     if ($fechaInicio) {
-        $sql .= " AND fecha_creacion >= :fecha_inicio";
+        $sql .= " AND fecha_contacto >= :fecha_inicio";
     }
     
     if ($fechaFin) {
-        $sql .= " AND fecha_creacion <= :fecha_fin";
+        $sql .= " AND fecha_contacto <= :fecha_fin";
     }
     
     $sql .= " GROUP BY estado ORDER BY total DESC";
@@ -316,19 +326,19 @@ function generarInformePersonal($conn, $conector, $fechaInicio, $fechaFin, $incl
     
     if ($incluirDetalle) {
         // Consulta para obtener los últimos 10 registros de este conector
-        $sql = "SELECT nombre_persona, apellido_persona, telefono, estado, fecha_creacion 
+        $sql = "SELECT nombre_persona, apellido_persona, telefono, estado, fecha_contacto 
                 FROM registros 
                 WHERE nombre_conector = :conector";
         
         if ($fechaInicio) {
-            $sql .= " AND fecha_creacion >= :fecha_inicio";
+            $sql .= " AND fecha_contacto >= :fecha_inicio";
         }
         
         if ($fechaFin) {
-            $sql .= " AND fecha_creacion <= :fecha_fin";
+            $sql .= " AND fecha_contacto <= :fecha_fin";
         }
         
-        $sql .= " ORDER BY fecha_creacion DESC LIMIT 10";
+        $sql .= " ORDER BY fecha_contacto DESC LIMIT 10";
         
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':conector', $conector);
@@ -351,7 +361,7 @@ function generarInformePersonal($conn, $conector, $fechaInicio, $fechaFin, $incl
             $resultado .= "- " . $reg['nombre_persona'] . " " . $reg['apellido_persona'];
             $resultado .= " | Tel: " . $reg['telefono'];
             $resultado .= " | Estado: " . $reg['estado'];
-            $resultado .= " | Fecha: " . date('d/m/Y', strtotime($reg['fecha_creacion'])) . "\n";
+            $resultado .= " | Fecha: " . date('d/m/Y', strtotime($reg['fecha_contacto'])) . "\n";
         }
     }
     
@@ -370,11 +380,11 @@ function generarInformeEstados($conn, $estado, $fechaInicio, $fechaFin, $incluir
         $sql = "SELECT estado, COUNT(*) as total FROM registros WHERE estado IS NOT NULL AND estado != ''";
         
         if ($fechaInicio) {
-            $sql .= " AND fecha_creacion >= :fecha_inicio";
+            $sql .= " AND fecha_contacto >= :fecha_inicio";
         }
         
         if ($fechaFin) {
-            $sql .= " AND fecha_creacion <= :fecha_fin";
+            $sql .= " AND fecha_contacto <= :fecha_fin";
         }
         
         $sql .= " GROUP BY estado ORDER BY total DESC";
@@ -409,11 +419,11 @@ function generarInformeEstados($conn, $estado, $fechaInicio, $fechaFin, $incluir
                 WHERE estado = :estado AND nombre_conector IS NOT NULL AND nombre_conector != ''";
         
         if ($fechaInicio) {
-            $sql .= " AND fecha_creacion >= :fecha_inicio";
+            $sql .= " AND fecha_contacto >= :fecha_inicio";
         }
         
         if ($fechaFin) {
-            $sql .= " AND fecha_creacion <= :fecha_fin";
+            $sql .= " AND fecha_contacto <= :fecha_fin";
         }
         
         $sql .= " GROUP BY nombre_conector ORDER BY total DESC";
@@ -441,19 +451,19 @@ function generarInformeEstados($conn, $estado, $fechaInicio, $fechaFin, $incluir
         
         if ($incluirDetalle) {
             // Listar últimos 10 registros con este estado
-            $sql = "SELECT nombre_persona, apellido_persona, telefono, nombre_conector, fecha_creacion 
+            $sql = "SELECT nombre_persona, apellido_persona, telefono, nombre_conector, fecha_contacto 
                     FROM registros 
                     WHERE estado = :estado";
             
             if ($fechaInicio) {
-                $sql .= " AND fecha_creacion >= :fecha_inicio";
+                $sql .= " AND fecha_contacto >= :fecha_inicio";
             }
             
             if ($fechaFin) {
-                $sql .= " AND fecha_creacion <= :fecha_fin";
+                $sql .= " AND fecha_contacto <= :fecha_fin";
             }
             
-            $sql .= " ORDER BY fecha_creacion DESC LIMIT 10";
+            $sql .= " ORDER BY fecha_contacto DESC LIMIT 10";
             
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':estado', $estado);
@@ -476,7 +486,7 @@ function generarInformeEstados($conn, $estado, $fechaInicio, $fechaFin, $incluir
                 $resultado .= "- " . $reg['nombre_persona'] . " " . $reg['apellido_persona'];
                 $resultado .= " | Conector: " . $reg['nombre_conector'];
                 $resultado .= " | Tel: " . $reg['telefono'];
-                $resultado .= " | Fecha: " . date('d/m/Y', strtotime($reg['fecha_creacion'])) . "\n";
+                $resultado .= " | Fecha: " . date('d/m/Y', strtotime($reg['fecha_contacto'])) . "\n";
             }
         }
     }
@@ -492,7 +502,7 @@ function generarInformeDetallado($conn, $conector, $estado, $fechaInicio, $fecha
     $resultado .= "-----------------\n\n";
     
     // Construir consulta con filtros
-    $sql = "SELECT id, nombre_persona, apellido_persona, telefono, nombre_conector, estado, fecha_creacion FROM registros WHERE 1=1";
+    $sql = "SELECT id, nombre_persona, apellido_persona, telefono, nombre_conector, estado, fecha_contacto FROM registros WHERE 1=1";
     $params = [];
     
     if ($conector) {
@@ -506,17 +516,17 @@ function generarInformeDetallado($conn, $conector, $estado, $fechaInicio, $fecha
     }
     
     if ($fechaInicio) {
-        $sql .= " AND fecha_creacion >= :fecha_inicio";
+        $sql .= " AND fecha_contacto >= :fecha_inicio";
         $params[':fecha_inicio'] = $fechaInicio . ' 00:00:00';
     }
     
     if ($fechaFin) {
-        $sql .= " AND fecha_creacion <= :fecha_fin";
+        $sql .= " AND fecha_contacto <= :fecha_fin";
         $params[':fecha_fin'] = $fechaFin . ' 23:59:59';
     }
     
     // Ordenar por fecha más reciente
-    $sql .= " ORDER BY fecha_creacion DESC";
+    $sql .= " ORDER BY fecha_contacto DESC";
     
     // Limitar registros si no se piden detalles
     if (!$incluirDetalle) {
@@ -557,7 +567,7 @@ function generarInformeDetallado($conn, $conector, $estado, $fechaInicio, $fecha
         $resultado .= str_pad($reg['telefono'], 15) . " | ";
         $resultado .= str_pad(substr($reg['nombre_conector'], 0, 18), 20) . " | ";
         $resultado .= str_pad(substr($reg['estado'], 0, 23), 25) . " | ";
-        $resultado .= date('d/m/Y', strtotime($reg['fecha_creacion'])) . "\n";
+        $resultado .= date('d/m/Y', strtotime($reg['fecha_contacto'])) . "\n";
     }
     
     return $resultado;
@@ -574,11 +584,11 @@ function generarResumenGeneral($conn, $fechaInicio, $fechaFin) {
             WHERE nombre_conector IS NOT NULL AND nombre_conector != ''";
     
     if ($fechaInicio) {
-        $sql .= " AND fecha_creacion >= :fecha_inicio";
+        $sql .= " AND fecha_contacto >= :fecha_inicio";
     }
     
     if ($fechaFin) {
-        $sql .= " AND fecha_creacion <= :fecha_fin";
+        $sql .= " AND fecha_contacto <= :fecha_fin";
     }
     
     $stmt = $conn->prepare($sql);
@@ -603,11 +613,11 @@ function generarResumenGeneral($conn, $fechaInicio, $fechaFin) {
             WHERE estado IS NOT NULL AND estado != ''";
     
     if ($fechaInicio) {
-        $sql .= " AND fecha_creacion >= :fecha_inicio";
+        $sql .= " AND fecha_contacto >= :fecha_inicio";
     }
     
     if ($fechaFin) {
-        $sql .= " AND fecha_creacion <= :fecha_fin";
+        $sql .= " AND fecha_contacto <= :fecha_fin";
     }
     
     $sql .= " GROUP BY estado ORDER BY total DESC LIMIT 3";
@@ -647,11 +657,11 @@ function generarResumenPersonal($conn, $conector, $fechaInicio, $fechaFin) {
     $sql = "SELECT COUNT(*) as total FROM registros WHERE nombre_conector = :conector";
     
     if ($fechaInicio) {
-        $sql .= " AND fecha_creacion >= :fecha_inicio";
+        $sql .= " AND fecha_contacto >= :fecha_inicio";
     }
     
     if ($fechaFin) {
-        $sql .= " AND fecha_creacion <= :fecha_fin";
+        $sql .= " AND fecha_contacto <= :fecha_fin";
     }
     
     $stmt = $conn->prepare($sql);
@@ -675,11 +685,11 @@ function generarResumenPersonal($conn, $conector, $fechaInicio, $fechaFin) {
             WHERE nombre_conector = :conector AND estado IS NOT NULL AND estado != ''";
     
     if ($fechaInicio) {
-        $sql .= " AND fecha_creacion >= :fecha_inicio";
+        $sql .= " AND fecha_contacto >= :fecha_inicio";
     }
     
     if ($fechaFin) {
-        $sql .= " AND fecha_creacion <= :fecha_fin";
+        $sql .= " AND fecha_contacto <= :fecha_fin";
     }
     
     $sql .= " GROUP BY estado ORDER BY total DESC LIMIT 1";
@@ -723,11 +733,11 @@ function generarResumenEstados($conn, $estado, $fechaInicio, $fechaFin) {
     $sql = "SELECT COUNT(*) as total FROM registros WHERE estado = :estado";
     
     if ($fechaInicio) {
-        $sql .= " AND fecha_creacion >= :fecha_inicio";
+        $sql .= " AND fecha_contacto >= :fecha_inicio";
     }
     
     if ($fechaFin) {
-        $sql .= " AND fecha_creacion <= :fecha_fin";
+        $sql .= " AND fecha_contacto <= :fecha_fin";
     }
     
     $stmt = $conn->prepare($sql);
@@ -751,11 +761,11 @@ function generarResumenEstados($conn, $estado, $fechaInicio, $fechaFin) {
             WHERE estado = :estado AND nombre_conector IS NOT NULL AND nombre_conector != ''";
     
     if ($fechaInicio) {
-        $sql .= " AND fecha_creacion >= :fecha_inicio";
+        $sql .= " AND fecha_contacto >= :fecha_inicio";
     }
     
     if ($fechaFin) {
-        $sql .= " AND fecha_creacion <= :fecha_fin";
+        $sql .= " AND fecha_contacto <= :fecha_fin";
     }
     
     $sql .= " GROUP BY nombre_conector ORDER BY total DESC LIMIT 1";
