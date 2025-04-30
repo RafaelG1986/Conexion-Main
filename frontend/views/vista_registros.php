@@ -53,10 +53,10 @@ try {
 }
 ?>
 
-<div class="registros-container">
+<div class="registros-container" style="max-width: 100%; padding: 0;">
     <h2>Registros</h2>
     <div id="mensaje-estado"></div>
-    <div class="table-responsive">
+    <div class="table-responsive" style="overflow-x: auto; width: 100%;">
         <table border="1" cellpadding="6" cellspacing="0">
             <thead>
                 <tr>
