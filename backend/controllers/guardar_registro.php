@@ -58,6 +58,9 @@ try {
         if (move_uploaded_file($_FILES['foto']['tmp_name'], $ruta_destino)) {
             $ruta_foto = $nombre_archivo;
         }
+    } else if (isset($_POST['id']) && isset($_POST['foto_actual'])) {
+        // Si estamos actualizando y no se subió una foto nueva, mantener la actual
+        $ruta_foto = $_POST['foto_actual'];
     }
     
     // Si es una actualización (existe ID)

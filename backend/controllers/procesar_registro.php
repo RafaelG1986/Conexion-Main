@@ -42,6 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // Procesamiento de la imagen
+    $foto = '';
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+        // Código para subir la imagen
+        $foto = $nombre_foto;
+    }
+
     // Si hay errores, redirigir con mensaje de error
     if (!empty($error)) {
         $_SESSION['error_mensaje'] = $error;
@@ -102,6 +109,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':observaciones', $observaciones);
         
         $stmt->execute();
+        
+        // Actualización en la base de datos
+        $sql = "UPDATE registros SET foto = :foto, ... WHERE id = :id";
         
         // Registrar la acción
         error_log("Registro creado correctamente por usuario: {$subido_por}");

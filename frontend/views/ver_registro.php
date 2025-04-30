@@ -96,6 +96,7 @@ $colores = [
                         <i class="fas fa-camera"></i> <?php echo !empty($registro['foto']) ? 'Cambiar foto' : 'Subir foto'; ?>
                     </label>
                     <input type="file" id="foto" name="foto" accept="image/*">
+                    <input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($registro['foto'] ?? ''); ?>">
                 </div>
                 <?php endif; ?>
             </div>
