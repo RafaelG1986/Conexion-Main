@@ -83,7 +83,7 @@ try {
                             echo 'style="' . $colores[trim($registro['estado'])] . '"';
                         }
                         ?>>
-                        <select onchange="actualizarEstado(<?php echo $registro['id']; ?>, this.value)">
+                        <select onchange="actualizarEstado(this.value, <?php echo $registro['id']; ?>)">
                             <?php
                             foreach ($estados as $estadoOpcion):
                                 $estadoClase = str_replace(' ', '', $estadoOpcion);

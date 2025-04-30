@@ -1,4 +1,3 @@
-<!-- filepath: c:\xampp\htdocs\conexion-main\conexion-main\frontend\views\ver_registro.php -->
 <?php
 require_once __DIR__ . '/../../backend/config/database.php';
 
@@ -170,13 +169,11 @@ $colores = [
                 <div class="field-group field-required">
                     <label for="estado">Estado</label>
                     <?php if ($editar): ?>
-                        <select id="estado" name="estado" class="estado-select" required>
-                            <?php foreach ($estados as $estadoOpcion): ?>
-                                <option value="<?php echo htmlspecialchars($estadoOpcion); ?>" 
-                                        class="estado-option"
-                                        style="<?php echo $colores[$estadoOpcion]; ?>"
-                                        <?php if (trim($registro['estado']) == trim($estadoOpcion)) echo 'selected'; ?>>
-                                    <?php echo htmlspecialchars($estadoOpcion); ?>
+                        <select name="estado" id="estado" class="form-control">
+                            <?php foreach ($estados as $est): ?>
+                                <option value="<?php echo htmlspecialchars($est); ?>" 
+                                        <?php echo ($est == $registro['estado']) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($est); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -313,86 +310,58 @@ $colores = [
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        <?php if ($editar): ?>
-        // Validación del formulario
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function(e) {
-            let hasErrors = false;
-            
-            // Validar campos requeridos
-            const requiredFields = form.querySelectorAll('[required]');
-            requiredFields.forEach(field => {
-                const fieldGroup = field.closest('.field-group');
-                if (!field.value.trim()) {
-                    fieldGroup.classList.add('error');
-                    hasErrors = true;
-                } else {
-                    fieldGroup.classList.remove('error');
-                }
-            });
-            
-            // Validar email si se ha ingresado
-            const emailField = document.getElementById('email');
-            if (emailField.value.trim() && !isValidEmail(emailField.value.trim())) {
-                emailField.closest('.field-group').classList.add('error');
-                hasErrors = true;
-            }
-            
-            // Validar teléfono
-            const telefonoField = document.getElementById('telefono');
-            if (!isValidPhone(telefonoField.value.trim())) {
-                telefonoField.closest('.field-group').classList.add('error');
-                hasErrors = true;
-            }
-            
-            if (hasErrors) {
-                e.preventDefault();
-                // Scroll al primer error
-                const firstError = document.querySelector('.field-group.error');
-                if (firstError) {
-                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }
-        });
+        console.log('Inicializando eventos de registro...');
         
-        // Validadores
-        function isValidEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
+        // Obtener referencia al selector de estado
+        const estadoSelect = document.getElementById('estado');
         
-        function isValidPhone(phone) {
-            // Permitir dígitos, espacios, paréntesis, guiones y signos +
-            const re = /^[0-9\s()+\-]{8,15}$/;
-            return re.test(phone);
-        }
-        
-        // Previsualización de imagen
-        const inputFoto = document.getElementById('foto');
-        if (inputFoto) {
-            inputFoto.addEventListener('change', function() {
-                if (this.files && this.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const imgContainer = document.querySelector('.foto-container');
-                        
-                        // Reemplazar el contenido del contenedor con la nueva imagen
-                        if (imgContainer.querySelector('img')) {
-                            imgContainer.querySelector('img').src = e.target.result;
-                        } else {
-                            // Si no hay imagen, crear una nueva
-                            imgContainer.innerHTML = '';
-                            const img = document.createElement('img');
-                            img.src = e.target.result;
-                            img.alt = 'Foto de perfil';
-                            imgContainer.appendChild(img);
-                        }
+        if (estadoSelect) {
+            console.log('Selector de estado encontrado, añadiendo event listener');
+            
+            // Añadir evento al cambiar el valor
+            estadoSelect.addEventListener('change', function() {
+                const id = <?php echo $id; ?>;
+                const nuevoEstado = this.value;
+                
+                console.log('Estado cambiado:', id, nuevoEstado);
+                
+                // Crear FormData para enviar
+                const formData = new FormData();
+                formData.append('id', id);
+                formData.append('estado', nuevoEstado);
+                
+                // Mostrar indicador visual
+                document.body.style.cursor = 'wait';
+                this.disabled = true;
+                
+                // Realizar petición AJAX
+                fetch('../../backend/controllers/actualizar_estado.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Respuesta recibida:', data);
+                    if (data.success) {
+                        // Mostrar mensaje de éxito
+                        alert('Estado actualizado correctamente');
+                    } else {
+                        alert('Error al actualizar el estado: ' + (data.message || 'Error desconocido'));
                     }
-                    reader.readAsDataURL(this.files[0]);
-                }
+                })
+                .catch(error => {
+                    console.error('Error en la petición:', error);
+                    alert('Error al comunicarse con el servidor');
+                })
+                .finally(() => {
+                    // Restaurar interfaz
+                    document.body.style.cursor = 'default';
+                    this.disabled = false;
+                });
             });
+        } else {
+            console.error('No se encontró el selector de estado');
         }
-        <?php endif; ?>
     });
     </script>
 </body>

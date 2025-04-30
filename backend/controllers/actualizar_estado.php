@@ -14,13 +14,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['estado'
         $db = new Database();
         $conn = $db->connect();
         $stmt = $conn->prepare("UPDATE registros SET estado = :estado WHERE id = :id");
-        $stmt->execute([
-            ':estado' => $estado,
-            ':id' => $id
-        ]);
+        $stmt->bindParam(':estado', $estado);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        
+        // Añadir logging para debug
+        file_put_contents(__DIR__ . '/debug_estado.txt', 
+            date('Y-m-d H:i:s') . " - Actualizando estado: " . 
+            $id . " - " . $estado . "\n", 
+            FILE_APPEND);
+
         // Log para depuración
         file_put_contents(__DIR__ . '/debug_estado.log', "ID: $id, Estado: $estado, Filas: " . $stmt->rowCount() . "\n", FILE_APPEND);
-        echo "Estado actualizado";
+        echo json_encode(['success' => true, 'message' => 'Estado actualizado correctamente']);
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

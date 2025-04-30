@@ -287,8 +287,49 @@ $user = $_SESSION['user'];
             }
         }
     }
+
+    // Añade esta función en la sección de scripts de admin.php
+    function actualizarEstado(estado, id) {
+        console.log('Actualizando estado:', estado, id);
+        
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('estado', estado);
+        
+        fetch('../../backend/controllers/actualizar_estado.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Estado actualizado correctamente');
+            } else {
+                alert('Error al actualizar: ' + (data.message || 'Error desconocido'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error de comunicación con el servidor');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Seleccionar todos los selectores de estado
+        document.querySelectorAll('.selector-estado').forEach(select => {
+            select.addEventListener('change', function() {
+                const id = this.dataset.id;  // Obtener el ID del atributo data-id
+                const estado = this.value;
+                
+                actualizarEstado(estado, id);
+            });
+        });
+    });
     </script>
 
-   
+    <!-- Este tipo de código está causando el error -->
+    <select class="selector-estado" data-id="<?php echo $registro['id']; ?>">
+        <!-- opciones... -->
+    </select>
 </body>
 </html>
