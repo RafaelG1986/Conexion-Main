@@ -19,6 +19,7 @@ function formatearTelefonoWhatsApp($telefono) {
 
 <?php
 $estados = [
+    // Estados existentes
     'Primer contacto',
     'Conectado',
     'No confirmado a desayuno',
@@ -27,10 +28,22 @@ $estados = [
     'Congregado sin desayuno',
     'Visitante',
     'No interesado',
-    'Por Validar Estado'
+    'Por Validar Estado',
+    
+    // Nuevos estados a implementar
+    'Primer intento',
+    'Segundo Intento',
+    'Tercero intento',
+    'Miembro activo',
+    'Miembro inactivo',
+    'Miembro ausente',
+    'Lider Activo',
+    'Lider inactivo',
+    'Lider ausente'
 ];
 
 $colores = [
+    // Colores para estados existentes
     'Primer contacto' => 'background:#ffcccc; color:#a00;',
     'Conectado' => 'background:#ffd6cc; color:#b36b00;',
     'No confirmado a desayuno' => 'background:#ffe5cc; color:#b36b00;',
@@ -39,13 +52,24 @@ $colores = [
     'Congregado sin desayuno' => 'background:#d4edda; color:#155724;',
     'Visitante' => 'background:#fff; color:#222;',
     'No interesado' => 'background:#ffdddd; color:#a00;',
-    'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;'
+    'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;',
+    
+    // Colores para los nuevos estados
+    'Primer intento' => 'background:#f5e6ff; color:#5a00b3;',
+    'Segundo Intento' => 'background:#e6ccff; color:#5a00b3;',
+    'Tercero intento' => 'background:#d9b3ff; color:#5a00b3;',
+    'Miembro activo' => 'background:#d9f2d9; color:#006600;',
+    'Miembro inactivo' => 'background:#ffebcc; color:#994d00;',
+    'Miembro ausente' => 'background:#ffe6e6; color:#cc0000;',
+    'Lider Activo' => 'background:#cce0ff; color:#004080;',
+    'Lider inactivo' => 'background:#e6e6e6; color:#666666;',
+    'Lider ausente' => 'background:#ffe6ea; color:#990033;'
 ];
 
 try {
     $db = new Database();
     $conn = $db->connect();
-    $stmt = $conn->query("SELECT foto, nombre_persona, apellido_persona, telefono, nombre_conector, nombre_quien_trajo, estado, id, observaciones FROM registros ORDER BY id DESC");
+    $stmt = $conn->query("SELECT foto, nombre_persona, apellido_persona, telefono, nombre_conector, nombre_quien_trajo, estado, id, observaciones, fecha_contacto FROM registros ORDER BY CASE WHEN fecha_contacto IS NULL THEN 1 ELSE 0 END, fecha_contacto DESC");
     $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo '<p>Error al conectar con la base de datos: ' . $e->getMessage() . '</p>';
@@ -67,7 +91,7 @@ try {
                     <th>Nombre del Conector</th>
                     <th>Quién lo invitó</th>
                     <th>Estado</th>
-                    <th>Observaciones</th>
+                    <th>Fecha de ingreso</th><!-- Agregar esta línea -->
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -109,8 +133,16 @@ try {
                                 </option>
                             <?php endforeach; ?>
                         </select>
+                    </td>                   
+                    <td>
+                        <?php 
+                        if (!empty($registro['fecha_contacto'])) {
+                            echo date('d/m/Y', strtotime($registro['fecha_contacto'])); 
+                        } else {
+                            echo "Sin fecha";
+                        }
+                        ?>
                     </td>
-                    <td><?php echo htmlspecialchars($registro['observaciones']); ?></td>
                     <td class="acciones-td">
                         <div class="botones-accion">
                             <button type="button" class="btn-accion" title="Editar" 

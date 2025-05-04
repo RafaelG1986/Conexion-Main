@@ -97,17 +97,40 @@ try {
                     <h3><i class="fas fa-clipboard-list"></i> Estado y Seguimiento</h3>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="estado">Estado Actual</label>
-                            <select id="estado" name="estado">
-                                <option value="Primer contacto">Primer contacto</option>
-                                <option value="Conectado">Conectado</option>
-                                <option value="No confirmado a desayuno">No confirmado a desayuno</option>
-                                <option value="Confirmado a Desayuno">Confirmado a Desayuno</option>
-                                <option value="Desayuno Asistido">Desayuno Asistido</option>
-                                <option value="Congregado sin desayuno">Congregado sin desayuno</option>
-                                <option value="Visitante">Visitante</option>
-                                <option value="No interesado">No interesado</option>
-                                <option value="Por Validar Estado">Por Validar Estado</option>
+                            <label for="estado">Estado</label>
+                            <select name="estado" id="estado" class="form-control" required>
+                                <optgroup label="Contacto Inicial">
+                                    <option value="Primer contacto">Primer contacto</option>
+                                    <option value="Primer intento">Primer intento</option>
+                                    <option value="Segundo Intento">Segundo Intento</option>
+                                    <option value="Tercero intento">Tercero intento</option>
+                                    <option value="No interesado">No interesado</option>
+                                </optgroup>
+                                
+                                <optgroup label="Desayunos">
+                                    <option value="No confirmado a desayuno">No confirmado a desayuno</option>
+                                    <option value="Confirmado a Desayuno">Confirmado a Desayuno</option>
+                                    <option value="Desayuno Asistido">Desayuno Asistido</option>
+                                </optgroup>
+                                
+                                <optgroup label="Miembros">
+                                    <option value="Miembro activo">Miembro activo</option>
+                                    <option value="Miembro inactivo">Miembro inactivo</option>
+                                    <option value="Miembro ausente">Miembro ausente</option>
+                                    <option value="Congregado sin desayuno">Congregado sin desayuno</option>
+                                    <option value="Visitante">Visitante</option>
+                                </optgroup>
+                                
+                                <optgroup label="Líderes">
+                                    <option value="Lider Activo">Lider Activo</option>
+                                    <option value="Lider inactivo">Lider inactivo</option>
+                                    <option value="Lider ausente">Lider ausente</option>
+                                </optgroup>
+                                
+                                <optgroup label="Otros">
+                                    <option value="Conectado">Conectado</option>
+                                    <option value="Por Validar Estado">Por Validar Estado</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div class="form-group">

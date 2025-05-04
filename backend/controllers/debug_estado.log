@@ -35,3 +35,15 @@ Llamada recibida: {"id":"49","estado":"Conectado"}
 ID: 49, Estado: Conectado, Filas: 1
 Llamada recibida: {"id":"23","estado":"No interesado"}
 ID: 23, Estado: No interesado, Filas: 1
+Llamada recibida: {"id":"52","estado":"Miembro activo"}
+ID: 52, Estado: Miembro activo, Filas: 1
+Llamada recibida: {"id":"47","estado":"Por Validar Estado"}
+ID: 47, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"49","estado":"Visitante"}
+ID: 49, Estado: Visitante, Filas: 1
+Llamada recibida: {"id":"54","estado":"Por Validar Estado"}
+ID: 54, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"54","estado":"No interesado"}
+ID: 54, Estado: No interesado, Filas: 1
+Llamada recibida: {"id":"55","estado":"Por Validar Estado"}
+ID: 55, Estado: Por Validar Estado, Filas: 1

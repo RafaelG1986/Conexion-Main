@@ -46,6 +46,7 @@ try {
 
 // Definir estados y colores
 $estados = [
+    // Estados existentes
     'Primer contacto',
     'Conectado',
     'No confirmado a desayuno',
@@ -54,10 +55,22 @@ $estados = [
     'Congregado sin desayuno',
     'Visitante',
     'No interesado',
-    'Por Validar Estado'
+    'Por Validar Estado',
+    
+    // Nuevos estados
+    'Primer intento',
+    'Segundo Intento',
+    'Tercero intento',
+    'Miembro activo',
+    'Miembro inactivo',
+    'Miembro ausente',
+    'Lider Activo',
+    'Lider inactivo',
+    'Lider ausente'
 ];
 
 $colores = [
+    // Colores existentes
     'Primer contacto' => 'background:#ffcccc; color:#a00;',
     'Conectado' => 'background:#ffd6cc; color:#b36b00;',
     'No confirmado a desayuno' => 'background:#ffe5cc; color:#b36b00;',
@@ -66,7 +79,18 @@ $colores = [
     'Congregado sin desayuno' => 'background:#d4edda; color:#155724;',
     'Visitante' => 'background:#fff; color:#222;',
     'No interesado' => 'background:#ffdddd; color:#a00;',
-    'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;'
+    'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;',
+    
+    // Colores para los nuevos estados
+    'Primer intento' => 'background:#f5e6ff; color:#5a00b3;',
+    'Segundo Intento' => 'background:#e6ccff; color:#5a00b3;',
+    'Tercero intento' => 'background:#d9b3ff; color:#5a00b3;',
+    'Miembro activo' => 'background:#d9f2d9; color:#006600;',
+    'Miembro inactivo' => 'background:#ffebcc; color:#994d00;',
+    'Miembro ausente' => 'background:#ffe6e6; color:#cc0000;',
+    'Lider Activo' => 'background:#cce0ff; color:#004080;',
+    'Lider inactivo' => 'background:#e6e6e6; color:#666666;',
+    'Lider ausente' => 'background:#ffe6ea; color:#990033;'
 ];
 ?>
 <!DOCTYPE html>
@@ -202,13 +226,39 @@ $colores = [
                 <div class="field-group field-required">
                     <label for="estado">Estado</label>
                     <?php if ($editar): ?>
-                        <select name="estado" id="estado" class="form-control">
-                            <?php foreach ($estados as $est): ?>
-                                <option value="<?php echo htmlspecialchars($est); ?>" 
-                                        <?php echo ($est == $registro['estado']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($est); ?>
-                                </option>
-                            <?php endforeach; ?>
+                        <select name="estado" id="estado" class="form-control" required>
+                            <optgroup label="Contacto Inicial">
+                                <option value="Primer contacto" <?php echo ($registro['estado'] == 'Primer contacto') ? 'selected' : ''; ?> style="<?php echo $colores['Primer contacto']; ?>">Primer contacto</option>
+                                <option value="Primer intento" <?php echo ($registro['estado'] == 'Primer intento') ? 'selected' : ''; ?> style="<?php echo $colores['Primer intento']; ?>">Primer intento</option>
+                                <option value="Segundo Intento" <?php echo ($registro['estado'] == 'Segundo Intento') ? 'selected' : ''; ?> style="<?php echo $colores['Segundo Intento']; ?>">Segundo Intento</option>
+                                <option value="Tercero intento" <?php echo ($registro['estado'] == 'Tercero intento') ? 'selected' : ''; ?> style="<?php echo $colores['Tercero intento']; ?>">Tercero intento</option>
+                                <option value="No interesado" <?php echo ($registro['estado'] == 'No interesado') ? 'selected' : ''; ?> style="<?php echo $colores['No interesado']; ?>">No interesado</option>
+                            </optgroup>
+                            
+                            <optgroup label="Desayunos">
+                                <option value="No confirmado a desayuno" <?php echo ($registro['estado'] == 'No confirmado a desayuno') ? 'selected' : ''; ?> style="<?php echo $colores['No confirmado a desayuno']; ?>">No confirmado a desayuno</option>
+                                <option value="Confirmado a Desayuno" <?php echo ($registro['estado'] == 'Confirmado a Desayuno') ? 'selected' : ''; ?> style="<?php echo $colores['Confirmado a Desayuno']; ?>">Confirmado a Desayuno</option>
+                                <option value="Desayuno Asistido" <?php echo ($registro['estado'] == 'Desayuno Asistido') ? 'selected' : ''; ?> style="<?php echo $colores['Desayuno Asistido']; ?>">Desayuno Asistido</option>
+                            </optgroup>
+                            
+                            <optgroup label="Miembros">
+                                <option value="Miembro activo" <?php echo ($registro['estado'] == 'Miembro activo') ? 'selected' : ''; ?> style="<?php echo $colores['Miembro activo']; ?>">Miembro activo</option>
+                                <option value="Miembro inactivo" <?php echo ($registro['estado'] == 'Miembro inactivo') ? 'selected' : ''; ?> style="<?php echo $colores['Miembro inactivo']; ?>">Miembro inactivo</option>
+                                <option value="Miembro ausente" <?php echo ($registro['estado'] == 'Miembro ausente') ? 'selected' : ''; ?> style="<?php echo $colores['Miembro ausente']; ?>">Miembro ausente</option>
+                                <option value="Congregado sin desayuno" <?php echo ($registro['estado'] == 'Congregado sin desayuno') ? 'selected' : ''; ?> style="<?php echo $colores['Congregado sin desayuno']; ?>">Congregado sin desayuno</option>
+                                <option value="Visitante" <?php echo ($registro['estado'] == 'Visitante') ? 'selected' : ''; ?> style="<?php echo $colores['Visitante']; ?>">Visitante</option>
+                            </optgroup>
+                            
+                            <optgroup label="Líderes">
+                                <option value="Lider Activo" <?php echo ($registro['estado'] == 'Lider Activo') ? 'selected' : ''; ?> style="<?php echo $colores['Lider Activo']; ?>">Lider Activo</option>
+                                <option value="Lider inactivo" <?php echo ($registro['estado'] == 'Lider inactivo') ? 'selected' : ''; ?> style="<?php echo $colores['Lider inactivo']; ?>">Lider inactivo</option>
+                                <option value="Lider ausente" <?php echo ($registro['estado'] == 'Lider ausente') ? 'selected' : ''; ?> style="<?php echo $colores['Lider ausente']; ?>">Lider ausente</option>
+                            </optgroup>
+                            
+                            <optgroup label="Otros">
+                                <option value="Conectado" <?php echo ($registro['estado'] == 'Conectado') ? 'selected' : ''; ?> style="<?php echo $colores['Conectado']; ?>">Conectado</option>
+                                <option value="Por Validar Estado" <?php echo ($registro['estado'] == 'Por Validar Estado') ? 'selected' : ''; ?> style="<?php echo $colores['Por Validar Estado']; ?>">Por Validar Estado</option>
+                            </optgroup>
                         </select>
                     <?php else: ?>
                         <div class="field-value" style="<?php echo $colores[$registro['estado']]; ?> padding: 8px; border-radius: 4px; font-weight: bold;">
