@@ -17,3 +17,21 @@ Llamada recibida: {"id":"No confirmado a desayuno","estado":"46"}
 ID: 0, Estado: 46, Filas: 0
 Llamada recibida: {"id":"46","estado":"Conectado"}
 ID: 46, Estado: Conectado, Filas: 1
+Llamada recibida: {"id":"32","estado":"Conectado"}
+ID: 32, Estado: Conectado, Filas: 1
+Llamada recibida: {"id":"32","estado":"No confirmado a desayuno"}
+ID: 32, Estado: No confirmado a desayuno, Filas: 1
+Llamada recibida: {"id":"48","estado":"No confirmado a desayuno"}
+ID: 48, Estado: No confirmado a desayuno, Filas: 1
+Llamada recibida: {"id":"45","estado":"No confirmado a desayuno"}
+ID: 45, Estado: No confirmado a desayuno, Filas: 1
+Llamada recibida: {"id":"45","estado":"Por Validar Estado"}
+ID: 45, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"26","estado":"No interesado"}
+ID: 26, Estado: No interesado, Filas: 1
+Llamada recibida: {"id":"27","estado":"No interesado"}
+ID: 27, Estado: No interesado, Filas: 1
+Llamada recibida: {"id":"49","estado":"Conectado"}
+ID: 49, Estado: Conectado, Filas: 1
+Llamada recibida: {"id":"23","estado":"No interesado"}
+ID: 23, Estado: No interesado, Filas: 1

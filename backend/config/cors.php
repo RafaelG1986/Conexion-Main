@@ -14,25 +14,39 @@ function getDomainFromUrl($url) {
     return isset($parsedUrl['host']) ? $parsedUrl['host'] : '';
 }
 
-// Detectar si estamos usando ngrok
-$isNgrok = false;
-$ngrokDomain = '';
+// Detectar si estamos usando ngrok o localtunnel
+$isTunnel = false;
+$tunnelDomain = '';
 
+// Detectar ngrok
 if (strpos($origin, 'ngrok-free.app') !== false) {
-    $isNgrok = true;
-    $ngrokDomain = $origin;
+    $isTunnel = true;
+    $tunnelDomain = $origin;
 } elseif (strpos($referer, 'ngrok-free.app') !== false) {
-    $isNgrok = true;
-    $ngrokDomain = preg_replace('/^(https?:\/\/[^\/]+).*$/', '$1', $referer);
+    $isTunnel = true;
+    $tunnelDomain = preg_replace('/^(https?:\/\/[^\/]+).*$/', '$1', $referer);
+}
+
+// Detectar localtunnel
+if (!$isTunnel) {
+    if (strpos($origin, 'loca.lt') !== false) {
+        $isTunnel = true;
+        $tunnelDomain = $origin;
+    } elseif (strpos($referer, 'loca.lt') !== false) {
+        $isTunnel = true;
+        $tunnelDomain = preg_replace('/^(https?:\/\/[^\/]+).*$/', '$1', $referer);
+    }
 }
 
 // Configurar los encabezados CORS según el entorno
-if ($isNgrok) {
-    // Si es ngrok, permitir ese origen específico
-    header("Access-Control-Allow-Origin: $ngrokDomain");
-} elseif (in_array($_SERVER['SERVER_NAME'], ['localhost', '127.0.0.1'])) {
+if ($isTunnel) {
+    // Si es un túnel, permitir ese origen específico
+    header("Access-Control-Allow-Origin: $tunnelDomain");
+    error_log("CORS: Permitido origen de túnel: $tunnelDomain");
+} elseif (in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1'])) {
     // Entorno de desarrollo local
     header('Access-Control-Allow-Origin: *');
+    error_log("CORS: Permitido cualquier origen (desarrollo local)");
 } else {
     // Entorno de producción - aquí puedes definir dominios específicos
     $allowedDomains = [
@@ -43,6 +57,7 @@ if ($isNgrok) {
     $domain = getDomainFromUrl($origin);
     if (in_array($domain, $allowedDomains)) {
         header("Access-Control-Allow-Origin: $origin");
+        error_log("CORS: Permitido origen de producción: $origin");
     }
 }
 
