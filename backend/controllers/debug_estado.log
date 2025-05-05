@@ -47,3 +47,17 @@ Llamada recibida: {"id":"54","estado":"No interesado"}
 ID: 54, Estado: No interesado, Filas: 1
 Llamada recibida: {"id":"55","estado":"Por Validar Estado"}
 ID: 55, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"21","estado":"Intento de reconexi\u00f3n"}
+ID: 21, Estado: Intento de reconexión, Filas: 1
+Llamada recibida: {"id":"46","estado":"No confirma Desayuno"}
+ID: 46, Estado: No confirma Desayuno, Filas: 1
+Llamada recibida: {"id":"35","estado":"Por Validar Estado"}
+ID: 35, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"32","estado":"No confirma Desayuno"}
+ID: 32, Estado: No confirma Desayuno, Filas: 1
+Llamada recibida: {"id":"50","estado":"Conectado"}
+ID: 50, Estado: Conectado, Filas: 1
+Llamada recibida: {"id":"50","estado":"Primer contacto"}
+ID: 50, Estado: Primer contacto, Filas: 1
+Llamada recibida: {"id":"32","estado":"No confirma desayuno"}
+ID: 32, Estado: No confirma desayuno, Filas: 1

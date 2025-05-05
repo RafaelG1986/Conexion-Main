@@ -11,17 +11,6 @@ div.registros-container {
     box-sizing: border-box;
 }
 
-/* Estilos para mejorar los títulos de la tabla */
-.registros-container h2 {
-    font-size: 28px;
-    text-align: center;
-    margin: 20px 0;
-    color: #333;
-    font-weight: 600;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #4d69e9;
-}
-
 /* Encabezado */
 h2 {
     color: #2c3e50;
@@ -59,18 +48,6 @@ table th {
     position: sticky;
     top: 0;
     z-index: 10;
-}
-
-.registros-container table thead th {
-    font-size: 16px;
-    text-align: center;
-    padding: 12px 8px;
-    background-color: #f0f3ff;
-    color: #333;
-    font-weight: 600;
-    vertical-align: middle;
-    border-bottom: 2px solid #4d69e9;
-    white-space: nowrap;
 }
 
 /* Celdas de tabla */
@@ -423,14 +400,6 @@ td.celda-estado select option:checked {
         width: 100%;
         margin: 4px 0;
     }
-
-    .registros-container h2 {
-        font-size: 24px;
-    }
-    
-    .registros-container table thead th {
-        font-size: 14px;
-    }
 }
 
 /* Ajustar el padding de celdas para pantallas grandes */
@@ -487,31 +456,3 @@ table tr {
 .fa-whatsapp {
     font-size: 16px;
 }
-
-/* Añadir al bloque de estilos existente */
-optgroup {
-    font-weight: bold;
-    background-color: #f8f9fa;
-}
-
-optgroup option {
-    font-weight: normal;
-    padding-left: 15px;
-}
-
-/* Estilos específicos para los nuevos grupos de estados */
-.estado-MiembroActivo, .estado-LiderActivo {
-    font-weight: bold;
-}
-
-/* Añadir un indicador pequeño para estados de "intento" */
-.estado-Primerintento::before,
-.estado-Segundointento::before,
-.estado-Tercerintento::before {
-    content: '● ';
-    font-size: 10px;
-}
-
-.estado-Primerintento::before { color: #a8a8a8; }
-.estado-Segundointento::before { color: #878787; }
-.estado-Tercerintento::before { color: #666666; }

@@ -18,52 +18,74 @@ function formatearTelefonoWhatsApp($telefono) {
 <link rel="stylesheet" href="../css/styles_vista_registros.css">
 
 <?php
+// Lista completa de estados organizada por categorías
 $estados = [
-    // Estados existentes
+    // Contacto Inicial
     'Primer contacto',
     'Conectado',
-    'No confirmado a desayuno',
-    'Confirmado a Desayuno',
-    'Desayuno Asistido',
-    'Congregado sin desayuno',
-    'Visitante',
-    'No interesado',
-    'Por Validar Estado',
-    
-    // Nuevos estados a implementar
     'Primer intento',
     'Segundo Intento',
     'Tercero intento',
+    'No interesado',
+    
+    // Desayunos
+    'No confirma desayuno', // Modificado (antes era "No confirmado a desayuno")
+    'Confirmado a Desayuno',
+    'Desayuno Asistido',
+    
+    // Miembros
     'Miembro activo',
     'Miembro inactivo',
     'Miembro ausente',
+    'Congregado sin desayuno',
+    'Visitante',
+    
+    // Líderes
     'Lider Activo',
     'Lider inactivo',
-    'Lider ausente'
+    'Lider ausente',
+    
+    // Reconexión
+    'Reconectado',             // Nuevo
+    'Intento de reconexión',   // Nuevo
+    
+    // Otros
+    'Por Validar Estado'
 ];
 
+// Colores para cada estado
 $colores = [
-    // Colores para estados existentes
+    // Contacto Inicial
     'Primer contacto' => 'background:#ffcccc; color:#a00;',
     'Conectado' => 'background:#ffd6cc; color:#b36b00;',
-    'No confirmado a desayuno' => 'background:#ffe5cc; color:#b36b00;',
-    'Confirmado a Desayuno' => 'background:#cce0ff; color:#00509e;',
-    'Desayuno Asistido' => 'background:#cce6ff; color:#00509e;',
-    'Congregado sin desayuno' => 'background:#d4edda; color:#155724;',
-    'Visitante' => 'background:#fff; color:#222;',
-    'No interesado' => 'background:#ffdddd; color:#a00;',
-    'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;',
-    
-    // Colores para los nuevos estados
     'Primer intento' => 'background:#f5e6ff; color:#5a00b3;',
     'Segundo Intento' => 'background:#e6ccff; color:#5a00b3;',
     'Tercero intento' => 'background:#d9b3ff; color:#5a00b3;',
+    'No interesado' => 'background:#ffdddd; color:#a00;',
+    
+    // Desayunos
+    'No confirma desayuno' => 'background:#ffe5cc; color:#b36b00;', // Modificado
+    'Confirmado a Desayuno' => 'background:#cce0ff; color:#00509e;',
+    'Desayuno Asistido' => 'background:#cce6ff; color:#00509e;',
+    
+    // Miembros
     'Miembro activo' => 'background:#d9f2d9; color:#006600;',
     'Miembro inactivo' => 'background:#ffebcc; color:#994d00;',
     'Miembro ausente' => 'background:#ffe6e6; color:#cc0000;',
+    'Congregado sin desayuno' => 'background:#d4edda; color:#155724;',
+    'Visitante' => 'background:#fff; color:#222;',
+    
+    // Líderes
     'Lider Activo' => 'background:#cce0ff; color:#004080;',
     'Lider inactivo' => 'background:#e6e6e6; color:#666666;',
-    'Lider ausente' => 'background:#ffe6ea; color:#990033;'
+    'Lider ausente' => 'background:#ffe6ea; color:#990033;',
+    
+    // Reconexión
+    'Reconectado' => 'background:#c8e6c9; color:#2e7d32;',          // Nuevo
+    'Intento de reconexión' => 'background:#dcedc8; color:#33691e;', // Nuevo
+    
+    // Otros
+    'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;'
 ];
 
 try {
@@ -121,17 +143,77 @@ try {
                         }
                         ?>>
                         <select onchange="actualizarEstado(this.value, <?php echo $registro['id']; ?>)">
-                            <?php
-                            foreach ($estados as $estadoOpcion):
-                                $estadoClase = str_replace(' ', '', $estadoOpcion);
-                            ?>
-                                <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
-                                    class="estado-<?php echo $estadoClase; ?>"
-                                    style="<?php echo $colores[$estadoOpcion]; ?>"
-                                    <?php if (trim($registro['estado']) == trim($estadoOpcion)) echo 'selected'; ?>>
-                                    <?php echo htmlspecialchars($estadoOpcion); ?>
-                                </option>
-                            <?php endforeach; ?>
+                            <optgroup label="Contacto Inicial">
+                                <?php foreach (['Primer contacto', 'Conectado', 'Primer intento', 'Segundo Intento', 'Tercero intento', 'No interesado'] as $estadoOpcion): ?>
+                                    <?php $estadoClase = str_replace(' ', '', $estadoOpcion); ?>
+                                    <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
+                                        class="estado-<?php echo $estadoClase; ?>"
+                                        style="<?php echo $colores[$estadoOpcion]; ?>"
+                                        <?php if (trim($registro['estado']) == trim($estadoOpcion)) echo 'selected'; ?>>
+                                        <?php echo htmlspecialchars($estadoOpcion); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            
+                            <optgroup label="Desayunos">
+                                <?php foreach (['No confirma desayuno', 'Confirmado a Desayuno', 'Desayuno Asistido'] as $estadoOpcion): ?>
+                                    <?php $estadoClase = str_replace(' ', '', $estadoOpcion); ?>
+                                    <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
+                                        class="estado-<?php echo $estadoClase; ?>"
+                                        style="<?php echo $colores[$estadoOpcion]; ?>"
+                                        <?php if (trim($registro['estado']) == trim($estadoOpcion)) echo 'selected'; ?>>
+                                        <?php echo htmlspecialchars($estadoOpcion); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            
+                            <optgroup label="Miembros">
+                                <?php foreach (['Miembro activo', 'Miembro inactivo', 'Miembro ausente', 'Congregado sin desayuno', 'Visitante'] as $estadoOpcion): ?>
+                                    <?php $estadoClase = str_replace(' ', '', $estadoOpcion); ?>
+                                    <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
+                                        class="estado-<?php echo $estadoClase; ?>"
+                                        style="<?php echo $colores[$estadoOpcion]; ?>"
+                                        <?php if (trim($registro['estado']) == trim($estadoOpcion)) echo 'selected'; ?>>
+                                        <?php echo htmlspecialchars($estadoOpcion); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            
+                            <optgroup label="Líderes">
+                                <?php foreach (['Lider Activo', 'Lider inactivo', 'Lider ausente'] as $estadoOpcion): ?>
+                                    <?php $estadoClase = str_replace(' ', '', $estadoOpcion); ?>
+                                    <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
+                                        class="estado-<?php echo $estadoClase; ?>"
+                                        style="<?php echo $colores[$estadoOpcion]; ?>"
+                                        <?php if (trim($registro['estado']) == trim($estadoOpcion)) echo 'selected'; ?>>
+                                        <?php echo htmlspecialchars($estadoOpcion); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            
+                            <optgroup label="Reconexión">
+                                <?php foreach (['Reconectado', 'Intento de reconexión'] as $estadoOpcion): ?>
+                                    <?php $estadoClase = str_replace(' ', '', $estadoOpcion); ?>
+                                    <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
+                                        class="estado-<?php echo $estadoClase; ?>"
+                                        style="<?php echo $colores[$estadoOpcion]; ?>"
+                                        <?php if (trim($registro['estado']) == trim($estadoOpcion)) echo 'selected'; ?>>
+                                        <?php echo htmlspecialchars($estadoOpcion); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            
+                            <optgroup label="Otros">
+                                <?php foreach (['Por Validar Estado'] as $estadoOpcion): ?>
+                                    <?php $estadoClase = str_replace(' ', '', $estadoOpcion); ?>
+                                    <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
+                                        class="estado-<?php echo $estadoClase; ?>"
+                                        style="<?php echo $colores[$estadoOpcion]; ?>"
+                                        <?php if (trim($registro['estado']) == trim($estadoOpcion)) echo 'selected'; ?>>
+                                        <?php echo htmlspecialchars($estadoOpcion); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
                         </select>
                     </td>                   
                     <td>

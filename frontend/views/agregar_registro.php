@@ -1,6 +1,43 @@
 <?php
 require_once __DIR__ . '/../../backend/config/database.php';
 session_start();
+
+// Al inicio del archivo, después de los includes
+$estadosPorCategoria = [
+    'Contacto Inicial' => [
+        'Primer contacto' => 'background:#ffcccc; color:#a00;',
+        'Conectado' => 'background:#ffd6cc; color:#b36b00;',
+        'Primer intento' => 'background:#f5e6ff; color:#5a00b3;',
+        'Segundo Intento' => 'background:#e6ccff; color:#5a00b3;',
+        'Tercero intento' => 'background:#d9b3ff; color:#5a00b3;',
+        'No interesado' => 'background:#ffdddd; color:#a00;'
+    ],
+    'Desayunos' => [
+        'No confirma desayuno' => 'background:#ffe5cc; color:#b36b00;',
+        'Confirmado a Desayuno' => 'background:#cce0ff; color:#00509e;',
+        'Desayuno Asistido' => 'background:#cce6ff; color:#00509e;'
+    ],
+    'Miembros' => [
+        'Miembro activo' => 'background:#d9f2d9; color:#006600;',
+        'Miembro inactivo' => 'background:#ffebcc; color:#994d00;',
+        'Miembro ausente' => 'background:#ffe6e6; color:#cc0000;',
+        'Congregado sin desayuno' => 'background:#d4edda; color:#155724;',
+        'Visitante' => 'background:#fff; color:#222;'
+    ],
+    'Líderes' => [
+        'Lider Activo' => 'background:#cce0ff; color:#004080;',
+        'Lider inactivo' => 'background:#e6e6e6; color:#666666;',
+        'Lider ausente' => 'background:#ffe6ea; color:#990033;'
+    ],
+    'Reconexión' => [
+        'Reconectado' => 'background:#c8e6c9; color:#2e7d32;',
+        'Intento de reconexión' => 'background:#dcedc8; color:#33691e;'
+    ],
+    'Otros' => [
+        'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;'
+    ]
+];
+
 // Mostrar mensajes de error o éxito si existen
 if (isset($_SESSION['error_mensaje'])) {
     echo '<div class="alert alert-danger">' . $_SESSION['error_mensaje'] . '</div>';
@@ -97,40 +134,17 @@ try {
                     <h3><i class="fas fa-clipboard-list"></i> Estado y Seguimiento</h3>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="estado">Estado</label>
-                            <select name="estado" id="estado" class="form-control" required>
-                                <optgroup label="Contacto Inicial">
-                                    <option value="Primer contacto">Primer contacto</option>
-                                    <option value="Primer intento">Primer intento</option>
-                                    <option value="Segundo Intento">Segundo Intento</option>
-                                    <option value="Tercero intento">Tercero intento</option>
-                                    <option value="No interesado">No interesado</option>
-                                </optgroup>
-                                
-                                <optgroup label="Desayunos">
-                                    <option value="No confirmado a desayuno">No confirmado a desayuno</option>
-                                    <option value="Confirmado a Desayuno">Confirmado a Desayuno</option>
-                                    <option value="Desayuno Asistido">Desayuno Asistido</option>
-                                </optgroup>
-                                
-                                <optgroup label="Miembros">
-                                    <option value="Miembro activo">Miembro activo</option>
-                                    <option value="Miembro inactivo">Miembro inactivo</option>
-                                    <option value="Miembro ausente">Miembro ausente</option>
-                                    <option value="Congregado sin desayuno">Congregado sin desayuno</option>
-                                    <option value="Visitante">Visitante</option>
-                                </optgroup>
-                                
-                                <optgroup label="Líderes">
-                                    <option value="Lider Activo">Lider Activo</option>
-                                    <option value="Lider inactivo">Lider inactivo</option>
-                                    <option value="Lider ausente">Lider ausente</option>
-                                </optgroup>
-                                
-                                <optgroup label="Otros">
-                                    <option value="Conectado">Conectado</option>
-                                    <option value="Por Validar Estado">Por Validar Estado</option>
-                                </optgroup>
+                            <label for="estado">Estado Actual</label>
+                            <select id="estado" name="estado">
+                                <?php foreach ($estadosPorCategoria as $categoria => $estados): ?>
+                                    <optgroup label="<?php echo $categoria; ?>">
+                                        <?php foreach ($estados as $estado => $estilo): ?>
+                                            <option value="<?php echo $estado; ?>" style="<?php echo $estilo; ?>">
+                                                <?php echo $estado; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </optgroup>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="form-group">
