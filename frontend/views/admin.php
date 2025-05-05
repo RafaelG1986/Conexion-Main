@@ -196,20 +196,29 @@ $_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
     <script>
     // FUNCIONES DE NAVEGACIÓN
     function cargarVista(ruta) {
-        // AGREGAR ESTA LÍNEA: actualizar la vista actual antes de cargar nueva vista
+        // Actualizar la vista actual 
         window.vistaActual = ruta;
         console.log("Vista actual actualizada a:", ruta);
         
-        // Ruta relativa desde admin.php
-        const url = `${ruta}`;
+        // Usar la misma lógica de detección de base URL que cargarRegistro
+        const getBaseUrl = () => {
+            const pathSegments = window.location.pathname.split('/');
+            if (pathSegments.length > 1 && pathSegments[1]) {
+                return '/' + pathSegments[1];
+            }
+            return '';
+        };
         
-        console.log("Cargando vista simple:", url);
+        const baseUrl = getBaseUrl();
+        const url = `${baseUrl}/frontend/views/${ruta}`;
         
-        // Mostrar indicador de carga
+        console.log("Base URL detectada:", baseUrl);
+        console.log("Cargando vista desde:", url);
+        
+        // Resto del código igual...
         document.getElementById('contenido-dinamico').innerHTML = 
             '<div class="cargando-contenido"><i class="fas fa-spinner fa-spin"></i> Cargando vista...</div>';
         
-        // Realizar la petición fetch con timestamp para evitar caché
         fetch(url + '?_=' + new Date().getTime())
             .then(res => {
                 if (!res.ok) {
