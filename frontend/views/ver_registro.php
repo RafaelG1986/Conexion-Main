@@ -146,18 +146,10 @@ if ($ajax) {
                 </a>
             <?php endif; ?>
             
-            <!-- Botones comunes para ambos modos -->
+            <!-- Botón de WhatsApp se mantiene -->
             <a href="https://wa.me/<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>" 
                class="btn-whatsapp" target="_blank" title="Contactar por WhatsApp">
                 <i class="fab fa-whatsapp"></i>
-            </a>
-            
-            <a href="#" onclick="window.close(); return false;" class="btn-close" title="Cerrar">
-                <i class="fas fa-times"></i>
-            </a>
-            
-            <a href="admin.php?vista=vista_registros.php" class="btn-back" title="Volver a Registros">
-                <i class="fas fa-arrow-left"></i>
             </a>
         </div>
     </div>
@@ -459,18 +451,10 @@ if ($ajax) {
                     </a>
                 <?php endif; ?>
                 
-                <!-- Botones comunes para ambos modos -->
+                <!-- Botón de WhatsApp se mantiene -->
                 <a href="https://wa.me/<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>" 
                    class="btn-whatsapp" target="_blank" title="Contactar por WhatsApp">
                     <i class="fab fa-whatsapp"></i>
-                </a>
-                
-                <a href="#" onclick="window.close(); return false;" class="btn-close" title="Cerrar">
-                    <i class="fas fa-times"></i>
-                </a>
-                
-                <a href="admin.php?vista=vista_registros.php" class="btn-back" title="Volver a Registros">
-                    <i class="fas fa-arrow-left"></i>
                 </a>
             </div>
         </div>
