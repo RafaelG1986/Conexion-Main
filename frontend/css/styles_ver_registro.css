@@ -23,19 +23,152 @@ body {
     position: relative;
 }
 
+/* Estilos para la barra de acciones en ver_registro.php */
 .registro-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 25px;
+    align-items: center;
+    margin-bottom: 20px;
     padding-bottom: 15px;
-    border-bottom: 2px solid #f0f0f0;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.registro-header h1 {
+.registro-header h2 {
+    margin: 0;
+    font-size: 24px;
     color: #2c3e50;
-    font-size: 28px;
-    font-weight: 600;
+}
+
+.actions-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Estilos de los botones */
+.actions-bar .btn-primary,
+.actions-bar .btn-secondary,
+.actions-bar .btn-edit,
+.actions-bar .btn-whatsapp,
+.actions-bar .btn-close,
+.actions-bar .btn-back {
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    border: none;
+}
+
+.actions-bar .btn-primary {
+    background-color: #4d69e9;
+    color: white;
+}
+
+.actions-bar .btn-secondary {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.actions-bar .btn-edit {
+    background-color: #f39c12;
+    color: white;
+}
+
+.actions-bar .btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+}
+
+.actions-bar .btn-close {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.actions-bar .btn-back {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.actions-bar button:hover,
+.actions-bar a:hover {
+    opacity: 0.9;
+    transform: translateY(-3px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+}
+
+.actions-bar i {
+    font-size: 18px;
+    margin: 0;
+}
+
+/* Estilos para botones de solo iconos */
+.actions-bar .btn-primary,
+.actions-bar .btn-secondary,
+.actions-bar .btn-edit,
+.actions-bar .btn-whatsapp,
+.actions-bar .btn-close,
+.actions-bar .btn-back {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s;
+}
+
+.actions-bar [title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.actions-bar button,
+.actions-bar a {
+    position: relative;
+    margin: 0 5px;
+}
+
+/* Separador entre grupos de botones */
+.actions-bar a.btn-whatsapp {
+    margin-left: 15px;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+    .registro-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .actions-bar {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .actions-bar button,
+    .actions-bar a {
+        flex-grow: 1;
+        text-align: center;
+        justify-content: center;
+    }
 }
 
 .modo-badge {

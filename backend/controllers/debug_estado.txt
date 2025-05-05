@@ -29,3 +29,4 @@
 2025-05-05 03:51:00 - Actualizando estado: 50 - Conectado
 2025-05-05 03:51:20 - Actualizando estado: 50 - Primer contacto
 2025-05-05 04:21:28 - Actualizando estado: 32 - No confirma desayuno
+2025-05-05 04:24:53 - Actualizando estado: 46 - No confirma desayuno
