@@ -196,19 +196,27 @@ $_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
     <script>
     // FUNCIONES DE NAVEGACIÓN
     function cargarVista(ruta) {
-        // Guardar la ruta actual para posibles recargas
+        // AGREGAR ESTA LÍNEA: actualizar la vista actual antes de cargar nueva vista
         window.vistaActual = ruta;
+        console.log("Vista actual actualizada a:", ruta);
         
-        // Quitar clase active de todos los enlaces
-        document.querySelectorAll('.sidebar a').forEach(link => {
-            link.classList.remove('active');
-        });
+        // Ruta relativa desde admin.php
+        const url = `${ruta}`;
         
-        // Añadir clase active al enlace correspondiente
-        document.querySelector(`.sidebar a[onclick*="${ruta}"]`)?.classList.add('active');
+        console.log("Cargando vista simple:", url);
         
-        fetch(ruta)
-            .then(res => res.text())
+        // Mostrar indicador de carga
+        document.getElementById('contenido-dinamico').innerHTML = 
+            '<div class="cargando-contenido"><i class="fas fa-spinner fa-spin"></i> Cargando vista...</div>';
+        
+        // Realizar la petición fetch con timestamp para evitar caché
+        fetch(url + '?_=' + new Date().getTime())
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Error HTTP: ${res.status}`);
+                }
+                return res.text();
+            })
             .then(html => {
                 document.getElementById('contenido-dinamico').innerHTML = html;
                 document.querySelector('.main-content').classList.remove('centrado');
@@ -219,11 +227,11 @@ $_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
             .catch(error => {
                 console.error('Error cargando vista:', error);
                 document.getElementById('contenido-dinamico').innerHTML = 
-                    '<div class="alert alert-danger">Error cargando la vista. Inténtalo de nuevo.</div>';
+                    '<div class="error-mensaje"><i class="fas fa-exclamation-triangle"></i> ' + 
+                    'Error al cargar la vista: ' + error.message + '</div>';
             });
     }
 
-    // Función para inicializar los diferentes módulos según la ruta
     function inicializarModulo(ruta) {
         // Estadísticas generales
         if (ruta === 'vista_estadisticas.php') {
@@ -394,8 +402,17 @@ $_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
 
     // Función para cargar ver_registro.php dinámicamente
     function cargarRegistro(id, editar = false) {
-        // Determinar la URL con los parámetros necesarios
-        const url = `ver_registro.php?id=${id}${editar ? '&editar=1' : ''}&ajax=1`;
+        // Detectar base URL
+        const getBaseUrl = () => {
+            const pathSegments = window.location.pathname.split('/');
+            if (pathSegments.length > 1 && pathSegments[1]) {
+                return '/' + pathSegments[1];
+            }
+            return '';
+        };
+        
+        const baseUrl = getBaseUrl();
+        const url = `${baseUrl}/frontend/views/ver_registro.php?id=${id}${editar ? '&editar=1' : ''}&ajax=1`;
         
         // Guardar la vista actual para poder volver después
         window.vistaAnterior = window.vistaActual || 'vista_registros.php';
@@ -541,6 +558,18 @@ $_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
             console.error('✗ Ventana chat NO encontrada');
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const elemento = document.getElementById('ID-DEL-ELEMENTO'); // Reemplaza con el ID correcto
+        
+        if (elemento) {
+            elemento.addEventListener('click', function() {
+                // tu código actual...
+            });
+        } else {
+            console.log("Elemento no encontrado en esta vista");
+        }
+    });
     </script>
 
     <!-- Modal de usuarios conectados -->
@@ -567,6 +596,12 @@ $_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
     <button id="btn-usuarios-online" class="floating-btn">
         <i class="fas fa-users"></i>
         <span id="contador-usuarios-online">0</span>
+    </button>
+
+    <!-- Botón flotante para abrir/cerrar el chat -->
+    <button id="chat-toggle-button" class="chat-toggle-btn">
+        <i class="fas fa-comments"></i>
+        <span class="badge" id="chat-badge">0</span>
     </button>
 
     <script src="/Conexion-Main/frontend/js/usuarios-online.js"></script>

@@ -1,8 +1,16 @@
 // chat.js - Sistema de chat interno para la plataforma Conexión
 
 function inicializarChat() {
-    // Obtener referencias a elementos DOM
-    const chatContainer = document.getElementById('chat-container');
+    // Añadir verificación para el elemento
+    const elemento = document.getElementById('chat-container'); // o cualquier ID que esté buscando
+    
+    if (!elemento) {
+        console.log("El elemento del chat no está disponible en esta vista");
+        return; // Salir de la función si el elemento no existe
+    }
+    
+    // Continuar con el resto del código solo si el elemento existe
+    const chatContainer = elemento;
     const usuarioActual = chatContainer.dataset.usuarioId;
     let conversacionActiva = null;
     let intervaloActualizacion = null;
@@ -398,6 +406,9 @@ function inicializarChatSidebar() {
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
-    inicializarChat();
+    // Solo inicializar el chat si estamos en una página que lo tenga
+    if (document.getElementById('chat-container')) {
+        inicializarChat();
+    }
     inicializarChatSidebar();
 });
