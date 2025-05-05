@@ -97,7 +97,68 @@ $colores = [
 ];
 ?>
 
-<!-- Devolver solo el contenido HTML necesario, sin DOCTYPE ni etiquetas de estructura completa -->
+<!-- Estilos para los botones de acción -->
+<style>
+    /* Estilos mejorados para los botones de acción */
+    .btn-accion {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: none;
+        margin: 0 4px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        background-color: #f8f9fa;
+        color: #495057;
+    }
+    
+    /* Botón Ver detalles */
+    .btn-accion[title="Ver detalles"] {
+        background-color: #e3f2fd;
+        color: #0d6efd;
+    }
+    
+    .btn-accion[title="Ver detalles"]:hover {
+        background-color: #cfe2ff;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(13, 110, 253, 0.25);
+    }
+    
+    /* Botón Editar */
+    .btn-accion[title="Editar"] {
+        background-color: #e7f7ee;
+        color: #28a745;
+    }
+    
+    .btn-accion[title="Editar"]:hover {
+        background-color: #d4f2e2;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(40, 167, 69, 0.25);
+    }
+    
+    /* Iconos dentro de los botones */
+    .btn-accion i {
+        font-size: 16px;
+    }
+    
+    /* Efecto de clic */
+    .btn-accion:active {
+        transform: translateY(1px);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Celda de acciones */
+    .table-responsive table td:last-child {
+        text-align: center;
+        white-space: nowrap;
+        min-width: 100px;
+    }
+</style>
+
 <?php if (!empty($filtros)): ?>
 <div class="applied-filters">
     <div class="filters-title">Filtros aplicados:</div>
@@ -171,12 +232,14 @@ $colores = [
                 <td><?php echo htmlspecialchars($registro['nombre_conector']); ?></td>
                 <td><?php echo date('d/m/Y', strtotime($registro['fecha_contacto'])); ?></td>
                 <td>
-                    <a href="ver_registro.php?id=<?php echo $registro['id']; ?>" class="btn-action btn-view" title="Ver registro">
-                        <i class="fas fa-eye"></i>
-                    </a>
-                    <a href="ver_registro.php?id=<?php echo $registro['id']; ?>&editar=1" class="btn-action btn-edit" title="Editar registro">
+                    <button type="button" class="btn-accion" title="Ver detalles" 
+                            onclick="window.parent.cargarRegistro(<?php echo $registro['id']; ?>, false)">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button type="button" class="btn-accion" title="Editar" 
+                            onclick="window.parent.cargarRegistro(<?php echo $registro['id']; ?>, true)">
                         <i class="fas fa-edit"></i>
-                    </a>
+                    </button>
                 </td>
             </tr>
             <?php endforeach; ?>
