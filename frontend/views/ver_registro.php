@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/../../backend/config/database.php';
 
+// Detectar si es una carga AJAX
+$ajax = (isset($_GET['ajax']) && $_GET['ajax'] == '1');
+
 // Función para formatear teléfono para WhatsApp
 function formatearTelefonoWhatsApp($telefono) {
     // Eliminar todos los caracteres no numéricos
@@ -115,6 +118,313 @@ $colores = [
     // Compatibilidad con estados antiguos
     'No confirmado a desayuno' => 'background:#ffe5cc; color:#b36b00;'
 ];
+
+// Si es una carga AJAX, solo mostrar el contenido del registro
+if ($ajax) {
+    // Solo emitir el contenido HTML necesario
+?>
+<div class="registro-container">
+    <!-- NUEVA SECCIÓN DE BOTONES AL INICIO -->
+    <div class="registro-header">
+        <h2><i class="fas fa-<?php echo $editar ? 'edit' : 'eye'; ?>"></i> 
+            <?php echo $editar ? 'Editar Registro' : 'Detalles del Registro'; ?>
+        </h2>
+        
+        <div class="actions-bar">
+            <?php if ($editar): ?>
+                <!-- Botones para modo edición -->
+                <button type="submit" form="form-registro" class="btn-primary" title="Guardar Cambios">
+                    <i class="fas fa-save"></i>
+                </button>
+                <button type="reset" form="form-registro" class="btn-secondary" title="Restablecer Campos">
+                    <i class="fas fa-undo"></i>
+                </button>
+            <?php else: ?>
+                <!-- Botones para modo visualización -->
+                <a href="ver_registro.php?id=<?php echo $registro['id']; ?>&editar=1" class="btn-edit" title="Editar Registro">
+                    <i class="fas fa-edit"></i>
+                </a>
+            <?php endif; ?>
+            
+            <!-- Botones comunes para ambos modos -->
+            <a href="https://wa.me/<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>" 
+               class="btn-whatsapp" target="_blank" title="Contactar por WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            
+            <a href="#" onclick="window.close(); return false;" class="btn-close" title="Cerrar">
+                <i class="fas fa-times"></i>
+            </a>
+            
+            <a href="admin.php?vista=vista_registros.php" class="btn-back" title="Volver a Registros">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+    
+    <!-- FORMULARIO PRINCIPAL -->
+    <form id="form-registro" method="post" action="../../backend/controllers/actualizar_registro.php" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<?php echo $registro['id']; ?>">
+        
+        <!-- Sección de información personal -->
+        <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-user"></i> Información Personal</h2>
+            
+            <div class="foto-section">
+                <div class="foto-container">
+                    <img src="<?php echo !empty($registro['foto']) ? '../img/' . $registro['foto'] : '../img/no-foto.jpg'; ?>" alt="Foto de <?php echo htmlspecialchars($registro['nombre_persona']); ?>" 
+                         onclick="window.open(this.src, '_blank', 'width=900,height=900')">
+                </div>
+                
+                <?php if ($editar): ?>
+                <div class="foto-upload">
+                    <label for="foto">
+                        <i class="fas fa-camera"></i> <?php echo !empty($registro['foto']) ? 'Cambiar foto' : 'Subir foto'; ?>
+                    </label>
+                    <input type="file" id="foto" name="foto" accept="image/*">
+                    <input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($registro['foto'] ?? ''); ?>">
+                </div>
+                <?php endif; ?>
+            </div>
+            
+            <div class="registro-grid">
+                <div class="field-group field-required">
+                    <label for="nombre_persona">Nombre</label>
+                    <?php if ($editar): ?>
+                        <input type="text" id="nombre_persona" name="nombre_persona" value="<?php echo htmlspecialchars($registro['nombre_persona']); ?>" required>
+                        <div class="validation-message">Este campo es obligatorio</div>
+                    <?php else: ?>
+                        <div class="field-value"><?php echo htmlspecialchars($registro['nombre_persona']); ?></div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="field-group field-required">
+                    <label for="apellido_persona">Apellido</label>
+                    <?php if ($editar): ?>
+                        <input type="text" id="apellido_persona" name="apellido_persona" value="<?php echo htmlspecialchars($registro['apellido_persona']); ?>" required>
+                        <div class="validation-message">Este campo es obligatorio</div>
+                    <?php else: ?>
+                        <div class="field-value"><?php echo htmlspecialchars($registro['apellido_persona']); ?></div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="field-group">
+                    <label for="telefono">Teléfono</label>
+                    <?php if ($editar): ?>
+                        <input type="tel" id="telefono" name="telefono" value="<?php echo htmlspecialchars($registro['telefono'] ?? ''); ?>">
+                        <div class="validation-message">Ingrese un número de teléfono válido</div>
+                    <?php else: ?>
+                        <div class="field-value"><?php echo htmlspecialchars($registro['telefono'] ?? 'No especificado'); ?></div>
+                    <?php endif; ?>
+                    
+                    <?php if (!$editar && !empty($registro['telefono'])): ?>
+                        <!-- Botón de WhatsApp eliminado para evitar duplicados -->
+                    <?php endif; ?>
+                </div>
+                
+                <div class="field-group">
+                    <label for="cumpleanos">Cumpleaños</label>
+                    <?php if ($editar): ?>
+                        <input type="text" id="cumpleanos" name="cumpleanos" value="<?php echo htmlspecialchars($registro['cumpleanos'] ?? ''); ?>">
+                    <?php else: ?>
+                        <div class="field-value"><?php echo htmlspecialchars($registro['cumpleanos'] ?? 'No especificado'); ?></div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de información de conexión -->
+        <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-link"></i> Información de Conexión</h2>
+            
+            <div class="registro-grid">
+                <div class="field-group field-required">
+                    <label for="nombre_conector">Nombre del Conector</label>
+                    <?php if ($editar): ?>
+                        <input type="text" id="nombre_conector" name="nombre_conector" value="<?php echo htmlspecialchars($registro['nombre_conector']); ?>" required>
+                        <div class="validation-message">Este campo es obligatorio</div>
+                    <?php else: ?>
+                        <div class="field-value"><?php echo htmlspecialchars($registro['nombre_conector']); ?></div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="field-group">
+                    <label for="nombre_quien_trajo">Nombre de quien lo invitó</label>
+                    <?php if ($editar): ?>
+                        <input type="text" id="nombre_quien_trajo" name="nombre_quien_trajo" value="<?php echo htmlspecialchars($registro['nombre_quien_trajo'] ?? ''); ?>">
+                    <?php else: ?>
+                        <div class="field-value"><?php echo htmlspecialchars($registro['nombre_quien_trajo'] ?? 'No especificado'); ?></div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="field-group field-required">
+                    <label for="estado">Estado</label>
+                    <?php if ($editar): ?>
+                        <select name="estado" id="estado" class="form-control">
+                            <optgroup label="Contacto Inicial">
+                                <?php foreach (['Primer contacto', 'Conectado', 'Primer intento', 'Segundo Intento', 'Tercero intento', 'No interesado'] as $est): ?>
+                                    <option value="<?php echo htmlspecialchars($est); ?>" 
+                                            <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
+                                            style="<?php echo $colores[$est]; ?>">
+                                        <?php echo htmlspecialchars($est); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+
+                            <optgroup label="Desayunos">
+                                <?php foreach (['No confirma desayuno', 'Confirmado a Desayuno', 'Desayuno Asistido'] as $est): ?>
+                                    <option value="<?php echo htmlspecialchars($est); ?>" 
+                                            <?php echo (trim($est) == trim($registro['estado']) || ($est == 'No confirma desayuno' && $registro['estado'] == 'No confirmado a desayuno')) ? 'selected' : ''; ?>
+                                            style="<?php echo $colores[$est]; ?>">
+                                        <?php echo htmlspecialchars($est); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+
+                            <optgroup label="Miembros">
+                                <?php foreach (['Miembro activo', 'Miembro inactivo', 'Miembro ausente', 'Congregado sin desayuno', 'Visitante'] as $est): ?>
+                                    <option value="<?php echo htmlspecialchars($est); ?>" 
+                                            <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
+                                            style="<?php echo $colores[$est]; ?>">
+                                        <?php echo htmlspecialchars($est); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+
+                            <optgroup label="Líderes">
+                                <?php foreach (['Lider Activo', 'Lider inactivo', 'Lider ausente'] as $est): ?>
+                                    <option value="<?php echo htmlspecialchars($est); ?>" 
+                                            <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
+                                            style="<?php echo $colores[$est]; ?>">
+                                        <?php echo htmlspecialchars($est); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+
+                            <optgroup label="Reconexión">
+                                <?php foreach (['Reconectado', 'Intento de reconexión'] as $est): ?>
+                                    <option value="<?php echo htmlspecialchars($est); ?>" 
+                                            <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
+                                            style="<?php echo $colores[$est]; ?>">
+                                        <?php echo htmlspecialchars($est); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+
+                            <optgroup label="Otros">
+                                <?php foreach (['Por Validar Estado'] as $est): ?>
+                                    <option value="<?php echo htmlspecialchars($est); ?>" 
+                                            <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
+                                            style="<?php echo $colores[$est]; ?>">
+                                        <?php echo htmlspecialchars($est); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                        </select>
+                    <?php else: ?>
+                        <div class="field-value" style="<?php 
+                            // Maneja el caso para estados antiguos
+                            if ($registro['estado'] == 'No confirmado a desayuno') {
+                                echo $colores['No confirma desayuno'];
+                            } else {
+                                echo isset($colores[$registro['estado']]) ? $colores[$registro['estado']] : '';
+                            }
+                        ?> padding: 8px; border-radius: 4px; font-weight: bold;">
+                            <?php 
+                            // Mostrar el nombre actualizado del estado si es el caso antiguo
+                            echo ($registro['estado'] == 'No confirmado a desayuno') 
+                                ? 'No confirma desayuno' 
+                                : htmlspecialchars($registro['estado']); 
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="field-group">
+                    <label for="fecha_contacto">Fecha de Contacto</label>
+                    <?php if ($editar): ?>
+                        <input type="date" id="fecha_contacto" name="fecha_contacto" value="<?php echo htmlspecialchars($registro['fecha_contacto'] ?? ''); ?>">
+                    <?php else: ?>
+                        <div class="field-value">
+                            <?php 
+                            echo !empty($registro['fecha_contacto']) 
+                                ? date('d/m/Y', strtotime($registro['fecha_contacto'])) 
+                                : 'No especificada';
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="field-group">
+                    <label for="fecha_ultimo_contacto">Fecha Último Contacto</label>
+                    <?php if ($editar): ?>
+                        <input type="date" id="fecha_ultimo_contacto" name="fecha_ultimo_contacto" value="<?php echo htmlspecialchars($registro['fecha_ultimo_contacto'] ?? ''); ?>">
+                    <?php else: ?>
+                        <div class="field-value">
+                            <?php 
+                            echo !empty($registro['fecha_ultimo_contacto']) 
+                                ? date('d/m/Y', strtotime($registro['fecha_ultimo_contacto'])) 
+                                : 'No especificada';
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de formularios -->
+        <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-file-alt"></i> Información de Formularios</h2>
+            
+            <div class="registro-grid">
+                <div class="field-group">
+                    <label for="formulario_nuevos">Formulario de Nuevos</label>
+                    <?php if ($editar): ?>
+                        <input type="text" id="formulario_nuevos" name="formulario_nuevos" value="<?php echo htmlspecialchars($registro['formulario_nuevos'] ?? ''); ?>">
+                    <?php else: ?>
+                        <div class="field-value"><?php echo htmlspecialchars($registro['formulario_nuevos'] ?? 'No especificado'); ?></div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="field-group">
+                    <label for="formulario_llamadas">Formulario de Llamadas</label>
+                    <?php if ($editar): ?>
+                        <input type="text" id="formulario_llamadas" name="formulario_llamadas" value="<?php echo htmlspecialchars($registro['formulario_llamadas'] ?? ''); ?>">
+                    <?php else: ?>
+                        <div class="field-value"><?php echo htmlspecialchars($registro['formulario_llamadas'] ?? 'No especificado'); ?></div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="field-group">
+                    <label for="subido_por">Subido Por</label>
+                    <?php if ($editar): ?>
+                        <input type="text" id="subido_por" name="subido_por" value="<?php echo htmlspecialchars($registro['subido_por'] ?? ''); ?>">
+                    <?php else: ?>
+                        <div class="field-value"><?php echo htmlspecialchars($registro['subido_por'] ?? 'No especificado'); ?></div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de observaciones -->
+        <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-comment-alt"></i> Observaciones</h2>
+            
+            <div class="field-group full-width">
+                <label for="observaciones">Observaciones Generales</label>
+                <?php if ($editar): ?>
+                    <textarea id="observaciones" name="observaciones"><?php echo htmlspecialchars($registro['observaciones'] ?? ''); ?></textarea>
+                <?php else: ?>
+                    <div class="field-value" style="white-space: pre-wrap;">
+                        <?php echo htmlspecialchars($registro['observaciones'] ?: 'Sin observaciones generales.'); ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </form>
+</div>
+<?php
+} else {
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -485,3 +795,6 @@ $colores = [
     </script>
 </body>
 </html>
+<?php
+}
+?>

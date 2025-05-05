@@ -228,12 +228,12 @@ try {
                     <td class="acciones-td">
                         <div class="botones-accion">
                             <button type="button" class="btn-accion" title="Editar" 
-                                    onclick="window.open('ver_registro.php?id=<?php echo $registro['id']; ?>&editar=1', '_blank')">
+                                    onclick="cargarRegistro(<?php echo $registro['id']; ?>, true)">
                                 <i class="fas fa-edit"></i>
                             </button>
                             
                             <button type="button" class="btn-accion" title="Ver detalles" 
-                                    onclick="window.open('ver_registro.php?id=<?php echo $registro['id']; ?>', '_blank')">
+                                    onclick="cargarRegistro(<?php echo $registro['id']; ?>)">
                                 <i class="fas fa-search"></i>
                             </button>
                             

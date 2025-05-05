@@ -391,57 +391,128 @@ $_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
             chatSidebar.classList.toggle('active');
         });
     });
-    </script>
 
-    <!-- Este tipo de código está causando el error -->
-    <select class="selector-estado" data-id="<?php echo $registro['id']; ?>">
-        <!-- opciones... -->
-    </select>
-
-    <!-- Contenedor para el ID de usuario -->
-    <div id="chat-container" data-usuario-id="<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '0'; ?>"></div>
-
-    <!-- Botón para mostrar/ocultar el chat -->
-    <div id="chat-toggle-button" class="chat-toggle-button">
-        <i class="fas fa-comments"></i>
-        <span class="badge" id="unread-badge" style="display: none;">0</span>
-    </div>
-
-    <!-- Añadir al final de admin.php antes del cierre del body -->
-    <div id="chat-container-renamed" data-usuario-id="<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '0'; ?>"></div>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Verificar elementos críticos
-        if (!document.getElementById('chat-container')) {
-            console.error('No se encontró el elemento chat-container');
-        }
+    // Función para cargar ver_registro.php dinámicamente
+    function cargarRegistro(id, editar = false) {
+        // Determinar la URL con los parámetros necesarios
+        const url = `ver_registro.php?id=${id}${editar ? '&editar=1' : ''}&ajax=1`;
         
-        if (!document.getElementById('chat-window')) {
-            console.error('No se encontró el elemento chat-window');
-        }
+        // Guardar la vista actual para poder volver después
+        window.vistaAnterior = window.vistaActual || 'vista_registros.php';
         
-        if (!document.getElementById('minimize-chat')) {
-            console.error('No se encontró el elemento minimize-chat');
-        }
+        // Mostrar indicador de carga
+        document.getElementById('contenido-dinamico').innerHTML = 
+            '<div class="cargando-contenido"><i class="fas fa-spinner fa-spin"></i> Cargando registro...</div>';
         
-        // Inicializar chat si existe la función
-        if (typeof inicializarChat === 'function') {
-            console.log('Inicializando sistema de chat...');
-            try {
-                inicializarChat();
-                console.log('Sistema de chat inicializado correctamente');
-            } catch (e) {
-                console.error('Error inicializando el chat:', e);
-            }
-        } else {
-            console.error('Función inicializarChat no encontrada');
-        }
-    });
-    </script>
+        // Realizar la petición fetch
+        fetch(url)
+            .then(res => res.text())
+            .then(html => {
+                // Inyectar el contenido en el contenedor dinámico
+                document.getElementById('contenido-dinamico').innerHTML = html;
+                
+                // Añadir una barra de navegación para volver
+                const navBar = document.createElement('div');
+                navBar.className = 'registro-nav-bar';
+                navBar.innerHTML = `
+                    <button onclick="cargarVista('${window.vistaAnterior}')" class="btn-volver">
+                        <i class="fas fa-arrow-left"></i> Volver al listado
+                    </button>
+                    <h3>${editar ? 'Editar Registro' : 'Detalles del Registro'}</h3>
+                `;
+                
+                // Insertar la barra de navegación al inicio del contenido
+                const contenido = document.getElementById('contenido-dinamico');
+                contenido.insertBefore(navBar, contenido.firstChild);
+                
+                // Cargar el CSS específico de ver_registro si no está ya cargado
+                if (!document.querySelector('link[href*="styles_ver_registro.css"]')) {
+                    const link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = '../css/styles_ver_registro.css';
+                    document.head.appendChild(link);
+                }
+                
+                // Inicializar cualquier JS necesario para el formulario
+                inicializarFormularioRegistro();
+            })
+            .catch(error => {
+                console.error('Error cargando el registro:', error);
+                document.getElementById('contenido-dinamico').innerHTML = 
+                    `<div class="error-mensaje">Error al cargar el registro: ${error.message}</div>
+                    <button onclick="cargarVista('${window.vistaAnterior}')" class="btn-volver">
+                        <i class="fas fa-arrow-left"></i> Volver al listado
+                    </button>`;
+            });
+    }
+
+    // Función para inicializar el formulario del registro
+    function inicializarFormularioRegistro() {
+        // Capturar formularios para envío AJAX
+        const formularios = document.querySelectorAll('#contenido-dinamico form');
+        
+        formularios.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Mostrar indicador de carga
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn ? submitBtn.innerHTML : '';
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+                }
+                
+                // Enviar formulario con AJAX
+                fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.text())
+                .then(data => {
+                    try {
+                        // Intentar parsear como JSON
+                        const jsonData = JSON.parse(data);
+                        if (jsonData.success) {
+                            alert('Registro actualizado correctamente');
+                            cargarVista(window.vistaAnterior || 'vista_registros.php');
+                        } else {
+                            alert('Error: ' + (jsonData.message || 'No se pudo actualizar el registro'));
+                        }
+                    } catch (e) {
+                        // Si no es JSON, mostrar el texto devuelto
+                        if (data.includes('correctamente')) {
+                            alert('Registro actualizado correctamente');
+                            cargarVista(window.vistaAnterior || 'vista_registros.php');
+                        } else {
+                            alert('Error: ' + data);
+                        }
+                    }
+                    
+                    // Restaurar botón
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error de conexión. Intenta nuevamente.');
+                    
+                    // Restaurar botón
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }
+                });
+            });
+        });
+    }
 
     <!-- Añade esto al final antes de </body> -->
-    <script>
     document.addEventListener('DOMContentLoaded', function() {
         console.log('Verificando elementos del chat:');
         
