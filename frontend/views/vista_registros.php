@@ -13,6 +13,67 @@ function formatearTelefonoWhatsApp($telefono) {
     
     return $numero;
 }
+
+/**
+ * Obtiene el mensaje predefinido para WhatsApp según el estado del registro
+ */
+function obtenerMensajeWhatsApp($estado, $nombre, $apellido, $conector = 'Conexión') {
+    $nombreCompleto = trim($nombre . ' ' . $apellido);
+    
+    // Mensajes predefinidos por estado
+    $mensajes = [
+        // Contacto Inicial
+        'Primer contacto' => "Hola {$nombreCompleto}, te contactamos de Iglesia en Casa. Gracias por compartir tus datos con nosotros. ¿Te gustaría recibir más información sobre nuestras actividades?",
+        
+        'Conectado' => "Hola {$nombreCompleto}, te saludamos de Iglesia en Casa. Nos alegra haber conectado contigo. ¿Podemos ayudarte con algo específico?",
+        
+        'Primer intento' => "Buen día {$nombreCompleto}, Te Habla {$conector} de parte de los Pastores Javier Aponte y Paola Palacios; Queremos reconfirmar una invitación a un desayuno para comentarte a cerca de nuestra vision, y propósito; comentarte de nuestras reuniones semanales: Domingo 8:00am y 10:30am, Miércoles 6:45pm. Tambien tenemos reuniones de jóvenes los sábados a las 2:00pm y gozamos de nuestro estudio Bíblico llamado Crecer. Adicional estamos conectados con Rhema, Institución Bíblica mundial, donde podrás conocer mas la palabra, con los cursos de CEBCO. Queremos lo mejor para ti. Un abrazo, buen dia.",
+        
+        'Segundo Intento' => "Hola {$nombreCompleto}, ¿cómo estás? Te escribo nuevamente desde Iglesia en Casa. Nos gustaría saber si te interesa conocer más sobre nuestras actividades.",
+        
+        'Tercero intento' => "Hola {$nombreCompleto}, ¿cómo has estado? Te contactamos nuevamente desde Iglesia en Casa. Nos encantaría contar contigo en nuestro próximo evento.",
+        
+        'No interesado' => "Hola {$nombreCompleto}, respetamos tu decisión de no participar por ahora en Iglesia en Casa. Si en algún momento deseas volver a conectar, estaremos aquí.",
+        
+        // Desayunos
+        'No confirma desayuno' => "Hola {$nombreCompleto}, te escribimos de Iglesia en Casa. Queremos invitarte personalmente a nuestro próximo desayuno de conexión. ¿Te gustaría asistir?",
+        
+        'Confirmado a Desayuno' => "Hola {$nombreCompleto}, gracias por confirmar tu asistencia al desayuno de Iglesia en Casa. Te esperamos este domingo a las 9:00 AM. ¿Necesitas indicaciones para llegar?",
+        
+        'Desayuno Asistido' => "Hola {$nombreCompleto}, fue un gusto tenerte en nuestro desayuno. Nos encantaría seguir viéndote en Iglesia en Casa. ¿Te gustaría conocer nuestras próximas actividades?",
+        
+        // Miembros
+        'Miembro activo' => "Hola {$nombreCompleto}, te saludamos desde Iglesia en Casa. Queremos recordarte sobre nuestra próxima actividad este domingo. ¡Contamos contigo!",
+        
+        'Miembro inactivo' => "Hola {$nombreCompleto}, hace tiempo que no te vemos en Iglesia en Casa. Nos gustaría saber cómo estás y si podemos apoyarte en algo.",
+        
+        'Miembro ausente' => "Hola {$nombreCompleto}, te extrañamos en Iglesia en Casa. ¿Cómo has estado? Nos gustaría reconectar contigo y saber cómo podemos servirte.",
+        
+        'Congregado sin desayuno' => "Hola {$nombreCompleto}, nos da gusto verte en los servicios de Iglesia en Casa. Te invitamos a nuestro próximo desayuno de conexión. ¿Te gustaría participar?",
+        
+        'Visitante' => "Hola {$nombreCompleto}, gracias por visitar Iglesia en Casa. Fue un gusto conocerte. ¿Te gustaría recibir información sobre nuestras próximas actividades?",
+        
+        // Líderes
+        'Lider Activo' => "Hola {$nombreCompleto}, te escribo para coordinar los detalles de nuestro próximo evento en Iglesia en Casa. ¿Podemos agendar una llamada para discutir los preparativos?",
+        
+        'Lider inactivo' => "Hola {$nombreCompleto}, te escribo desde Iglesia en Casa. Extrañamos tu liderazgo y participación. ¿Podemos conversar sobre tu regreso al equipo?",
+        
+        'Lider ausente' => "Hola {$nombreCompleto}, desde Iglesia en Casa nos gustaría reconectar contigo. Tu experiencia y liderazgo son valiosos para nosotros. ¿Cómo has estado?",
+        
+        // Reconexión
+        'Reconectado' => "Hola {$nombreCompleto}, qué alegría reconectar contigo en Iglesia en Casa. ¿Te gustaría participar en nuestras próximas actividades?",
+        
+        'Intento de reconexión' => "Hola {$nombreCompleto}, te escribimos desde Iglesia en Casa. Nos gustaría reconectar contigo y saber cómo has estado últimamente.",
+        
+        // Otros
+        'Por Validar Estado' => "Hola {$nombreCompleto}, te contactamos desde Iglesia en Casa. Nos gustaría conocerte mejor y entender cómo podemos servirte."
+    ];
+    
+    // Retornar el mensaje correspondiente al estado o un mensaje genérico si no está definido
+    return isset($mensajes[$estado]) 
+        ? $mensajes[$estado] 
+        : "Hola {$nombreCompleto}, te contacto desde Iglesia en Casa. ¿Cómo estás?";
+}
 ?>
 
 <link rel="stylesheet" href="../css/styles_vista_registros.css">
@@ -254,10 +315,20 @@ try {
                             
                             <!-- Añadir botón de WhatsApp si existe teléfono -->
                             <?php if (!empty($registro['telefono'])): ?>
-                                <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>&text=Hola%20<?php echo urlencode($registro['nombre_persona'] . ' ' . $registro['apellido_persona']); ?>,%20te%20contacto%20desde%20Conexi%C3%B3n" 
+                                <?php 
+                                // Obtener el mensaje personalizado según el estado
+                                $mensaje = obtenerMensajeWhatsApp(
+                                    trim($registro['estado']),
+                                    $registro['nombre_persona'],
+                                    $registro['apellido_persona'],
+                                    $registro['nombre_conector'] ?: 'Conexión' // Pasar el nombre del conector o 'Conexión' si está vacío
+                                );
+                                ?>
+                                <a href="https://api.whatsapp.com/send?phone=<?php echo formatearTelefonoWhatsApp($registro['telefono']); ?>&text=<?php echo urlencode($mensaje); ?>" 
                                    target="_blank" 
                                    class="btn-accion btn-whatsapp" 
-                                   title="Contactar por WhatsApp">
+                                   title="Contactar por WhatsApp"
+                                   data-mensaje="<?php echo htmlspecialchars($mensaje); ?>">
                                     <i class="fab fa-whatsapp"></i>
                                 </a>
                             <?php endif; ?>
@@ -524,6 +595,51 @@ document.addEventListener('DOMContentLoaded', function() {
             if (title) {
                 alert(title);
             }
+        });
+    });
+});
+</script>
+
+<script>
+// Vista previa de mensaje WhatsApp
+document.addEventListener('DOMContentLoaded', function() {
+    // Crear elemento para mostrar la vista previa
+    const previewElement = document.createElement('div');
+    previewElement.className = 'whatsapp-preview';
+    previewElement.style.display = 'none';
+    previewElement.style.position = 'absolute';
+    previewElement.style.background = '#DCF8C6';
+    previewElement.style.border = '1px solid #4CAF50';
+    previewElement.style.borderRadius = '8px';
+    previewElement.style.padding = '10px 15px';
+    previewElement.style.maxWidth = '300px';
+    previewElement.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+    previewElement.style.zIndex = '1000';
+    previewElement.style.fontSize = '14px';
+    previewElement.style.color = '#303030';
+    document.body.appendChild(previewElement);
+    
+    // Para cada botón de WhatsApp
+    document.querySelectorAll('.btn-whatsapp').forEach(btn => {
+        // Mostrar vista previa al pasar el ratón
+        btn.addEventListener('mouseenter', function(e) {
+            const mensaje = this.getAttribute('data-mensaje');
+            if (mensaje) {
+                previewElement.textContent = mensaje;
+                
+                // Posicionar cerca del botón
+                const rect = this.getBoundingClientRect();
+                previewElement.style.left = rect.right + 10 + 'px';
+                previewElement.style.top = rect.top + window.scrollY + 'px';
+                
+                // Mostrar
+                previewElement.style.display = 'block';
+            }
+        });
+        
+        // Ocultar al quitar el ratón
+        btn.addEventListener('mouseleave', function() {
+            previewElement.style.display = 'none';
         });
     });
 });
