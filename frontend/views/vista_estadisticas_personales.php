@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/../../backend/config/database.php';
+?>
+<!-- Incluir Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<?php
 try {
     $db = new Database();
     $conn = $db->connect();
@@ -63,7 +67,7 @@ try {
 <div class="estadisticas-personales-container">
   <h2>Estadísticas Personales por Conector</h2>
   
-  <form id="filtro-conector">
+  <form id="filtro-conector" style="position:relative;">
     <label for="conector">Conector:</label>
     <select id="conector">
       <option value="">-- Selecciona --</option>
@@ -91,7 +95,6 @@ try {
         data-estados='<?= json_encode($datosConectores) ?>'></canvas>
 </div>
 
-<!-- No necesitamos definir variables globales, usamos atributos de datos -->
 <script>
 // Este script se ejecutará inmediatamente
 (function() {
@@ -123,4 +126,109 @@ try {
     document.addEventListener('DOMContentLoaded', inicializar);
   }
 })();
+</script>
+
+<script>
+// Script integrado que maneja el cambio de conector sin depender de archivos externos
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Inicializando selector de conector (script interno)');
+    
+    // Configurar el selector de conector
+    const select = document.getElementById('conector');
+    if (select) {
+        select.addEventListener('change', function() {
+            const valor = this.value;
+            if (!valor) return;
+            
+            console.log('Conector seleccionado:', valor);
+            
+            // Mostrar indicador de carga
+            const contenedor = document.querySelector('.estadisticas-personales-container');
+            if (contenedor) {
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'loading-overlay';
+                loadingDiv.innerHTML = '<div class="spinner">Cargando datos...</div>';
+                loadingDiv.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,0.7);display:flex;justify-content:center;align-items:center;z-index:1000;';
+                contenedor.style.position = 'relative';
+                contenedor.appendChild(loadingDiv);
+            }
+            
+            // Navegar a la misma vista con el parámetro conector
+            const timestamp = new Date().getTime();
+            const url = `vista_estadisticas_personales.php?conector=${encodeURIComponent(valor)}&t=${timestamp}`;
+            
+            // Intentar múltiples métodos para asegurar que funcione en cualquier contexto
+            if (typeof window.parent.cargarVista === 'function') {
+                console.log('Usando window.parent.cargarVista()');
+                window.parent.cargarVista(url);
+            } else if (typeof window.cargarVista === 'function') {
+                console.log('Usando window.cargarVista()');
+                window.cargarVista(url);
+            } else {
+                console.log('Usando window.location (método directo)');
+                if (window.parent !== window) {
+                    // Estamos en un iframe
+                    window.parent.location.href = `admin.php?vista=${url}`;
+                } else {
+                    // Navegación directa
+                    window.location.href = `?vista=${url}`;
+                }
+            }
+        });
+    } else {
+        console.error('No se encontró el selector de conector');
+    }
+    
+    // Inicializar el gráfico si está disponible Chart.js
+    if (typeof Chart === 'function') {
+        const canvas = document.getElementById('graficoEstadosPersonal');
+        if (canvas) {
+            // Extraer datos del canvas
+            const conector = canvas.getAttribute('data-conector') || '';
+            const datosStr = canvas.getAttribute('data-estados') || '{}';
+            
+            try {
+                const datos = JSON.parse(datosStr);
+                const labels = Object.keys(datos);
+                const values = Object.values(datos);
+                
+                if (labels.length > 0) {
+                    // Crear el gráfico
+                    const ctx = canvas.getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: `Estados para ${conector}`,
+                                data: values,
+                                backgroundColor: [
+                                    '#3498db', '#2ecc71', '#e74c3c', '#f39c12', 
+                                    '#9b59b6', '#1abc9c', '#34495e', '#d35400'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: `Estadísticas de ${conector}`,
+                                    font: { size: 16 }
+                                }
+                            }
+                        }
+                    });
+                    console.log('Gráfico inicializado correctamente');
+                } else {
+                    console.log('No hay datos para mostrar en el gráfico');
+                }
+            } catch (e) {
+                console.error('Error al procesar datos del gráfico:', e);
+            }
+        }
+    } else {
+        console.error('Chart.js no está disponible. Asegúrate de incluirlo en la página.');
+    }
+});
 </script>
