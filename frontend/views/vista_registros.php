@@ -27,7 +27,19 @@ function obtenerMensajeWhatsApp($estado, $nombre, $apellido, $conector = 'Conexi
         
         'Conectado' => "Hola {$nombreCompleto}, te saludamos de Iglesia en Casa. Nos alegra haber conectado contigo. ¿Podemos ayudarte con algo específico?",
         
-        'Primer intento' => "Buen día {$nombreCompleto}, Te Habla {$conector} de parte de los Pastores Javier Aponte y Paola Palacios; Queremos reconfirmar una invitación a un desayuno para comentarte a cerca de nuestra vision, y propósito; comentarte de nuestras reuniones semanales: Domingo 8:00am y 10:30am, Miércoles 6:45pm. Tambien tenemos reuniones de jóvenes los sábados a las 2:00pm y gozamos de nuestro estudio Bíblico llamado Crecer. Adicional estamos conectados con Rhema, Institución Bíblica mundial, donde podrás conocer mas la palabra, con los cursos de CEBCO. Queremos lo mejor para ti. Un abrazo, buen dia.",
+        'Primer intento' => "Te saludo en nombre de nuestros Pastores Javier Aponte y Paola Palacios. Mi nombre es {$conector}, quien te dio la bienvenida el día de enero que asististe por primera vez a nuestra Comunidad Cristiana En Casa, estamos muy felices de que ahora hagas parte de nuestra familia y queremos contarte un poco acerca de nosotros. 
+
+Nos apasiona servir a cada persona (niño, joven, hombre, mujer, adulto mayor); nuestro anhelo es contribuir a que mejore tu vida a través de la Palabra de Dios y sobre todo fomentar el crecimiento y restauración en cada área.
+
+Nuestra comunidad tiene servicios para fortalecer las familias, parejas y matrimonios. Programas radiales y presenciales para los jóvenes, programas de TV para los niños (también presenciales), charlas de profesionales enfocadas al emprendimiento de negocios con principios, entre otras cosas.
+
+Nos encantaría poder hablar contigo y orar por ti, por favor cuéntame si te puedo llamar hoy y a qué hora te parece bien. 
+ 
+¡Estaré muy pendiente de tu respuesta; ten un día bendecido! 🎉
+ 
+Pd. Agrega este número ‪+57 302 322 8906‬ (El WhatsApp oficial de nuestra Iglesia en·casa) a tu celular en tus contactos para que siempre estés al tanto de lo que hacemos.
+
+También queremos compartirte el recuerdo de tu primer día En•Casa",
         
         'Segundo Intento' => "Hola {$nombreCompleto}, ¿cómo estás? Te escribo nuevamente desde Iglesia en Casa. Nos gustaría saber si te interesa conocer más sobre nuestras actividades.",
         
@@ -355,6 +367,17 @@ try {
                                    data-mensaje="<?php echo htmlspecialchars($mensaje); ?>">
                                     <i class="fab fa-whatsapp"></i>
                                 </a>
+                                
+                                <!-- Nuevo botón para descargar foto si tiene foto -->
+                                <?php if (!empty($registro['foto'])): ?>
+                                    <a href="../img/<?php echo htmlspecialchars($registro['foto']); ?>" 
+                                       download="foto_<?php echo htmlspecialchars($registro['nombre_persona'] . '_' . $registro['apellido_persona']); ?>.jpg"
+                                       class="btn-accion btn-descargar-foto" 
+                                       title="Descargar foto para adjuntar"
+                                       aria-label="Descargar foto de <?php echo htmlspecialchars($registro['nombre_persona']); ?>">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>
                     </td>
@@ -669,6 +692,45 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<script>
+// Resaltar botones de descarga de foto para "Primer intento"
+document.addEventListener('DOMContentLoaded', function() {
+    // Para cada fila de la tabla
+    document.querySelectorAll('tr[data-id]').forEach(row => {
+        // Obtener el estado actual
+        const estadoCell = row.querySelector('td.celda-estado select');
+        if (estadoCell && estadoCell.value === 'Primer intento') {
+            // Añadir clase especial para resaltar la foto descargable
+            row.classList.add('primer-intento-badge');
+        }
+    });
+    
+    // Añadir feedback al descargar foto
+    document.querySelectorAll('.btn-descargar-foto').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Mostrar tooltip de confirmación
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip-download';
+            tooltip.textContent = '¡Foto descargada!';
+            tooltip.style.cssText = 'position:absolute;background:#4CAF50;color:white;padding:5px 10px;border-radius:3px;' + 
+                                   'bottom:100%;left:50%;transform:translateX(-50%);font-size:12px;white-space:nowrap;' +
+                                   'margin-bottom:8px;opacity:0;transition:opacity 0.3s ease;z-index:100;';
+            
+            this.style.position = 'relative';
+            this.appendChild(tooltip);
+            
+            // Mostrar y ocultar tooltip
+            setTimeout(() => {
+                tooltip.style.opacity = '1';
+                setTimeout(() => {
+                    tooltip.style.opacity = '0';
+                    setTimeout(() => tooltip.remove(), 300);
+                }, 1500);
+            }, 100);
+        });
+    });
+});
+</script>
 
 <style>
 /* Estilos para el historial de observaciones */
@@ -775,6 +837,42 @@ document.addEventListener('DOMContentLoaded', function() {
 .btn-whatsapp { /* WhatsApp */
     background-color: #e0f7fa;
     color: #00796b;
+}
+
+.btn-descargar-foto { /* Descargar foto */
+    background-color: #f0f4c3;
+    color: #827717;
+}
+
+/* Estilo para el botón de descargar foto */
+.btn-descargar-foto {
+    background-color: #e1bee7 !important;
+    color: #6a1b9a !important;
+    position: relative;
+}
+
+.btn-descargar-foto:hover {
+    background-color: #d1c4e9 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(106, 27, 154, 0.3);
+}
+
+/* Badge indicador para "Primer intento" */
+.primer-intento-badge .btn-descargar-foto::after {
+    content: "!";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #f44336;
+    color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
 
 /* Tamaño fijo para la columna de acciones */

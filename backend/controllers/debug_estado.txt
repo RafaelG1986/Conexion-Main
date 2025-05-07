@@ -35,3 +35,5 @@
 2025-05-07 23:47:15 - Actualizando estado: 23 - Etapa 1 reconexion (1 mes)
 2025-05-07 23:47:21 - Actualizando estado: 24 - Etapa 1 reconexion (1 mes)
 2025-05-07 23:51:09 - Actualizando estado: 27 - No interesado
+2025-05-08 00:05:13 - Actualizando estado: 56 - Primer intento
+2025-05-08 00:10:07 - Actualizando estado: 56 - Lider Activo
