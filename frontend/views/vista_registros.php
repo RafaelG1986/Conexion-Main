@@ -65,6 +65,12 @@ function obtenerMensajeWhatsApp($estado, $nombre, $apellido, $conector = 'Conexi
         
         'Intento de reconexión' => "Hola {$nombreCompleto}, te escribimos desde Iglesia en Casa. Nos gustaría reconectar contigo y saber cómo has estado últimamente.",
         
+        'Etapa 1 reconexion (1 mes)' => "Hola {$nombreCompleto}, ha pasado un mes desde nuestro último contacto. Nos gustaría saber cómo has estado y si podemos apoyarte en algo. ¡Esperamos verte pronto en Iglesia en Casa!",
+        
+        'Etapa 2 reconexion (3 mes)' => "Hola {$nombreCompleto}, han pasado tres meses y te extrañamos en nuestra comunidad de Iglesia en Casa. ¿Podríamos reunirnos para conversar? Nos encantaría reconectar contigo.",
+        
+        'Etapa 3 reconexion final (6 mes)' => "Hola {$nombreCompleto}, han pasado seis meses desde nuestro último contacto. Te seguimos teniendo presente y las puertas de Iglesia en Casa siempre estarán abiertas para ti. Nos gustaría saber de ti.",
+        
         // Otros
         'Por Validar Estado' => "Hola {$nombreCompleto}, te contactamos desde Iglesia en Casa. Nos gustaría conocerte mejor y entender cómo podemos servirte."
     ];
@@ -90,7 +96,7 @@ $estados = [
     'No interesado',
     
     // Desayunos
-    'No confirma desayuno', // Modificado (antes era "No confirmado a desayuno")
+    'No confirma desayuno',
     'Confirmado a Desayuno',
     'Desayuno Asistido',
     
@@ -107,8 +113,11 @@ $estados = [
     'Lider ausente',
     
     // Reconexión
-    'Reconectado',             // Nuevo
-    'Intento de reconexión',   // Nuevo
+    'Reconectado',
+    'Intento de reconexión',
+    'Etapa 1 reconexion (1 mes)', // NUEVO
+    'Etapa 2 reconexion (3 mes)', // NUEVO
+    'Etapa 3 reconexion final (6 mes)', // NUEVO
     
     // Otros
     'Por Validar Estado'
@@ -144,6 +153,9 @@ $colores = [
     // Reconexión
     'Reconectado' => 'background:#c8e6c9; color:#2e7d32;',          // Nuevo
     'Intento de reconexión' => 'background:#dcedc8; color:#33691e;', // Nuevo
+    'Etapa 1 reconexion (1 mes)' => 'background:#fff9c4; color:#f57f17;', // NUEVO - Amarillo
+    'Etapa 2 reconexion (3 mes)' => 'background:#ffe0b2; color:#e65100;', // NUEVO - Naranja
+    'Etapa 3 reconexion final (6 mes)' => 'background:#ffcdd2; color:#c62828;', // NUEVO - Rojo
     
     // Otros
     'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;'
@@ -259,7 +271,13 @@ try {
                             </optgroup>
                             
                             <optgroup label="Reconexión">
-                                <?php foreach (['Reconectado', 'Intento de reconexión'] as $estadoOpcion): ?>
+                                <?php foreach ([
+                                    'Reconectado', 
+                                    'Intento de reconexión',
+                                    'Etapa 1 reconexion (1 mes)', // NUEVO
+                                    'Etapa 2 reconexion (3 mes)', // NUEVO
+                                    'Etapa 3 reconexion final (6 mes)' // NUEVO
+                                ] as $estadoOpcion): ?>
                                     <?php $estadoClase = str_replace(' ', '', $estadoOpcion); ?>
                                     <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
                                         class="estado-<?php echo $estadoClase; ?>"

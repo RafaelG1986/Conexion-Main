@@ -30,3 +30,8 @@
 2025-05-05 03:51:20 - Actualizando estado: 50 - Primer contacto
 2025-05-05 04:21:28 - Actualizando estado: 32 - No confirma desayuno
 2025-05-05 04:24:53 - Actualizando estado: 46 - No confirma desayuno
+2025-05-07 23:46:39 - Actualizando estado: 29 - Etapa 1 reconexion (1 mes)
+2025-05-07 23:46:56 - Actualizando estado: 28 - Etapa 1 reconexion (1 mes)
+2025-05-07 23:47:15 - Actualizando estado: 23 - Etapa 1 reconexion (1 mes)
+2025-05-07 23:47:21 - Actualizando estado: 24 - Etapa 1 reconexion (1 mes)
+2025-05-07 23:51:09 - Actualizando estado: 27 - No interesado

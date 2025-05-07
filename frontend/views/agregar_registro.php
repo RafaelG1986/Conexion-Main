@@ -31,7 +31,10 @@ $estadosPorCategoria = [
     ],
     'Reconexión' => [
         'Reconectado' => 'background:#c8e6c9; color:#2e7d32;',
-        'Intento de reconexión' => 'background:#dcedc8; color:#33691e;'
+        'Intento de reconexión' => 'background:#dcedc8; color:#33691e;',
+        'Etapa 1 reconexion (1 mes)' => 'background:#dcedc8; color:#33691e;',
+        'Etapa 2 reconexion (3 mes)' => 'background:#dcedc8; color:#33691e;',
+        'Etapa 3 reconexion final (6 mes)' => 'background:#dcedc8; color:#33691e;'
     ],
     'Otros' => [
         'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;'

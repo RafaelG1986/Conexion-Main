@@ -77,6 +77,9 @@ $estados = [
     // Reconexión
     'Reconectado',             // Nuevo
     'Intento de reconexión',   // Nuevo
+    'Etapa 1 reconexion (1 mes)', // Nuevo
+    'Etapa 2 reconexion (3 mes)', // Nuevo
+    'Etapa 3 reconexion final (6 mes)', // Nuevo
     
     // Otros
     'Por Validar Estado'
@@ -111,6 +114,9 @@ $colores = [
     // Reconexión
     'Reconectado' => 'background:#c8e6c9; color:#2e7d32;',          // Nuevo
     'Intento de reconexión' => 'background:#dcedc8; color:#33691e;', // Nuevo
+    'Etapa 1 reconexion (1 mes)' => 'background:#dcedc8; color:#33691e;', // Nuevo
+    'Etapa 2 reconexion (3 mes)' => 'background:#dcedc8; color:#33691e;', // Nuevo
+    'Etapa 3 reconexion final (6 mes)' => 'background:#dcedc8; color:#33691e;', // Nuevo
     
     // Otros
     'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;',
@@ -294,7 +300,7 @@ if ($ajax) {
                             </optgroup>
 
                             <optgroup label="Reconexión">
-                                <?php foreach (['Reconectado', 'Intento de reconexión'] as $est): ?>
+                                <?php foreach (['Reconectado', 'Intento de reconexión', 'Etapa 1 reconexion (1 mes)', 'Etapa 2 reconexion (3 mes)', 'Etapa 3 reconexion final (6 mes)'] as $est): ?>
                                     <option value="<?php echo htmlspecialchars($est); ?>" 
                                             <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
                                             style="<?php echo $colores[$est]; ?>">
@@ -599,7 +605,7 @@ if ($ajax) {
                                 </optgroup>
 
                                 <optgroup label="Reconexión">
-                                    <?php foreach (['Reconectado', 'Intento de reconexión'] as $est): ?>
+                                    <?php foreach (['Reconectado', 'Intento de reconexión', 'Etapa 1 reconexion (1 mes)', 'Etapa 2 reconexion (3 mes)', 'Etapa 3 reconexion final (6 mes)'] as $est): ?>
                                         <option value="<?php echo htmlspecialchars($est); ?>" 
                                                 <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
                                                 style="<?php echo $colores[$est]; ?>">

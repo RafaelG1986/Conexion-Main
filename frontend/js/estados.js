@@ -2,16 +2,87 @@
  * Configuración de colores para cada estado
  */
 const estadoColores = {
+    // Contacto Inicial
     'Primer contacto':          {bg:'#ffcccc', color:'#a00'},
     'Conectado':                {bg:'#ffd6cc', color:'#b36b00'},
-    'No confirmado a desayuno': {bg:'#ffe5cc', color:'#b36b00'},
+    'Primer intento':           {bg:'#f5e6ff', color:'#5a00b3'},
+    'Segundo Intento':          {bg:'#e6ccff', color:'#5a00b3'},
+    'Tercero intento':          {bg:'#d9b3ff', color:'#5a00b3'},
+    'No interesado':            {bg:'#ffdddd', color:'#a00'},
+    
+    // Desayunos
+    'No confirma desayuno':     {bg:'#ffe5cc', color:'#b36b00'},
+    'No confirmado a desayuno': {bg:'#ffe5cc', color:'#b36b00'}, // Mantener para compatibilidad
     'Confirmado a Desayuno':    {bg:'#cce0ff', color:'#00509e'},
     'Desayuno Asistido':        {bg:'#cce6ff', color:'#00509e'},
+    
+    // Miembros
+    'Miembro activo':           {bg:'#d9f2d9', color:'#006600'},
+    'Miembro inactivo':         {bg:'#ffebcc', color:'#994d00'},
+    'Miembro ausente':          {bg:'#ffe6e6', color:'#cc0000'},
     'Congregado sin desayuno':  {bg:'#d4edda', color:'#155724'},
     'Visitante':                {bg:'#fff', color:'#222'},
-    'No interesado':            {bg:'#ffdddd', color:'#a00'},
+    
+    // Líderes
+    'Lider Activo':             {bg:'#cce0ff', color:'#004080'},
+    'Lider inactivo':           {bg:'#e6e6e6', color:'#666666'},
+    'Lider ausente':            {bg:'#ffe6ea', color:'#990033'},
+    
+    // Reconexión
+    'Reconectado':              {bg:'#c8e6c9', color:'#2e7d32'},
+    'Intento de reconexión':    {bg:'#dcedc8', color:'#33691e'},
+    'Etapa 1 reconexion (1 mes)': {bg:'#fff9c4', color:'#f57f17'}, // NUEVO - Amarillo
+    'Etapa 2 reconexion (3 mes)': {bg:'#ffe0b2', color:'#e65100'}, // NUEVO - Naranja
+    'Etapa 3 reconexion final (6 mes)': {bg:'#ffcdd2', color:'#c62828'}, // NUEVO - Rojo
+    
+    // Otros
     'Por Validar Estado':       {bg:'#ffe5b4', color:'#b36b00'}
 };
+
+/**
+ * Lista completa de estados agrupados por categoría
+ * Útil para inicializar selectores u otras funcionalidades
+ */
+const gruposEstados = {
+    'Contacto Inicial': [
+        'Primer contacto',
+        'Conectado',
+        'Primer intento',
+        'Segundo Intento',
+        'Tercero intento',
+        'No interesado'
+    ],
+    'Desayunos': [
+        'No confirma desayuno',
+        'Confirmado a Desayuno',
+        'Desayuno Asistido'
+    ],
+    'Miembros': [
+        'Miembro activo',
+        'Miembro inactivo',
+        'Miembro ausente',
+        'Congregado sin desayuno',
+        'Visitante'
+    ],
+    'Líderes': [
+        'Lider Activo',
+        'Lider inactivo',
+        'Lider ausente'
+    ],
+    'Reconexión': [
+        'Reconectado',
+        'Intento de reconexión',
+        'Etapa 1 reconexion (1 mes)',
+        'Etapa 2 reconexion (3 mes)',
+        'Etapa 3 reconexion final (6 mes)'
+    ],
+    'Otros': [
+        'Por Validar Estado'
+    ]
+};
+
+// Crear un array plano con todos los estados para facilitar validaciones
+const todosEstados = Object.values(gruposEstados).flat();
 
 /**
  * Función principal para cambiar el estado de un registro
@@ -148,3 +219,6 @@ document.addEventListener('DOMContentLoaded', inicializarEstados);
 window.actualizarEstado = actualizarEstado;
 window.cambiarEstado = cambiarEstado;
 window.setEstadoColor = setEstadoColor;
+window.estadoColores = estadoColores;
+window.gruposEstados = gruposEstados;
+window.todosEstados = todosEstados;
