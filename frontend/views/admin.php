@@ -35,6 +35,8 @@ $_SESSION['user_id'] = $user['id']; // Para compatibilidad con el chat
     <script src="../js/informes.js"></script>
     <link rel="stylesheet" href="../css/styles_chat.css">
     <script src="../js/chat.js"></script>
+    <link rel="stylesheet" href="../css/foto_styles.css">
+    <script src="../js/foto_maximizada.js"></script>
 </head>
 <body>
     <div id="debug-info" style="position:fixed; bottom:0; right:0; background:rgba(0,0,0,0.7); color:white; padding:10px; z-index:9999;"></div>

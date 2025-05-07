@@ -184,11 +184,17 @@ try {
                 <?php endif; ?>
                 <?php foreach ($registros as $registro): ?>
                 <tr data-id="<?php echo $registro['id']; ?>">
-                    <td>
+                    <td class="text-center">
                         <?php if (!empty($registro['foto'])): ?>
-                            <img src="../img/<?php echo htmlspecialchars($registro['foto']); ?>" alt="Foto">
+                            <img src="../img/<?php echo htmlspecialchars($registro['foto']); ?>" 
+                                 alt="Foto de <?php echo htmlspecialchars($registro['nombre_persona']); ?>" 
+                                 class="foto-perfil-mini" 
+                                 onclick="mostrarFotoMaximizada('../img/<?php echo htmlspecialchars($registro['foto']); ?>', '<?php echo htmlspecialchars($registro['nombre_persona'] . ' ' . $registro['apellido_persona']); ?>')"
+                                 title="Click para ampliar">
                         <?php else: ?>
-                            Sin foto
+                            <div class="sin-foto">
+                                <i class="fas fa-user"></i>
+                            </div>
                         <?php endif; ?>
                     </td>
                     <td><?php echo htmlspecialchars($registro['nombre_persona']); ?></td>
@@ -645,6 +651,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+
 <style>
 /* Estilos para el historial de observaciones */
 .observaciones-historial {
@@ -767,5 +774,71 @@ document.addEventListener('DOMContentLoaded', function() {
     .btn-accion {
         margin-bottom: 5px;
     }
+}
+/* Estilos para el modal de foto maximizada */
+.foto-celda {
+    text-align: center;
+}
+
+.foto-perfil-mini {
+    max-width: 60px;
+    max-height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.foto-perfil-mini:hover {
+    transform: scale(1.1);
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}
+
+.sin-foto {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #757575;
+}
+
+/* Estilo base del modal (si no existe) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.close {
+    color: white;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1060;
+}
+
+.close:hover {
+    color: #ccc;
 }
 </style>
