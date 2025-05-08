@@ -45,6 +45,11 @@ $estadosPorCategoria = [
         'Delegado a acompañante' => 'background:#e1bee7; color:#6a1b9a;',
         'Datos no autorizados' => 'background:#ffcdd2; color:#d32f2f;',
         'Datos incorrectos' => 'background:#f8bbd0; color:#c2185b;'               // NUEVO
+    ],
+    'Ministerios' => [
+        'Vencedores Kids' => 'background:#ffeb3b; color:#8c6d00;',
+        'Legado' => 'background:#dcedc8; color:#558b2f;',
+        'Teens Legado' => 'background:#c8e6c9; color:#2e7d32;',
     ]
 ];
 

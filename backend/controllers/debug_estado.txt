@@ -52,3 +52,7 @@
 2025-05-08 17:24:24 - Actualizando estado: 47 - Confirmado a Desayuno
 2025-05-08 17:30:41 - Actualizando estado: 26 - Por Validar Estado
 2025-05-08 17:31:08 - Actualizando estado: 26 - Datos incorrectos
+2025-05-08 17:53:36 - Actualizando estado: 19 - Vencedores Kids
+2025-05-08 20:34:30 - Actualizando estado: 57 - Primer intento
+2025-05-08 20:35:58 - Actualizando estado: 57 - Primer contacto
+2025-05-08 21:56:44 - Actualizando estado: 30 - Intento de reconexión

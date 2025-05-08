@@ -107,3 +107,11 @@ Llamada recibida: {"id":"26","estado":"Por Validar Estado"}
 ID: 26, Estado: Por Validar Estado, Filas: 1
 Llamada recibida: {"id":"26","estado":"Datos incorrectos"}
 ID: 26, Estado: Datos incorrectos, Filas: 1
+Llamada recibida: {"id":"19","estado":"Vencedores Kids"}
+ID: 19, Estado: Vencedores Kids, Filas: 1
+Llamada recibida: {"id":"57","estado":"Primer intento"}
+ID: 57, Estado: Primer intento, Filas: 1
+Llamada recibida: {"id":"57","estado":"Primer contacto"}
+ID: 57, Estado: Primer contacto, Filas: 1
+Llamada recibida: {"id":"30","estado":"Intento de reconexi\u00f3n"}
+ID: 30, Estado: Intento de reconexión, Filas: 1

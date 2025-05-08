@@ -114,6 +114,13 @@ También queremos compartirte el recuerdo de tu primer día En•Casa",
         
         'Etapa 3 reconexion final (6 mes)' => "Hola {$nombreCompleto}, han pasado seis meses desde nuestro último contacto. Te seguimos teniendo presente y las puertas de Iglesia en Casa siempre estarán abiertas para ti. Nos gustaría saber de ti.",
         
+        // Ministerios específicos
+        'Vencedores Kids' => "Hola {$nombreCompleto}, te contactamos de Iglesia en Casa. Queremos invitar a tus hijos al grupo Vencedores Kids este fin de semana. ¿Te gustaría recibir más información?",
+        
+        'Legado' => "Hola {$nombreCompleto}, te contactamos de Iglesia en Casa. Queremos invitarte a nuestro grupo Legado. ¿Te gustaría recibir más información sobre nuestras próximas reuniones?",
+        
+        'Teens Legado' => "Hola {$nombreCompleto}, te contactamos de Iglesia en Casa. Queremos invitar a tus adolescentes al grupo Teens Legado. ¿Te gustaría recibir más información sobre nuestras actividades?",
+        
         // Otros
         'Por Validar Estado' => "Hola {$nombreCompleto}, te contactamos desde Iglesia en Casa. Nos gustaría conocerte mejor y entender cómo podemos servirte.",
         
@@ -167,6 +174,11 @@ $estados = [
     'Etapa 2 reconexion (3 mes)', 
     'Etapa 3 reconexion final (6 mes)', 
     
+    // Ministerios
+    'Vencedores Kids',
+    'Legado',
+    'Teens Legado',
+    
     // Otros
     'Por Validar Estado',
     'Nulo',
@@ -211,6 +223,11 @@ $colores = [
     'Etapa 1 reconexion (1 mes)' => 'background:#fff9c4; color:#f57f17;', // NUEVO - Amarillo
     'Etapa 2 reconexion (3 mes)' => 'background:#ffe0b2; color:#e65100;', // NUEVO - Naranja
     'Etapa 3 reconexion final (6 mes)' => 'background:#ffcdd2; color:#c62828;', // NUEVO - Rojo
+    
+    // Ministerios
+    'Vencedores Kids' => 'background:#ffeb3b; color:#8c6d00;',
+    'Legado' => 'background:#dcedc8; color:#558b2f;',
+    'Teens Legado' => 'background:#c8e6c9; color:#2e7d32;',
     
     // Otros
     'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;',
@@ -339,6 +356,18 @@ try {
                                     'Etapa 2 reconexion (3 mes)', // NUEVO
                                     'Etapa 3 reconexion final (6 mes)' // NUEVO
                                 ] as $estadoOpcion): ?>
+                                    <?php $estadoClase = str_replace(' ', '', $estadoOpcion); ?>
+                                    <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
+                                        class="estado-<?php echo $estadoClase; ?>"
+                                        style="<?php echo $colores[$estadoOpcion]; ?>"
+                                        <?php if (trim($registro['estado']) == trim($estadoOpcion)) echo 'selected'; ?>>
+                                        <?php echo htmlspecialchars($estadoOpcion); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            
+                            <optgroup label="Ministerios">
+                                <?php foreach (['Vencedores Kids', 'Legado', 'Teens Legado'] as $estadoOpcion): ?>
                                     <?php $estadoClase = str_replace(' ', '', $estadoOpcion); ?>
                                     <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
                                         class="estado-<?php echo $estadoClase; ?>"

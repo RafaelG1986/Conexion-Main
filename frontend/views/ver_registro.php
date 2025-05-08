@@ -84,6 +84,11 @@ $estados = [
     'Etapa 2 reconexion (3 mes)', // Nuevo
     'Etapa 3 reconexion final (6 mes)', // Nuevo
     
+    // Ministerios
+    'Vencedores Kids',
+    'Legado',
+    'Teens Legado',
+    
     // Otros
     'Por Validar Estado',
     'Nulo',                      // NUEVO
@@ -127,6 +132,11 @@ $colores = [
     'Etapa 1 reconexion (1 mes)' => 'background:#dcedc8; color:#33691e;', // Nuevo
     'Etapa 2 reconexion (3 mes)' => 'background:#dcedc8; color:#33691e;', // Nuevo
     'Etapa 3 reconexion final (6 mes)' => 'background:#dcedc8; color:#33691e;', // Nuevo
+    
+    // Ministerios
+    'Vencedores Kids' => 'background:#ffeb3b; color:#8c6d00;',
+    'Legado' => 'background:#dcedc8; color:#558b2f;',
+    'Teens Legado' => 'background:#c8e6c9; color:#2e7d32;',
     
     // Otros
     'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;',
@@ -315,6 +325,16 @@ if ($ajax) {
 
                             <optgroup label="Reconexión">
                                 <?php foreach (['Reconectado', 'Intento de reconexión', 'Etapa 1 reconexion (1 mes)', 'Etapa 2 reconexion (3 mes)', 'Etapa 3 reconexion final (6 mes)'] as $est): ?>
+                                    <option value="<?php echo htmlspecialchars($est); ?>" 
+                                            <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
+                                            style="<?php echo $colores[$est]; ?>">
+                                        <?php echo htmlspecialchars($est); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+
+                            <optgroup label="Ministerios">
+                                <?php foreach (['Vencedores Kids', 'Legado', 'Teens Legado'] as $est): ?>
                                     <option value="<?php echo htmlspecialchars($est); ?>" 
                                             <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
                                             style="<?php echo $colores[$est]; ?>">
@@ -650,6 +670,16 @@ if ($ajax) {
 
                                 <optgroup label="Reconexión">
                                     <?php foreach (['Reconectado', 'Intento de reconexión', 'Etapa 1 reconexion (1 mes)', 'Etapa 2 reconexion (3 mes)', 'Etapa 3 reconexion final (6 mes)'] as $est): ?>
+                                        <option value="<?php echo htmlspecialchars($est); ?>" 
+                                                <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
+                                                style="<?php echo $colores[$est]; ?>">
+                                            <?php echo htmlspecialchars($est); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </optgroup>
+
+                                <optgroup label="Ministerios">
+                                    <?php foreach (['Vencedores Kids', 'Legado', 'Teens Legado'] as $est): ?>
                                         <option value="<?php echo htmlspecialchars($est); ?>" 
                                                 <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
                                                 style="<?php echo $colores[$est]; ?>">

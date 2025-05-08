@@ -38,6 +38,11 @@ const estadoColores = {
     'Etapa 2 reconexion (3 mes)': {bg:'#ffe0b2', color:'#e65100'}, // NUEVO - Naranja
     'Etapa 3 reconexion final (6 mes)': {bg:'#ffcdd2', color:'#c62828'}, // NUEVO - Rojo
     
+    // Ministerios Específicos (Nuevos)
+    'Vencedores Kids':         {bg:'#ffeb3b', color:'#8c6d00'}, // Amarillo
+    'Legado':                  {bg:'#dcedc8', color:'#558b2f'}, // Verde claro
+    'Teens Legado':            {bg:'#c8e6c9', color:'#2e7d32'}, // Verde medio
+    
     // Otros
     'Por Validar Estado':       {bg:'#ffe5b4', color:'#b36b00'},
     'Nulo':                     {bg:'#e0e0e0', color:'#757575'}, // NUEVO - Gris
@@ -85,6 +90,11 @@ const gruposEstados = {
         'Etapa 1 reconexion (1 mes)',
         'Etapa 2 reconexion (3 mes)',
         'Etapa 3 reconexion final (6 mes)'
+    ],
+    'Ministerios': [
+        'Vencedores Kids',
+        'Legado',
+        'Teens Legado'
     ],
     'Otros': [
         'Por Validar Estado',
@@ -235,4 +245,4 @@ window.cambiarEstado = cambiarEstado;
 window.setEstadoColor = setEstadoColor;
 window.estadoColores = estadoColores;
 window.gruposEstados = gruposEstados;
-window.todosEstados = todosEstados;
+window.todosEstados = todos
