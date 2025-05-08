@@ -381,6 +381,36 @@ if ($ajax) {
                         </div>
                     <?php endif; ?>
                 </div>
+
+                <!-- Nuevo campo para Próximo Contacto -->
+                <div class="field-group">
+                    <label for="proximo_contacto">Próximo Contacto</label>
+                    <?php if ($editar): ?>
+                        <input type="date" id="proximo_contacto" name="proximo_contacto" 
+                               value="<?php echo htmlspecialchars($registro['proximo_contacto'] ?? ''); ?>">
+                    <?php else: ?>
+                        <div class="field-value">
+                            <?php 
+                            if (!empty($registro['proximo_contacto'])) {
+                                $fecha_programada = new DateTime($registro['proximo_contacto']);
+                                $hoy = new DateTime('today');
+                                $diff = $hoy->diff($fecha_programada);
+                                
+                                echo date('d/m/Y', strtotime($registro['proximo_contacto']));
+                                
+                                // Mostrar indicador si la fecha está cercana o pasada
+                                if ($fecha_programada < $hoy) {
+                                    echo ' <span class="badge-vencido">Vencido</span>';
+                                } elseif ($diff->days <= 2) {
+                                    echo ' <span class="badge-urgente">Próximo</span>';
+                                }
+                            } else {
+                                echo 'No programado';
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
 
@@ -682,6 +712,36 @@ if ($ajax) {
                                 echo !empty($registro['fecha_ultimo_contacto']) 
                                     ? date('d/m/Y', strtotime($registro['fecha_ultimo_contacto'])) 
                                     : 'No especificada';
+                                ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Nuevo campo para Próximo Contacto -->
+                    <div class="field-group">
+                        <label for="proximo_contacto">Próximo Contacto</label>
+                        <?php if ($editar): ?>
+                            <input type="date" id="proximo_contacto" name="proximo_contacto" 
+                                   value="<?php echo htmlspecialchars($registro['proximo_contacto'] ?? ''); ?>">
+                        <?php else: ?>
+                            <div class="field-value">
+                                <?php 
+                                if (!empty($registro['proximo_contacto'])) {
+                                    $fecha_programada = new DateTime($registro['proximo_contacto']);
+                                    $hoy = new DateTime('today');
+                                    $diff = $hoy->diff($fecha_programada);
+                                    
+                                    echo date('d/m/Y', strtotime($registro['proximo_contacto']));
+                                    
+                                    // Mostrar indicador si la fecha está cercana o pasada
+                                    if ($fecha_programada < $hoy) {
+                                        echo ' <span class="badge-vencido">Vencido</span>';
+                                    } elseif ($diff->days <= 2) {
+                                        echo ' <span class="badge-urgente">Próximo</span>';
+                                    }
+                                } else {
+                                    echo 'No programado';
+                                }
                                 ?>
                             </div>
                         <?php endif; ?>

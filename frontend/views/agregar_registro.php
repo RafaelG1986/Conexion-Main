@@ -136,6 +136,11 @@ try {
                             <label for="fecha_ultimo_contacto">Último Contacto</label>
                             <input type="date" id="fecha_ultimo_contacto" name="fecha_ultimo_contacto">
                         </div>
+                        <div class="form-group">
+                            <label for="proximo_contacto">Próximo Contacto:</label>
+                            <input type="date" id="proximo_contacto" name="proximo_contacto" class="form-control">
+                            <small class="text-muted">Programa la fecha para el siguiente seguimiento</small>
+                        </div>
                     </div>
                 </div>
                 

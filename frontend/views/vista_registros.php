@@ -198,7 +198,7 @@ $colores = [
 try {
     $db = new Database();
     $conn = $db->connect();
-    $stmt = $conn->query("SELECT foto, nombre_persona, apellido_persona, telefono, nombre_conector, nombre_quien_trajo, estado, id, observaciones, fecha_contacto FROM registros ORDER BY CASE WHEN fecha_contacto IS NULL THEN 1 ELSE 0 END, fecha_contacto DESC");
+    $stmt = $conn->query("SELECT foto, nombre_persona, apellido_persona, telefono, nombre_conector, nombre_quien_trajo, estado, id, observaciones, fecha_contacto, proximo_contacto FROM registros ORDER BY CASE WHEN fecha_contacto IS NULL THEN 1 ELSE 0 END, fecha_contacto DESC");
     $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo '<p>Error al conectar con la base de datos: ' . $e->getMessage() . '</p>';
@@ -221,12 +221,13 @@ try {
                     <th>Quién lo invitó</th>
                     <th>Estado</th>
                     <th>Fecha de ingreso</th><!-- Agregar esta línea -->
+                    <th class="th-proximo-contacto">Próximo Contacto</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (empty($registros)): ?>
-                    <tr><td colspan="9" style="text-align:center;">No hay registros.</td></tr>
+                    <tr><td colspan="10" style="text-align:center;">No hay registros.</td></tr>
                 <?php endif; ?>
                 <?php foreach ($registros as $registro): ?>
                 <tr data-id="<?php echo $registro['id']; ?>">
@@ -349,6 +350,23 @@ try {
                             echo "Sin fecha";
                         }
                         ?>
+                    </td>
+                    <td class="td-proximo-contacto">
+                        <?php if (!empty($registro['proximo_contacto'])): ?>
+                            <?php 
+                                $fecha_programada = new DateTime($registro['proximo_contacto']);
+                                $hoy = new DateTime('today');
+                                $diff = $hoy->diff($fecha_programada);
+                                
+                                echo date('d/m/Y', strtotime($registro['proximo_contacto']));
+                                
+                                if ($fecha_programada < $hoy) {
+                                    echo ' <span class="badge-vencido" title="Contacto vencido"><i class="fas fa-exclamation-circle"></i></span>';
+                                } elseif ($diff->days <= 2) {
+                                    echo ' <span class="badge-urgente" title="Contacto próximo"><i class="fas fa-clock"></i></span>';
+                                }
+                            ?>
+                        <?php endif; ?>
                     </td>
                     <td class="acciones-td">
                         <div class="botones-accion">
@@ -761,6 +779,31 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
+/* Estilos para próximo contacto */
+.th-proximo-contacto, .td-proximo-contacto {
+    min-width: 100px;
+}
+
+.badge-vencido {
+    background-color: #f44336;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.8em;
+}
+
+.badge-urgente {
+    background-color: #ff9800;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.8em;
+}
+
+.td-proximo-contacto i {
+    margin-left: 3px;
+}
+
 /* Estilos para el historial de observaciones */
 .observaciones-historial {
     max-height: 400px;

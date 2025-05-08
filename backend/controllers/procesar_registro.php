@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $formulario_llamadas = $_POST['formulario_llamadas'] ?? '';
         $cumpleanos = $_POST['cumpleanos'] ?? '';
         $observaciones = $_POST['observaciones'] ?? '';
+        $proximo_contacto = !empty($_POST['proximo_contacto']) ? $_POST['proximo_contacto'] : null;
         
         // Subido por el usuario actual
         $subido_por = $_SESSION['user']['nombre'] ?? '';
@@ -75,13 +76,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 nombre_conector, nombre_quien_trajo, estado, 
                 foto, fecha_contacto, formulario_nuevos, 
                 formulario_llamadas, subido_por, fecha_ultimo_contacto,
-                cumpleanos, observaciones
+                cumpleanos, observaciones, proximo_contacto
             ) VALUES (
                 :nombre, :apellido, :telefono,
                 :nombre_conector, :nombre_quien_trajo, :estado,
                 :foto, :fecha_contacto, :formulario_nuevos,
                 :formulario_llamadas, :subido_por, NOW(),
-                :cumpleanos, :observaciones
+                :cumpleanos, :observaciones, :proximo_contacto
             )";
         
         $stmt = $conn->prepare($sql);
@@ -100,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':subido_por', $subido_por);
         $stmt->bindParam(':cumpleanos', $cumpleanos);
         $stmt->bindParam(':observaciones', $observaciones);
+        $stmt->bindParam(':proximo_contacto', $proximo_contacto);
         
         $stmt->execute();
         

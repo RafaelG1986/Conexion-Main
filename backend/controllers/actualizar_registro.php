@@ -14,6 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
         $foto = $_POST['foto_actual'] ?? '';
     }
 
+    // Añadir al controlador de actualización
+    $proximo_contacto = !empty($_POST['proximo_contacto']) ? $_POST['proximo_contacto'] : null;
+
     $sql = "UPDATE registros SET 
         nombre_persona = :nombre_persona,
         apellido_persona = :apellido_persona,
@@ -28,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
         subido_por = :subido_por,
         fecha_ultimo_contacto = :fecha_ultimo_contacto,
         cumpleanos = :cumpleanos,
-        observaciones = :observaciones
+        observaciones = :observaciones,
+        proximo_contacto = :proximo_contacto
         WHERE id = :id";
 
     $params = [
@@ -46,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
         ':fecha_ultimo_contacto' => $_POST['fecha_ultimo_contacto'] ?? '',
         ':cumpleanos' => $_POST['cumpleanos'] ?? '',
         ':observaciones' => $_POST['observaciones'] ?? '',
+        ':proximo_contacto' => $proximo_contacto,
         ':id' => $_POST['id']
     ];
 
