@@ -15,7 +15,15 @@ try {
     $conn = $db->connect();
     
     // Lista de campos permitidos para prevenir inyección SQL
-    $camposPermitidos = ['nombre_persona', 'apellido_persona', 'telefono', 'nombre_conector', 'estado', 'observaciones'];
+    $camposPermitidos = [
+        'nombre_persona', 
+        'apellido_persona', 
+        'telefono', 
+        'nombre_conector', 
+        'estado', 
+        'observaciones',
+        'proximo_contacto'  // Añadir el nuevo campo
+    ];
     
     if (!in_array($campo, $camposPermitidos)) {
         echo json_encode([]);
@@ -24,11 +32,11 @@ try {
     
     // Si se proporciona un valor específico
     if ($valor) {
-        $stmt = $conn->prepare("SELECT id, nombre_persona, apellido_persona, telefono, nombre_conector, estado, observaciones FROM registros WHERE $campo = :valor ORDER BY id DESC");
+        $stmt = $conn->prepare("SELECT id, nombre_persona, apellido_persona, telefono, nombre_conector, estado, observaciones, proximo_contacto FROM registros WHERE $campo = :valor ORDER BY id DESC");
         $stmt->execute([':valor' => $valor]);
     } else { 
         // Si queremos todos los registros para ese campo (que no sean nulos)
-        $stmt = $conn->prepare("SELECT id, nombre_persona, apellido_persona, telefono, nombre_conector, estado, observaciones FROM registros WHERE $campo IS NOT NULL AND $campo != '' ORDER BY $campo, id DESC");
+        $stmt = $conn->prepare("SELECT id, nombre_persona, apellido_persona, telefono, nombre_conector, estado, observaciones, proximo_contacto FROM registros WHERE $campo IS NOT NULL AND $campo != '' ORDER BY $campo, id DESC");
         $stmt->execute();
     }
     

@@ -13,7 +13,15 @@ try {
     $conn = $db->connect();
     
     // Lista de campos permitidos para prevenir inyección SQL
-    $camposPermitidos = ['nombre_persona', 'apellido_persona', 'telefono', 'nombre_conector', 'estado', 'observaciones'];
+    $camposPermitidos = [
+        'nombre_persona', 
+        'apellido_persona', 
+        'telefono', 
+        'nombre_conector', 
+        'estado', 
+        'observaciones',
+        'proximo_contacto'  // Añadido nuevo campo
+    ];
     
     if (!in_array($campo, $camposPermitidos)) {
         echo json_encode([]);

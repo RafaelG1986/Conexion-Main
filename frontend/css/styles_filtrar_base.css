@@ -400,6 +400,48 @@
     100% { transform: rotate(360deg); }
 }
 
+/* Estilos para indicadores de próximo contacto */
+.badge-vencido {
+    display: inline-block;
+    background-color: #f44336;
+    color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.badge-urgente {
+    display: inline-block;
+    background-color: #ff9800;
+    color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+/* Estilos para opciones de filtro */
+.filter-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.filter-checkbox input {
+    margin-right: 8px;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
 /* Adaptaciones responsive */
 @media (max-width: 992px) {
     .filter-form {

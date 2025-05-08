@@ -18,6 +18,10 @@ $estado = isset($_GET['estado']) ? $_GET['estado'] : '';
 $conector = isset($_GET['conector']) ? $_GET['conector'] : '';
 $fecha_desde = isset($_GET['fecha_desde']) ? $_GET['fecha_desde'] : '';
 $fecha_hasta = isset($_GET['fecha_hasta']) ? $_GET['fecha_hasta'] : '';
+$proximo_desde = isset($_GET['proximo_desde']) ? $_GET['proximo_desde'] : '';
+$proximo_hasta = isset($_GET['proximo_hasta']) ? $_GET['proximo_hasta'] : '';
+$contactos_hoy = isset($_GET['contactos_hoy']) && $_GET['contactos_hoy'] == '1';
+$contactos_pendientes = isset($_GET['contactos_pendientes']) && $_GET['contactos_pendientes'] == '1';
 
 try {
     $db = new Database();
@@ -58,6 +62,28 @@ try {
         $query_where .= " AND fecha_contacto <= :fecha_hasta";
         $parametros[':fecha_hasta'] = $_GET['fecha_hasta'];
         $filtros[] = "Hasta: " . date('d/m/Y', strtotime($_GET['fecha_hasta']));
+    }
+    
+    if (!empty($_GET['proximo_desde'])) {
+        $query_where .= " AND proximo_contacto >= :proximo_desde";
+        $parametros[':proximo_desde'] = $_GET['proximo_desde'];
+        $filtros[] = "Próximo contacto desde: " . date('d/m/Y', strtotime($_GET['proximo_desde']));
+    }
+
+    if (!empty($_GET['proximo_hasta'])) {
+        $query_where .= " AND proximo_contacto <= :proximo_hasta";
+        $parametros[':proximo_hasta'] = $_GET['proximo_hasta'];
+        $filtros[] = "Próximo contacto hasta: " . date('d/m/Y', strtotime($_GET['proximo_hasta']));
+    }
+
+    if ($contactos_hoy) {
+        $query_where .= " AND proximo_contacto = CURRENT_DATE()";
+        $filtros[] = "Contactos programados para hoy";
+    }
+
+    if ($contactos_pendientes) {
+        $query_where .= " AND proximo_contacto BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), INTERVAL 7 DAY)";
+        $filtros[] = "Contactos pendientes (próximos 7 días)";
     }
     
     // Obtener el total de registros sin filtrar para estadísticas
@@ -208,6 +234,7 @@ $colores = [
                 <th>Estado</th>
                 <th>Conector</th>
                 <th>Fecha Contacto</th>
+                <th>Próximo Contacto</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -231,6 +258,24 @@ $colores = [
                 </td>
                 <td><?php echo htmlspecialchars($registro['nombre_conector']); ?></td>
                 <td><?php echo date('d/m/Y', strtotime($registro['fecha_contacto'])); ?></td>
+                <td>
+                    <?php if (!empty($registro['proximo_contacto'])): ?>
+                        <?php 
+                            $fecha_programada = new DateTime($registro['proximo_contacto']);
+                            $hoy = new DateTime('today');
+                            
+                            echo date('d/m/Y', strtotime($registro['proximo_contacto']));
+                            
+                            if ($fecha_programada < $hoy) {
+                                echo ' <span class="badge-vencido" title="Vencido">!</span>';
+                            } elseif ($hoy->diff($fecha_programada)->days <= 2) {
+                                echo ' <span class="badge-urgente" title="Próximo">!</span>';
+                            }
+                        ?>
+                    <?php else: ?>
+                        <span class="text-muted">-</span>
+                    <?php endif; ?>
+                </td>
                 <td>
                     <button type="button" class="btn-accion" title="Ver detalles" 
                             onclick="window.parent.cargarRegistro(<?php echo $registro['id']; ?>, false)">

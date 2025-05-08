@@ -81,6 +81,26 @@ try {
                 <label for="fecha_hasta">Fecha Hasta</label>
                 <input type="date" id="fecha_hasta" name="fecha_hasta">
             </div>
+
+            <div class="filter-group">
+                <label for="proximo_desde">Próximo Contacto Desde</label>
+                <input type="date" id="proximo_desde" name="proximo_desde">
+            </div>
+
+            <div class="filter-group">
+                <label for="proximo_hasta">Próximo Contacto Hasta</label>
+                <input type="date" id="proximo_hasta" name="proximo_hasta">
+            </div>
+
+            <div class="filter-group filter-checkbox">
+                <input type="checkbox" id="contactos_hoy" name="contactos_hoy" value="1">
+                <label for="contactos_hoy">Solo contactos de hoy</label>
+            </div>
+
+            <div class="filter-group filter-checkbox">
+                <input type="checkbox" id="contactos_pendientes" name="contactos_pendientes" value="1">
+                <label for="contactos_pendientes">Contactos pendientes (próximos 7 días)</label>
+            </div>
         </div>
         
         <div class="filter-actions">
