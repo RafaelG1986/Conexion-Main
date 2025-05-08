@@ -37,3 +37,15 @@
 2025-05-07 23:51:09 - Actualizando estado: 27 - No interesado
 2025-05-08 00:05:13 - Actualizando estado: 56 - Primer intento
 2025-05-08 00:10:07 - Actualizando estado: 56 - Lider Activo
+2025-05-08 01:14:22 - Actualizando estado: 51 - Segundo Intento
+2025-05-08 01:20:51 - Actualizando estado: 55 - Reconectado
+2025-05-08 01:23:27 - Actualizando estado: 26 - Etapa 1 reconexion (1 mes)
+2025-05-08 01:23:33 - Actualizando estado: 27 - Etapa 1 reconexion (1 mes)
+2025-05-08 01:27:05 - Actualizando estado: 19 - Por Validar Estado
+2025-05-08 14:44:46 - Actualizando estado: 54 - Datos no autorizados
+2025-05-08 14:44:59 - Actualizando estado: 45 - Delegado a acompañante
+2025-05-08 14:46:24 - Actualizando estado: 26 - Nulo
+2025-05-08 14:46:31 - Actualizando estado: 27 - Nulo
+2025-05-08 15:23:34 - Actualizando estado: 26 - Intento llamada telefonica
+2025-05-08 15:23:40 - Actualizando estado: 27 - Intento llamada telefonica
+2025-05-08 15:26:03 - Actualizando estado: 47 - Intento llamada telefonica

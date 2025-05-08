@@ -77,3 +77,27 @@ Llamada recibida: {"id":"56","estado":"Primer intento"}
 ID: 56, Estado: Primer intento, Filas: 1
 Llamada recibida: {"id":"56","estado":"Lider Activo"}
 ID: 56, Estado: Lider Activo, Filas: 1
+Llamada recibida: {"id":"51","estado":"Segundo Intento"}
+ID: 51, Estado: Segundo Intento, Filas: 1
+Llamada recibida: {"id":"55","estado":"Reconectado"}
+ID: 55, Estado: Reconectado, Filas: 1
+Llamada recibida: {"id":"26","estado":"Etapa 1 reconexion (1 mes)"}
+ID: 26, Estado: Etapa 1 reconexion (1 mes), Filas: 1
+Llamada recibida: {"id":"27","estado":"Etapa 1 reconexion (1 mes)"}
+ID: 27, Estado: Etapa 1 reconexion (1 mes), Filas: 1
+Llamada recibida: {"id":"19","estado":"Por Validar Estado"}
+ID: 19, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"54","estado":"Datos no autorizados"}
+ID: 54, Estado: Datos no autorizados, Filas: 1
+Llamada recibida: {"id":"45","estado":"Delegado a acompa\u00f1ante"}
+ID: 45, Estado: Delegado a acompañante, Filas: 1
+Llamada recibida: {"id":"26","estado":"Nulo"}
+ID: 26, Estado: Nulo, Filas: 1
+Llamada recibida: {"id":"27","estado":"Nulo"}
+ID: 27, Estado: Nulo, Filas: 1
+Llamada recibida: {"id":"26","estado":"Intento llamada telefonica"}
+ID: 26, Estado: Intento llamada telefonica, Filas: 1
+Llamada recibida: {"id":"27","estado":"Intento llamada telefonica"}
+ID: 27, Estado: Intento llamada telefonica, Filas: 1
+Llamada recibida: {"id":"47","estado":"Intento llamada telefonica"}
+ID: 47, Estado: Intento llamada telefonica, Filas: 1

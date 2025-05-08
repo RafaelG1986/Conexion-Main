@@ -55,6 +55,9 @@ $estados = [
     'Primer intento',
     'Segundo Intento',
     'Tercero intento',
+    'Intento llamada telefonica',     // NUEVO
+    'Intento 2 llamada telefonica',   // NUEVO
+    'Intento 3 llamada telefonica',   // NUEVO
     'No interesado',
     
     // Desayunos
@@ -82,7 +85,11 @@ $estados = [
     'Etapa 3 reconexion final (6 mes)', // Nuevo
     
     // Otros
-    'Por Validar Estado'
+    'Por Validar Estado',
+    'Nulo',                      // NUEVO
+    'Delegado a acompañante',    // NUEVO
+    'Datos no autorizados',      // NUEVO
+    'Datos incorrectos'          // NUEVO
 ];
 
 $colores = [
@@ -92,6 +99,9 @@ $colores = [
     'Primer intento' => 'background:#f5e6ff; color:#5a00b3;',
     'Segundo Intento' => 'background:#e6ccff; color:#5a00b3;',
     'Tercero intento' => 'background:#d9b3ff; color:#5a00b3;',
+    'Intento llamada telefonica' => 'background:#e1f5fe; color:#0288d1;',     // NUEVO
+    'Intento 2 llamada telefonica' => 'background:#b3e5fc; color:#0277bd;',   // NUEVO
+    'Intento 3 llamada telefonica' => 'background:#81d4fa; color:#01579b;',   // NUEVO
     'No interesado' => 'background:#ffdddd; color:#a00;',
     
     // Desayunos
@@ -120,6 +130,10 @@ $colores = [
     
     // Otros
     'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;',
+    'Nulo' => 'background:#e0e0e0; color:#757575;',                   // NUEVO - Gris
+    'Delegado a acompañante' => 'background:#e1bee7; color:#6a1b9a;', // NUEVO - Púrpura
+    'Datos no autorizados' => 'background:#ffcdd2; color:#d32f2f;',   // NUEVO - Rojo claro
+    'Datos incorrectos' => 'background:#f8bbd0; color:#c2185b;',       // NUEVO
     
     // Compatibilidad con estados antiguos
     'No confirmado a desayuno' => 'background:#ffe5cc; color:#b36b00;'
@@ -260,7 +274,7 @@ if ($ajax) {
                     <?php if ($editar): ?>
                         <select name="estado" id="estado" class="form-control">
                             <optgroup label="Contacto Inicial">
-                                <?php foreach (['Primer contacto', 'Conectado', 'Primer intento', 'Segundo Intento', 'Tercero intento', 'No interesado'] as $est): ?>
+                                <?php foreach (['Primer contacto', 'Conectado', 'Primer intento', 'Segundo Intento', 'Tercero intento', 'Intento llamada telefonica', 'Intento 2 llamada telefonica', 'Intento 3 llamada telefonica', 'No interesado'] as $est): ?>
                                     <option value="<?php echo htmlspecialchars($est); ?>" 
                                             <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
                                             style="<?php echo $colores[$est]; ?>">
@@ -310,7 +324,7 @@ if ($ajax) {
                             </optgroup>
 
                             <optgroup label="Otros">
-                                <?php foreach (['Por Validar Estado'] as $est): ?>
+                                <?php foreach (['Por Validar Estado', 'Nulo', 'Delegado a acompañante', 'Datos no autorizados', 'Datos incorrectos'] as $est): ?>
                                     <option value="<?php echo htmlspecialchars($est); ?>" 
                                             <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
                                             style="<?php echo $colores[$est]; ?>">
@@ -565,7 +579,7 @@ if ($ajax) {
                         <?php if ($editar): ?>
                             <select name="estado" id="estado" class="form-control">
                                 <optgroup label="Contacto Inicial">
-                                    <?php foreach (['Primer contacto', 'Conectado', 'Primer intento', 'Segundo Intento', 'Tercero intento', 'No interesado'] as $est): ?>
+                                    <?php foreach (['Primer contacto', 'Conectado', 'Primer intento', 'Segundo Intento', 'Tercero intento', 'Intento llamada telefonica', 'Intento 2 llamada telefonica', 'Intento 3 llamada telefonica', 'No interesado'] as $est): ?>
                                         <option value="<?php echo htmlspecialchars($est); ?>" 
                                                 <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
                                                 style="<?php echo $colores[$est]; ?>">
@@ -615,7 +629,7 @@ if ($ajax) {
                                 </optgroup>
 
                                 <optgroup label="Otros">
-                                    <?php foreach (['Por Validar Estado'] as $est): ?>
+                                    <?php foreach (['Por Validar Estado', 'Nulo', 'Delegado a acompañante', 'Datos no autorizados', 'Datos incorrectos'] as $est): ?>
                                         <option value="<?php echo htmlspecialchars($est); ?>" 
                                                 <?php echo (trim($est) == trim($registro['estado'])) ? 'selected' : ''; ?>
                                                 style="<?php echo $colores[$est]; ?>">

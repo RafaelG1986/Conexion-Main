@@ -45,6 +45,12 @@ También queremos compartirte el recuerdo de tu primer día En•Casa",
         
         'Tercero intento' => "Hola {$nombreCompleto}, ¿cómo has estado? Te contactamos nuevamente desde Iglesia en Casa. Nos encantaría contar contigo en nuestro próximo evento.",
         
+        'Intento llamada telefonica' => "Hola {$nombreCompleto}, te contactamos desde Iglesia en Casa. Intentamos llamarte pero no pudimos comunicarnos. ¿Podrías indicarnos un momento conveniente para hablar?",
+        
+        'Intento 2 llamada telefonica' => "Hola {$nombreCompleto}, somos de Iglesia en Casa. Hemos intentado llamarte nuevamente sin éxito. Nos gustaría conversar contigo. ¿Cuál sería el mejor momento para comunicarnos?",
+        
+        'Intento 3 llamada telefonica' => "Hola {$nombreCompleto}, te escribimos de Iglesia en Casa. Hemos intentado comunicarnos por teléfono en varias ocasiones. Por favor, hazme saber cuándo estarías disponible para una llamada.",
+        
         'No interesado' => "Hola {$nombreCompleto}, respetamos tu decisión de no participar por ahora en Iglesia en Casa. Si en algún momento deseas volver a conectar, estaremos aquí.",
         
         // Desayunos
@@ -84,7 +90,9 @@ También queremos compartirte el recuerdo de tu primer día En•Casa",
         'Etapa 3 reconexion final (6 mes)' => "Hola {$nombreCompleto}, han pasado seis meses desde nuestro último contacto. Te seguimos teniendo presente y las puertas de Iglesia en Casa siempre estarán abiertas para ti. Nos gustaría saber de ti.",
         
         // Otros
-        'Por Validar Estado' => "Hola {$nombreCompleto}, te contactamos desde Iglesia en Casa. Nos gustaría conocerte mejor y entender cómo podemos servirte."
+        'Por Validar Estado' => "Hola {$nombreCompleto}, te contactamos desde Iglesia en Casa. Nos gustaría conocerte mejor y entender cómo podemos servirte.",
+        
+        'Datos incorrectos' => "Nota interna: Los datos de contacto de {$nombreCompleto} son incorrectos. Se requiere verificación."
     ];
     
     // Retornar el mensaje correspondiente al estado o un mensaje genérico si no está definido
@@ -105,6 +113,9 @@ $estados = [
     'Primer intento',
     'Segundo Intento',
     'Tercero intento',
+    'Intento llamada telefonica',     // NUEVO
+    'Intento 2 llamada telefonica',   // NUEVO
+    'Intento 3 llamada telefonica',   // NUEVO
     'No interesado',
     
     // Desayunos
@@ -127,12 +138,16 @@ $estados = [
     // Reconexión
     'Reconectado',
     'Intento de reconexión',
-    'Etapa 1 reconexion (1 mes)', // NUEVO
-    'Etapa 2 reconexion (3 mes)', // NUEVO
-    'Etapa 3 reconexion final (6 mes)', // NUEVO
+    'Etapa 1 reconexion (1 mes)', 
+    'Etapa 2 reconexion (3 mes)', 
+    'Etapa 3 reconexion final (6 mes)', 
     
     // Otros
-    'Por Validar Estado'
+    'Por Validar Estado',
+    'Nulo',
+    'Delegado a acompañante',
+    'Datos no autorizados',
+    'Datos incorrectos'               // NUEVO
 ];
 
 // Colores para cada estado
@@ -143,6 +158,9 @@ $colores = [
     'Primer intento' => 'background:#f5e6ff; color:#5a00b3;',
     'Segundo Intento' => 'background:#e6ccff; color:#5a00b3;',
     'Tercero intento' => 'background:#d9b3ff; color:#5a00b3;',
+    'Intento llamada telefonica' => 'background:#e1f5fe; color:#0288d1;',     // NUEVO
+    'Intento 2 llamada telefonica' => 'background:#b3e5fc; color:#0277bd;',   // NUEVO
+    'Intento 3 llamada telefonica' => 'background:#81d4fa; color:#01579b;',   // NUEVO
     'No interesado' => 'background:#ffdddd; color:#a00;',
     
     // Desayunos
@@ -170,7 +188,11 @@ $colores = [
     'Etapa 3 reconexion final (6 mes)' => 'background:#ffcdd2; color:#c62828;', // NUEVO - Rojo
     
     // Otros
-    'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;'
+    'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;',
+    'Nulo' => 'background:#e0e0e0; color:#757575;',
+    'Delegado a acompañante' => 'background:#e1bee7; color:#6a1b9a;',
+    'Datos no autorizados' => 'background:#ffcdd2; color:#d32f2f;',
+    'Datos incorrectos' => 'background:#f8bbd0; color:#c2185b;'               // NUEVO
 ];
 
 try {
@@ -235,7 +257,7 @@ try {
                         ?>>
                         <select onchange="actualizarEstado(this.value, <?php echo $registro['id']; ?>)">
                             <optgroup label="Contacto Inicial">
-                                <?php foreach (['Primer contacto', 'Conectado', 'Primer intento', 'Segundo Intento', 'Tercero intento', 'No interesado'] as $estadoOpcion): ?>
+                                <?php foreach (['Primer contacto', 'Conectado', 'Primer intento', 'Segundo Intento', 'Tercero intento', 'Intento llamada telefonica', 'Intento 2 llamada telefonica', 'Intento 3 llamada telefonica', 'No interesado'] as $estadoOpcion): ?>
                                     <?php $estadoClase = str_replace(' ', '', $estadoOpcion); ?>
                                     <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
                                         class="estado-<?php echo $estadoClase; ?>"
@@ -301,7 +323,13 @@ try {
                             </optgroup>
                             
                             <optgroup label="Otros">
-                                <?php foreach (['Por Validar Estado'] as $estadoOpcion): ?>
+                                <?php foreach ([
+                                    'Por Validar Estado',
+                                    'Nulo',
+                                    'Delegado a acompañante',
+                                    'Datos no autorizados',
+                                    'Datos incorrectos' // NUEVO
+                                ] as $estadoOpcion): ?>
                                     <?php $estadoClase = str_replace(' ', '', $estadoOpcion); ?>
                                     <option value="<?php echo htmlspecialchars($estadoOpcion); ?>"
                                         class="estado-<?php echo $estadoClase; ?>"

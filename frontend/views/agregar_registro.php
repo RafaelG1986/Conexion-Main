@@ -10,6 +10,9 @@ $estadosPorCategoria = [
         'Primer intento' => 'background:#f5e6ff; color:#5a00b3;',
         'Segundo Intento' => 'background:#e6ccff; color:#5a00b3;',
         'Tercero intento' => 'background:#d9b3ff; color:#5a00b3;',
+        'Intento llamada telefonica' => 'background:#e1f5fe; color:#0288d1;',     // NUEVO
+        'Intento 2 llamada telefonica' => 'background:#b3e5fc; color:#0277bd;',   // NUEVO
+        'Intento 3 llamada telefonica' => 'background:#81d4fa; color:#01579b;',   // NUEVO
         'No interesado' => 'background:#ffdddd; color:#a00;'
     ],
     'Desayunos' => [
@@ -32,12 +35,16 @@ $estadosPorCategoria = [
     'Reconexión' => [
         'Reconectado' => 'background:#c8e6c9; color:#2e7d32;',
         'Intento de reconexión' => 'background:#dcedc8; color:#33691e;',
-        'Etapa 1 reconexion (1 mes)' => 'background:#dcedc8; color:#33691e;',
-        'Etapa 2 reconexion (3 mes)' => 'background:#dcedc8; color:#33691e;',
-        'Etapa 3 reconexion final (6 mes)' => 'background:#dcedc8; color:#33691e;'
+        'Etapa 1 reconexion (1 mes)' => 'background:#fff9c4; color:#f57f17;',      // Color amarillo
+        'Etapa 2 reconexion (3 mes)' => 'background:#ffe0b2; color:#e65100;',      // Color naranja
+        'Etapa 3 reconexion final (6 mes)' => 'background:#ffcdd2; color:#c62828;' // Color rojo
     ],
     'Otros' => [
-        'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;'
+        'Por Validar Estado' => 'background:#ffe5b4; color:#b36b00;',
+        'Nulo' => 'background:#e0e0e0; color:#757575;',
+        'Delegado a acompañante' => 'background:#e1bee7; color:#6a1b9a;',
+        'Datos no autorizados' => 'background:#ffcdd2; color:#d32f2f;',
+        'Datos incorrectos' => 'background:#f8bbd0; color:#c2185b;'               // NUEVO
     ]
 ];
 

@@ -8,6 +8,9 @@ const estadoColores = {
     'Primer intento':           {bg:'#f5e6ff', color:'#5a00b3'},
     'Segundo Intento':          {bg:'#e6ccff', color:'#5a00b3'},
     'Tercero intento':          {bg:'#d9b3ff', color:'#5a00b3'},
+    'Intento llamada telefonica': {bg:'#e1f5fe', color:'#0288d1'},   // NUEVO - Azul claro
+    'Intento 2 llamada telefonica': {bg:'#b3e5fc', color:'#0277bd'}, // NUEVO - Azul medio
+    'Intento 3 llamada telefonica': {bg:'#81d4fa', color:'#01579b'}, // NUEVO - Azul oscuro
     'No interesado':            {bg:'#ffdddd', color:'#a00'},
     
     // Desayunos
@@ -36,7 +39,11 @@ const estadoColores = {
     'Etapa 3 reconexion final (6 mes)': {bg:'#ffcdd2', color:'#c62828'}, // NUEVO - Rojo
     
     // Otros
-    'Por Validar Estado':       {bg:'#ffe5b4', color:'#b36b00'}
+    'Por Validar Estado':       {bg:'#ffe5b4', color:'#b36b00'},
+    'Nulo':                     {bg:'#e0e0e0', color:'#757575'}, // NUEVO - Gris
+    'Delegado a acompañante':   {bg:'#e1bee7', color:'#6a1b9a'}, // NUEVO - Púrpura
+    'Datos no autorizados':     {bg:'#ffcdd2', color:'#d32f2f'}, // NUEVO - Rojo claro
+    'Datos incorrectos':        {bg:'#f8bbd0', color:'#c2185b'}  // NUEVO - Rosa
 };
 
 /**
@@ -50,6 +57,9 @@ const gruposEstados = {
         'Primer intento',
         'Segundo Intento',
         'Tercero intento',
+        'Intento llamada telefonica',     // NUEVO
+        'Intento 2 llamada telefonica',   // NUEVO
+        'Intento 3 llamada telefonica',   // NUEVO
         'No interesado'
     ],
     'Desayunos': [
@@ -77,7 +87,11 @@ const gruposEstados = {
         'Etapa 3 reconexion final (6 mes)'
     ],
     'Otros': [
-        'Por Validar Estado'
+        'Por Validar Estado',
+        'Nulo',                   // NUEVO
+        'Delegado a acompañante', // NUEVO
+        'Datos no autorizados',   // NUEVO
+        'Datos incorrectos'       // NUEVO
     ]
 };
 
