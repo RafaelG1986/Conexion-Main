@@ -423,35 +423,70 @@ try {
                             ?>
                         <?php endif; ?>
                     </td>
-                    <!-- Nueva celda para último contacto -->
+                    <!-- Nueva celda para último contacto con lógica mejorada -->
                     <td class="fecha-ultimo-contacto">
                         <?php if (!empty($registro['fecha_ultimo_contacto'])): ?>
                             <?php
-                                // Determinar clase según el estado
-                                $clase_fecha = '';
-                                $estado_actual = trim($registro['estado']);
+                                // Definir estados óptimos y no óptimos
+                                $estados_optimos = [
+                                    'Conectado',
+                                    'Confirmado a Desayuno',
+                                    'Desayuno Asistido',
+                                    'Miembro activo',
+                                    'Congregado sin desayuno',
+                                    'Lider Activo',
+                                    'Reconectado',
+                                    'Vencedores Kids',
+                                    'Legado',
+                                    'Teens Legado'
+                                ];
                                 
-                                // Listas de estados positivos y negativos
-                                if (in_array($estado_actual, $estados_positivos)) {
-                                    $clase_fecha = 'fecha-positiva';
-                                } elseif (in_array($estado_actual, $estados_negativos)) {
-                                    $clase_fecha = 'fecha-negativa';
-                                }
+                                $estados_no_optimos = [
+                                    'No interesado',
+                                    'No confirma desayuno', 
+                                    'Miembro ausente',
+                                    'Miembro inactivo',
+                                    'Lider ausente',
+                                    'Lider inactivo',
+                                    'Intento 3 llamada telefonica',
+                                    'Etapa 3 reconexion final (6 mes)',
+                                    'Datos incorrectos',
+                                    'Datos no autorizados',
+                                    'Nulo'
+                                ];
                                 
                                 // Calcular días transcurridos
                                 $ultimo_contacto = new DateTime($registro['fecha_ultimo_contacto']);
                                 $hoy = new DateTime('today');
                                 $dias_transcurridos = $hoy->diff($ultimo_contacto)->days;
                                 
-                                // Si han pasado más de 30 días, añadir la clase de alerta
-                                if ($dias_transcurridos > 30) {
-                                    $clase_fecha = 'fecha-alerta';
+                                $estado_actual = trim($registro['estado']);
+                                $clase_fecha = '';
+                                
+                                if (in_array($estado_actual, $estados_optimos)) {
+                                    // Estados óptimos siempre en azul, sin importar el tiempo
+                                    $clase_fecha = 'fecha-positiva';
+                                } elseif (in_array($estado_actual, $estados_no_optimos)) {
+                                    // Estados no óptimos
+                                    if ($dias_transcurridos > 30) {
+                                        // Si además han pasado más de 30 días, alerta roja
+                                        $clase_fecha = 'fecha-alerta';
+                                    } else {
+                                        // Estado no óptimo pero contacto reciente
+                                        $clase_fecha = 'fecha-negativa';
+                                    }
+                                } else {
+                                    // Estados neutros o no clasificados
+                                    if ($dias_transcurridos > 30) {
+                                        // Más de 30 días sin contacto es alerta para cualquier estado
+                                        $clase_fecha = 'fecha-alerta';
+                                    }
                                 }
                             ?>
                             <span class="<?php echo $clase_fecha; ?>" 
                                   title="Último contacto hace <?php echo $dias_transcurridos; ?> días">
                                 <?php echo date('d/m/Y', strtotime($registro['fecha_ultimo_contacto'])); ?>
-                                <?php if ($dias_transcurridos > 30): ?>
+                                <?php if ($clase_fecha == 'fecha-alerta'): ?>
                                     <i class="fas fa-exclamation-circle"></i>
                                 <?php endif; ?>
                             </span>
