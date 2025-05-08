@@ -49,3 +49,6 @@
 2025-05-08 15:23:34 - Actualizando estado: 26 - Intento llamada telefonica
 2025-05-08 15:23:40 - Actualizando estado: 27 - Intento llamada telefonica
 2025-05-08 15:26:03 - Actualizando estado: 47 - Intento llamada telefonica
+2025-05-08 17:24:24 - Actualizando estado: 47 - Confirmado a Desayuno
+2025-05-08 17:30:41 - Actualizando estado: 26 - Por Validar Estado
+2025-05-08 17:31:08 - Actualizando estado: 26 - Datos incorrectos

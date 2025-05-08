@@ -1,6 +1,31 @@
 <?php
 require_once __DIR__ . '/../../backend/config/database.php';
 
+// Añadir esto al inicio del archivo o donde definas variables generales
+$estados_positivos = [
+    'Conectado',
+    'Confirmado a Desayuno',
+    'Desayuno Asistido',
+    'Miembro activo',
+    'Congregado sin desayuno',
+    'Lider Activo',
+    'Reconectado'
+];
+
+$estados_negativos = [
+    'No interesado',
+    'No confirma desayuno', 
+    'Miembro ausente',
+    'Miembro inactivo',
+    'Lider ausente',
+    'Lider inactivo',
+    'Intento 3 llamada telefonica',
+    'Etapa 3 reconexion final (6 mes)',
+    'Datos incorrectos',
+    'Datos no autorizados',
+    'Nulo'
+];
+
 // Función para formatear teléfono para WhatsApp
 function formatearTelefonoWhatsApp($telefono) {
     // Eliminar todos los caracteres no numéricos
@@ -95,7 +120,7 @@ También queremos compartirte el recuerdo de tu primer día En•Casa",
         'Datos incorrectos' => "Nota interna: Los datos de contacto de {$nombreCompleto} son incorrectos. Se requiere verificación."
     ];
     
-    // Retornar el mensaje correspondiente al estado o un mensaje genérico si no está definido
+    // Retornar el mensaje correspondiente al estado o un mensaje generérico si no está definido
     return isset($mensajes[$estado]) 
         ? $mensajes[$estado] 
         : "Hola {$nombreCompleto}, te contacto desde Iglesia en Casa. ¿Cómo estás?";
@@ -198,7 +223,7 @@ $colores = [
 try {
     $db = new Database();
     $conn = $db->connect();
-    $stmt = $conn->query("SELECT foto, nombre_persona, apellido_persona, telefono, nombre_conector, nombre_quien_trajo, estado, id, observaciones, fecha_contacto, proximo_contacto FROM registros ORDER BY CASE WHEN fecha_contacto IS NULL THEN 1 ELSE 0 END, fecha_contacto DESC");
+    $stmt = $conn->query("SELECT foto, nombre_persona, apellido_persona, telefono, nombre_conector, nombre_quien_trajo, estado, id, observaciones, fecha_contacto, proximo_contacto, fecha_ultimo_contacto FROM registros ORDER BY CASE WHEN fecha_contacto IS NULL THEN 1 ELSE 0 END, fecha_contacto DESC");
     $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo '<p>Error al conectar con la base de datos: ' . $e->getMessage() . '</p>';
@@ -222,12 +247,13 @@ try {
                     <th>Estado</th>
                     <th>Fecha de ingreso</th><!-- Agregar esta línea -->
                     <th class="th-proximo-contacto">Próximo Contacto</th>
+                    <th>Último Contacto</th><!-- Nueva columna -->
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (empty($registros)): ?>
-                    <tr><td colspan="10" style="text-align:center;">No hay registros.</td></tr>
+                    <tr><td colspan="11" style="text-align:center;">No hay registros.</td></tr>
                 <?php endif; ?>
                 <?php foreach ($registros as $registro): ?>
                 <tr data-id="<?php echo $registro['id']; ?>">
@@ -366,6 +392,42 @@ try {
                                     echo ' <span class="badge-urgente" title="Contacto próximo"><i class="fas fa-clock"></i></span>';
                                 }
                             ?>
+                        <?php endif; ?>
+                    </td>
+                    <!-- Nueva celda para último contacto -->
+                    <td class="fecha-ultimo-contacto">
+                        <?php if (!empty($registro['fecha_ultimo_contacto'])): ?>
+                            <?php
+                                // Determinar clase según el estado
+                                $clase_fecha = '';
+                                $estado_actual = trim($registro['estado']);
+                                
+                                // Listas de estados positivos y negativos
+                                if (in_array($estado_actual, $estados_positivos)) {
+                                    $clase_fecha = 'fecha-positiva';
+                                } elseif (in_array($estado_actual, $estados_negativos)) {
+                                    $clase_fecha = 'fecha-negativa';
+                                }
+                                
+                                // Calcular días transcurridos
+                                $ultimo_contacto = new DateTime($registro['fecha_ultimo_contacto']);
+                                $hoy = new DateTime('today');
+                                $dias_transcurridos = $hoy->diff($ultimo_contacto)->days;
+                                
+                                // Si han pasado más de 30 días, añadir la clase de alerta
+                                if ($dias_transcurridos > 30) {
+                                    $clase_fecha = 'fecha-alerta';
+                                }
+                            ?>
+                            <span class="<?php echo $clase_fecha; ?>" 
+                                  title="Último contacto hace <?php echo $dias_transcurridos; ?> días">
+                                <?php echo date('d/m/Y', strtotime($registro['fecha_ultimo_contacto'])); ?>
+                                <?php if ($dias_transcurridos > 30): ?>
+                                    <i class="fas fa-exclamation-circle"></i>
+                                <?php endif; ?>
+                            </span>
+                        <?php else: ?>
+                            <span class="sin-fecha">No registrado</span>
                         <?php endif; ?>
                     </td>
                     <td class="acciones-td">

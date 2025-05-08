@@ -101,3 +101,9 @@ Llamada recibida: {"id":"27","estado":"Intento llamada telefonica"}
 ID: 27, Estado: Intento llamada telefonica, Filas: 1
 Llamada recibida: {"id":"47","estado":"Intento llamada telefonica"}
 ID: 47, Estado: Intento llamada telefonica, Filas: 1
+Llamada recibida: {"id":"47","estado":"Confirmado a Desayuno"}
+ID: 47, Estado: Confirmado a Desayuno, Filas: 1
+Llamada recibida: {"id":"26","estado":"Por Validar Estado"}
+ID: 26, Estado: Por Validar Estado, Filas: 1
+Llamada recibida: {"id":"26","estado":"Datos incorrectos"}
+ID: 26, Estado: Datos incorrectos, Filas: 1
